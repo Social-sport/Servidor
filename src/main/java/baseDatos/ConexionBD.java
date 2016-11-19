@@ -1,4 +1,4 @@
-package main.java.baseDatos;
+package baseDatos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,8 +11,7 @@ public class ConexionBD {
 
 	private static Connection conexion = null;
 	private static String db4free = "jdbc:mysql://db4free.net:3306/socialsport?user=socialsport&password=socialsport";
-	private static String openshift = "jdbc:mysql://localhost:3306/socialsport?user=adminNhxVfzE&password=wf-QyTaE11-l";
-	private static String openshift2 = "jdbc:mysql://127.11.148.2:3306/socialsport?user=adminNhxVfzE&password=wf-QyTaE11-l";
+	//private static String openshift = "jdbc:mysql://127.11.148.2:3306/socialsport?user=adminNhxVfzE&password=wf-QyTaE11-l";
 
 	/**
 	 * Inicia conexion con una base de datos MySQL.

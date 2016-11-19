@@ -1,25 +1,36 @@
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'jetty'
 apply plugin: 'eclipse-wtp'
 
 repositories {
 	mavenCentral()
 }
+tasks.withType(JavaCompile) {
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+}
+sourceSets {
+  main {
+    output.classesDir   = 'WebContent/WEB-INF/classes'
+  }
+}
 dependencies {
-	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.21'
-	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
-	compile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
-    testCompile 'junit:junit:[4,)'
+	compile fileTree(dir: 'WebContent/WEB-INF/lib', include: ['*.jar'])
+	//compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.21'
+	//compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+	//compile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
+	//compile group: 'org.seleniumhq.selenium', name: 'selenium-server-standalone', version: '2.53.0'
+   	testCompile 'junit:junit:[4,)'
 }
 test {
-	    testLogging {
-        // Show that tests are run in the command-line output
-        events 'started', 'passed'
-    }
+	exclude 'tests/GUITest.class'
+	testLogging {
+        	events "PASSED", "STARTED", "FAILED", "SKIPPED"
+    	}
 }
 war{
- archiveName = 'ROOT.war'
+ webAppDirName = 'WebContent'
+ webXml = file('WebContent/WEB-INF/web.xml')
+ archiveName = 'Servidor.war'
  destinationDir = file('webapps')
 }
-jettyRunWar.contextPath = '' 

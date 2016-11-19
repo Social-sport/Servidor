@@ -1,5 +1,6 @@
 body { 
 	background:#ffffff;
+	font-family: 'Noto Sans', sans-serif;
 }
 
 /*nav css*/
@@ -191,6 +192,16 @@ body {
 	padding: 10px;
 }
 
+.tab-paneEvent {
+	width: 40%;
+	background: #ffffff;
+	box-shadow: 0 0 4px rgba(0,0,0,.4);
+	border-radius: 6px;
+	text-align: center;
+	margin-right: 10%;
+	padding: 10px;
+}
+
 .tab-content>.active {
 	margin-top:15px;
 	margin-bottom: 10px;
@@ -222,12 +233,20 @@ h2.register {
 	color: #59B2E0;
 }
 
+h2.Subtittle { 
+	padding: 10px 25px; 
+	text-transform: capitalize;
+	font-size: 25px;
+	color: #00;
+}
+
+
 .fom-main { 
 	overflow:hidden;
 }
 
 legend {
-	font-family: 'Bitter', serif;
+	font-family: 'Noto Sans', sans-serif;
 	color: #ff3200;
 	border-bottom: 0px solid;
 }
@@ -252,7 +271,7 @@ input.form-control {
 }
 
 textarea.form-control {
-	text-align: center;
+	text-align: left;
 }
 
 select.form-control {
@@ -306,7 +325,7 @@ select.selectpicker option:first-child {
 	margin: 0 auto;
 }
 
-#genero {
+#genero,#gratuito {
 	width: 100%;
 	text-align:left !important;
 }
@@ -388,6 +407,7 @@ h4.pro-title {
 	margin: 5px 5px 5px 5px;
 	position: relative;
 	display: block;
+	text-align: center;
 	padding: 10px 30px;
 	border: 0px solid !important;
 	box-shadow: none !important;
@@ -531,5 +551,21 @@ h4.pro-title {
 
 	.bio-table>tbody>tr>td {
 		font-size: 13px;
+	}
+}
+
+@media all and (max-width:400px){
+	#perfilInfo {
+		margin-right: 0;
+		margin-left: 10%;
+	}
+
+	.searhFriend {
+		margin-right: 0;
+		margin-left: 18%;
+	}
+
+	.nav-menu li a {
+		font-size: 11px;
 	}
 }

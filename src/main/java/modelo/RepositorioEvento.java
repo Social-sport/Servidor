@@ -1,4 +1,4 @@
-package main.java.modelo;
+package modelo;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import main.java.baseDatos.ConexionBD;
+import baseDatos.ConexionBD;
 
 public class RepositorioEvento {
 
@@ -21,14 +21,14 @@ public class RepositorioEvento {
 		this.conexion = ConexionBD.getConexion();
 	}
 
-	public Evento findEvento(int id) {
+	public Evento findEvento(String nombre) {
 		Evento evento = null;
 		try {
-			String sql = "SELECT * FROM Evento WHERE id='"+id+"'";
+			String sql = "SELECT * FROM Evento WHERE nombre='"+nombre+"'";
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
-			evento = new Evento(rs.getInt("id"),rs.getString("fecha"),
+			evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 					rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"));
 			stmt.close();
 		}
@@ -46,7 +46,7 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("fecha"),
+				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"), rs.getString("descripcion"), rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
 						rs.getString("creador")));
 			}
@@ -61,12 +61,12 @@ public class RepositorioEvento {
 
 	public List<Evento> listarEventosUsuario(String email) {
 		List<Evento> eventos = new LinkedList<Evento>();
-		String sql = "SELECT * FROM Evento,UsuarioEvento WHERE idEvento = id AND usuario ='"+email+"'";
+		String sql = "SELECT * FROM Evento,EventoSuscrito WHERE idEvento = id AND Usuario ='"+email+"'";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("fecha"),
+				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
 						rs.getString("creador")));
 			}
@@ -86,7 +86,7 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("fecha"),
+				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
 						rs.getString("creador")));
 			}
@@ -100,11 +100,11 @@ public class RepositorioEvento {
 	}
 
 	public boolean insertarEvento(Evento evento) {
-		String sql = "INSERT INTO Evento (fecha,hora,deporte,creador)VALUES "
-				+ "('"+evento.getFecha()+"','"+evento.getHora()+"','"+evento.getDeporte()+"','"+evento.getCreador()+"')";
+		String sql = "INSERT INTO Evento (nombre,descripcion,fecha,hora,deporte,creador) VALUES "
+				+ "('"+evento.getNombre()+"','"+evento.getDescripcion()+"','"+evento.getFecha()+"','"+evento.getHora()+"','"+evento.getDeporte()+"','"+evento.getCreador()+"')";
 		try {
 			Statement stmt = conexion.createStatement();
-			stmt.execute(sql);
+			stmt.executeUpdate(sql);
 			stmt.close();
 			return true;
 		}
@@ -118,7 +118,7 @@ public class RepositorioEvento {
 		String sql = "DELETE FROM Evento WHERE id='"+id+"'";
 		try {
 			Statement stmt = conexion.createStatement();
-			stmt.executeQuery(sql);
+			stmt.executeUpdate(sql);
 			stmt.close();
 			return true;
 		}
@@ -133,7 +133,7 @@ public class RepositorioEvento {
 				+ "('"+id+"','"+email+"')";
 		try {
 			Statement stmt = conexion.createStatement();
-			stmt.execute(sql);
+			stmt.executeUpdate(sql);
 			stmt.close();
 			return true;
 		}
@@ -143,11 +143,11 @@ public class RepositorioEvento {
 		}
 	}
 
-	public boolean borrarseEvento(String email) {
+	public boolean darseDeBajaEvento(String email) {
 		String sql = "DELETE FROM EventoSuscrito WHERE usuario='"+email+"'";
 		try {
 			Statement stmt = conexion.createStatement();
-			stmt.execute(sql);
+			stmt.executeUpdate(sql);
 			stmt.close();
 			return true;
 		}

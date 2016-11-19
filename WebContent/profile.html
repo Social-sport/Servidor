@@ -9,73 +9,18 @@
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css">
     <link rel="stylesheet" href="css/profile.css">
 
-    <script src="js/profile.js"></script>
+    <!-- <script src="js/profile.js"></script> -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/profile.js"></script>
+    <script type="text/javascript" src="js/load.js"></script>
 
     <title>Perfil de Usuario</title>
   </head>
   <body>
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target =".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="muroVacio.html">Social Sport</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="muroVacio.html">Home</a>
-            </li>
-            <li>
-              <a href="#">About</a>
-            </li>
-            <li id="configEdit">
-              <a href="#change" data-toggle="tab">Configuración</a>
-            </li>
-            <li class="dropdown active">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil
-                <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li class="dropdown-header">Perfil de "nombre usuario"</li>
-                <li> 
-                  <a href="profile.html">Mi perfil</a>
-                </li>
-                <li class="divider"></li>
-                <li> 
-                  <a href="#deportes" data-toggle="modal">Mis deportes</a>
-                </li>
-                <li> 
-                  <a href="#eventos" data-toggle="modal">Mis eventos</a>
-                </li>
-                <li> 
-                  <a href="#amigos" data-toggle="modal">Mis amigos</a>
-                </li>
-                <li> 
-                  <a href="#mensajes" data-toggle="modal">Mis mensajes</a>
-                </li>
-                <li class="divider"></li>
-                <li> 
-                  <a href="#">Crear evento</a>
-                </li>
-                <li class="divider"></li>
-                <li> 
-                  <a href="signup.html">Cerrar sesión</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
+	<div id="topBar" ></div>
+	
     <section>
 
       <div class="container" style="margin-top: 80px;">
@@ -90,54 +35,14 @@
             <h5>Jenifer Smith</h5>
             <p>Web Designer / Develpor </p>
             <ul>
-              <li><span class="glyphicon glyphicon-home"></span> 555 street Address,toedo 43606 U.S.A.</li>
+              <li><span class="glyphicon glyphicon-home"></span> 555 street Address,toledo 43606 U.S.A.</li>
               <li><span class="glyphicon glyphicon-phone"></span> <a href="#" title="call">(+021) 956 789123</a></li>
               <li><span class="glyphicon glyphicon-envelope"></span><a href="#" title="mail">jenifer123@gmail.com</a></li>
             </ul>
-          </div><!--col-md-8 col-sm-8 col-xs-12 close-->
-
-          <div class="searhFriend">
-            <ul class="navbar-right">
-              <li><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-search"></span> Buscar Amigos</a></li>
-            </ul>
           </div>
+
         </div><!--profile-head close-->
       </div><!--container close-->
-
-      <div class="container">
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title">Buscar Amigos</h4>
-              </div>
-              <div class="modal-body">
-                <section class="search-box1" id="panel">
-                  <div class="container">
-                    <form class="form-inline" role="form">
-                      <div class="col-sm-8 col-xs-8 form-group top_search" style="padding-right:0px;">
-                        <div class="row">
-                          <span class="serach-footer"><img src="images/srch.png" /></span>
-                          <input type="text" class="form-control search-wrap" id="search" placeholder="Busca aquí...">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-4 col-xs-4 form-group top_search" style="padding-left:0px;">
-                          <button type="submit" class="btn btn-default search-btn">BUSCAR</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </section>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div id="sticky" class="container">
         <!-- Nav tabs -->
@@ -168,12 +73,12 @@
             </a>
           </li>
           <li>
-            <a href="#createEvent" role="tab" data-toggle="tab">
+            <a href="#createEvent" id="creaEvent" role="tab" data-toggle="tab">
               <i class="fa fa-calendar-plus-o"></i> Crear Evento
             </a>
           </li>
           <li id="configEdit1">
-            <a href="#change" role="tab" data-toggle="tab">
+            <a href="#change" id="editDat" role="tab" data-toggle="tab">
               <i class="fa fa-edit"></i> Editar Perfil
             </a>
           </li>
@@ -181,6 +86,61 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
+
+          <div class="tab-pane fade " id="mySports">
+            <div class="container fom-main">
+              <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="register">Mis Deportes</h2>
+                </div><!--col-sm-12 close-->
+              </div><!--row close-->
+            </div><!--container close -->          
+          </div><!--tab-pane close-->
+
+          <div class="tab-pane fade " id="myEvents">
+            <div class="container fom-main">
+              <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="register">Mis Eventos</h2>
+                </div><!--col-sm-12 close-->
+              </div><!--row close-->
+
+              <div class="col-xs-6 tab-paneEvent">
+                <h2 class="Subtittle">Creados</h2>
+                  <p>No has creado a ningun evento</p>
+                  <a href="#createEvent" class="btn btn-primary" data-toggle="tab">Crear Evento</a>
+              </div><!--column close-->
+     
+              <div class="col-xs-6 tab-paneEvent">
+                <h2 class="Subtittle">Suscritos</h2>
+                  <p>No te has suscrito a ningun evento</p>
+                  <a href="muro.html" class="btn btn-primary">Ver Eventos</a>
+              </div><!--column close-->
+
+            </div><!--container close --> 
+         </div><!--tab-pane close-->
+
+          <div class="tab-pane fade " id="myMessages">
+            <div class="container fom-main">
+              <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="register">Mis Mensajes</h2>
+                </div><!--col-sm-12 close-->
+             </div><!--row close-->
+            </div><!--container close -->          
+          </div><!--tab-pane close-->
+
+          <div class="tab-pane fade " id="myFriends">
+            <div class="container fom-main">
+              <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="register">Mis Amigos</h2>
+                </div><!--col-sm-12 close-->
+              </div><!--row close-->
+            </div><!--container close -->          
+          </div><!--tab-pane close-->
+
+        
           <div class="tab-pane fade active in" id="profile">
             <div class="container">
               <div class="col-sm-11">
@@ -248,196 +208,18 @@
             </div><!--container close-->
           </div><!--tab-pane close-->
 
+          <div class="tab-pane fade " id="createEvent">
+      
+            <div class="container fom-main">
+            
+              <div id="cEvent" ></div>
+              
+            </div><!--container close -->          
+          </div><!--tab-pane close-->
+
           <div class="tab-pane fade" id="change">
             <div class="container fom-main">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h2 class="register">Edita tu Perfil</h2>
-                </div><!--col-sm-12 close-->
-              </div><!--row close-->
-
-              <br />
-              <div class="row">
-                <form class="form-horizontal main_form text-left" action=" " method="post"  id="contact_form">
-                  <fieldset>
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label">Nombre</label>  
-                      <div class="col-md-12 inputGroupContainer">
-                        <div class="input-group">
-                          <input  name="nombre" placeholder="Nombre" class="form-control"  type="text">
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label" >Primer Apellido</label> 
-                      <div class="col-md-12 inputGroupContainer">
-                        <div class="input-group">
-                          <input name="apellido1" placeholder="Primer Apellido" class="form-control"  type="text">
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label" >Segundo Apellido</label> 
-                      <div class="col-md-12 inputGroupContainer">
-                        <div class="input-group">
-                          <input name="apellido2" placeholder="Segundo Apellido" class="form-control"  type="text">
-                        </div>
-                      </div>
-                    </div>
-
-                     <!-- Text input-->
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label" >Fecha de Nacimiento</label> 
-                      <div class="col-md-12 inputGroupContainer">
-                        <div class="input-group input-gs">
-                          <input type="date" name="fecha" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label">Número de Teléfono</label>  
-                      <div class="col-md-12 inputGroupContainer">
-                        <div class="input-group">
-                          <input name="telefono" placeholder="(+34) 697 122 122" class="form-control" type="tel">
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label">Dirección</label>
-                      <div class="col-md-12 inputGroupContainer">
-                        <div class="input-group">
-                          <textarea class="form-control" name="direccion" placeholder="Calle Número Esc Piso"></textarea>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label">Descripción</label>
-                      <div class="col-md-12 inputGroupContainer">
-                        <div class="input-group">
-                          <textarea class="form-control" name="descripcion" placeholder="Descripción"></textarea>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group col-md-12"> 
-                      <label class="col-md-10 control-label">Deporte Favorito</label>
-                      <div class="col-md-12 selectContainer">
-                        <div class="input-group input-gs">
-                          <select name="deportes" class="form-control selectpicker" >
-                            <option>---</option>
-                            <option>Fútbol</option>
-                            <option>Baloncesto</option>
-                            <option>Cardio</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Select Basic -->
-                    <div class="form-group col-md-12"> 
-                      <label class="col-md-10 control-label">Experiencia</label>
-                      <div class="col-md-12 selectContainer">
-                        <div class="input-group input-gs">
-                          <select name="experiencia" class="form-control selectpicker" >
-                            <option>Menos de un año</option>
-                            <option>1 año</option>
-                            <option>2 - 3 años</option>
-                            <option>3 - 4 años</option>
-                            <option>5 - 6+ años</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group col-md-12"> 
-                      <label class="col-md-10 control-label">País</label>
-                      <div class="col-md-12 selectContainer">
-                        <div class="input-group input-gs">
-                          <select name="pais" class="form-control selectpicker" >
-                            <option>Alemania</option>
-                            <option>España</option>
-                            <option>Suiza</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group col-md-12"> 
-                      <label class="col-md-10 control-label">Ciudad</label>
-                      <div class="col-md-12 selectContainer">
-                        <div class="input-group input-gs">
-                          <select name="ciudad" class="form-control selectpicker" >
-                            <option>Barcelona</option>
-                            <option>Madrid</option>
-                            <option>Zaragoza</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label">Nueva Contraseña</label>  
-                      <div class="col-md-12 inputGroupContainer">
-                        <div class="input-group">
-                          <input  name="first_name" placeholder="Nueva Contraseña" class="form-control"  type="password">
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label">Confirmar Nueva Contraseña</label>  
-                      <div class="col-md-12 inputGroupContainer">
-                        <div class="input-group">
-                          <input  name="first_name" placeholder="Confirmar Nueva Contraseña" class="form-control"  type="password">
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- radio checks -->
-                    <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label" id="genero">Genero</label>
-                      <div class="col-md-6">
-                        <div class="radio col-md-2">
-                          <label>
-                            <input type="radio" name="hombre" value="yes" /> Hombre
-                          </label>
-                        </div>
-                        <div class="radio col-md-2">
-                          <label>
-                            <input type="radio" name="mujer" value="no" /> Mujer
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- upload profile picture -->
-                    <div class="col-md-12 text-left">
-                      <div class="uplod-picture">
-                        <span class="btn btn-default uplod-file">
-                          Subir foto<input type="file" />
-                        </span>
-                      </div><!--uplod-picture close-->
-                    </div><!--col-md-12 close-->
-
-                    <!-- Button -->
-                    <div class="form-group col-md-10">
-                      <div class="col-md-6">
-                        <button type="submit" class="btn btn-warning submit-button" >Guardar</button>
-                        <button type="submit" class="btn btn-warning submit-button" >Cancelar</button>
-                      </div>
-                    </div>
-                  </fieldset>
-                </form>
-              </div><!--row close-->
+              <div id="editData" ></div>
             </div><!--container close -->          
           </div><!--tab-pane close-->
         </div><!--tab-content close-->

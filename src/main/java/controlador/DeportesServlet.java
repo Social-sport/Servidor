@@ -1,4 +1,4 @@
-package main.java.controlador;
+package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.modelo.Deporte;
-import main.java.modelo.RepositorioDeporte;
+import modelo.Deporte;
+import modelo.RepositorioDeporte;
 
 /**
  * Servlet de obtencion de usuaiors
@@ -20,7 +20,7 @@ import main.java.modelo.RepositorioDeporte;
 public class DeportesServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static RepositorioDeporte repoDeporte = new RepositorioDeporte();
+	private static RepositorioDeporte repo = new RepositorioDeporte();
 
 	/**
 	 * M�todo para a�adir usuarios a la BD a trav�s del cliente.
@@ -28,7 +28,37 @@ public class DeportesServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		doGet(req,resp);
+		String response = null;
+		String email = req.getParameter("email");
+		String deporte = req.getParameter("deporte");
+		boolean realizado = repo.suscribirseDeporte(deporte,email);
+		if (realizado) {
+			resp.setStatus(HttpServletResponse.SC_OK);
+			response = "El usuario se ha suscrito correctamente al deporte";
+		}
+		else {
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response = "El usuario no se ha podido suscribir al deporte";
+		}
+		setResponse(response, resp);
+	}
+	
+	@Override
+	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String response = null;
+		String email = req.getParameter("email");
+		String deporte = req.getParameter("deporte");
+		boolean realizado = repo.darseDeBajaDeporte(deporte,email);
+		if (realizado) {
+			resp.setStatus(HttpServletResponse.SC_OK);
+			response = "El usuario se ha dado de baja correctamente del deporte";
+		}
+		else {
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response = "El usuario no se ha podido dar de baja del deporte";
+		}
+		setResponse(response, resp);
 	}
 
 	@Override
@@ -38,19 +68,25 @@ public class DeportesServlet extends HttpServlet {
 		List<Deporte> deportes = null;
 		String email = req.getParameter("email");
 		if (email == null) {
-			deportes = repoDeporte.listarDeportes();
-			response = "todos los deportes";
-		}
-		else {
-			deportes = repoDeporte.listarDeportesUsuario(email);
-			response = "deportes usuario";
-		}
-		if (deportes==null) {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response = "El usuario no existe";
-		}
-		else {
+			deportes = repo.listarDeportes();
 			resp.setStatus(HttpServletResponse.SC_OK);
+			if (deportes.isEmpty()) {
+				response = "No existen deportes";
+			}
+			else {
+				response = "Todos los deportes";
+			}
+		}
+		else {
+			deportes = repo.listarDeportesUsuario(email);
+			if (deportes.isEmpty()) {
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response = "El usuario no existe";
+			}
+			else {
+				resp.setStatus(HttpServletResponse.SC_OK);
+				response = "Deportes usuario";
+			}
 		}
 		setResponse(response, resp);
 	}

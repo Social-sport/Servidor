@@ -1,11 +1,11 @@
-package main.java.modelo;
+package modelo;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import main.java.baseDatos.ConexionBD;
+import baseDatos.ConexionBD;
 
 public class RepositorioUsuario {
 
@@ -31,7 +31,7 @@ public class RepositorioUsuario {
 			stmt.close();
 		}
 		catch (SQLException e) {
-			System.out.println("Error en buscar Usuario");
+			System.out.println("Error en buscar Usuario "+email);
 		}
 		return usuario;
 	}
@@ -68,7 +68,7 @@ public class RepositorioUsuario {
 	}
 
 	public boolean actualizarUsuario (Usuario usuario) {
-		String sql = "UPDATE Usuario SET email=\""+usuario.getEmail()+"\" , nombre=\""+usuario.getNombre()+"\","
+		String sql = "UPDATE Usuario SET nombre=\""+usuario.getNombre()+"\","
 				+ "apellidos=\""+usuario.getApellidos()+"\", contrasena=\""+usuario.getContrasena()+"\", "
 				+ " foto=\""+usuario.getFoto()+"\", fecha_nacimiento=\""+usuario.getFecha_nacimiento()+"\", nick=\""+usuario.getNick()+"\" "
 				+ "WHERE email=\""+usuario.getEmail()+"\"";

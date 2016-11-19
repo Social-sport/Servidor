@@ -31,7 +31,11 @@ a:hover {
  */
 
 h1{
-  font-family: 'myFirstFont';
+  font-family: 'Noto Sans', sans-serif;
+}
+
+p{
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @font-face {
@@ -42,14 +46,14 @@ h1{
 html,
 body {
 /*css for full size background image*/
-  background: url('imagenes/Sport.jpg') no-repeat center center fixed;
+  background: url("../img/Sport.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 
   height: 100%;
-  background-color: #060;
+  background-color: #fff;
   color: #fff;
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
@@ -77,6 +81,11 @@ body {
 /* Padding for spacing */
 .inner {
   padding: 30px;
+}
+
+.cover {
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.7);
 }
 
 

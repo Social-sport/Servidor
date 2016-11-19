@@ -6,3 +6,8 @@
 build/
 webapps/
 bin/
+target
+.settings/*
+!.settings/.jsdtscope
+.openshift
+WebContent/WEB-INF/classes/*

@@ -1,21 +1,28 @@
-package main.java.modelo;
+package modelo;
 
 public class Evento {
+
 	private int id;
+	private String nombre;
+	private String descripcion;
 	private String fecha;
 	private String hora;
 	private String deporte;
 	private String creador;
 
-	public Evento(int id, String fecha, String hora, String deporte, String creador) {
+	public Evento(int id, String nombre, String descripcion, String fecha, String hora, String deporte, String creador) {
 		this.id=id;
+		this.nombre=nombre;
+		this.descripcion=descripcion;
 		this.fecha=fecha;
 		this.hora=hora;
 		this.deporte=deporte;
 		this.creador=creador;
 	}
 
-	public Evento(String fecha, String hora, String deporte, String creador) {
+	public Evento(String nombre, String descripcion, String fecha, String hora, String deporte, String creador) {
+		this.nombre=nombre;
+		this.descripcion=descripcion;
 		this.fecha=fecha;
 		this.hora=hora;
 		this.deporte=deporte;
@@ -28,6 +35,22 @@ public class Evento {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public String getFecha() {

@@ -1,10 +1,10 @@
-package main.java.modelo;
+package modelo;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import main.java.baseDatos.ConexionBD;
+import baseDatos.ConexionBD;
 
 public class RepositorioComentario {
 

@@ -1,4 +1,4 @@
-package main.java.controlador;
+package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.modelo.Usuario;
-import main.java.modelo.RepositorioUsuario;
+import modelo.Usuario;
+import modelo.RepositorioUsuario;
 
 
 /**
@@ -29,29 +29,27 @@ public class UsuariosServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		/*String email = (String) req.getAttribute("email");
-		String nick = (String) req.getAttribute("nick");
-		String nombre = (String) req.getAttribute("nombre");
-		String apellidos = (String) req.getAttribute("apellidos");
-		String contrasena = (String) req.getAttribute("contrasena");
-		String foto = (String) req.getAttribute("foto");
-		String fecha_nacimiento = (String) req.getAttribute("fecha_nacimiento");*/
 		String email = req.getParameter("email");
-		String nick = req.getParameter("nick");
+		String nick = req.getParameter("username");
 		String nombre = req.getParameter("nombre");
 		String apellidos = req.getParameter("apellidos");
 		String contrasena = req.getParameter("contrasena");
 		String foto = req.getParameter("foto");
+		if (foto == null) {
+			foto = "";
+		}
 		String fecha_nacimiento = req.getParameter("fecha_nacimiento");
 		Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
 		boolean realizado = repo.insertarUsuario(usuario);
 		if (realizado) {
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El usuario se ha insertado correctamente";
+			resp.sendRedirect("muro.html");
 		}
 		else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response = "El usuario no se ha podido insertar";
+			resp.sendRedirect("signup.html");
 		}
 		setResponse(response, resp);
 	}
@@ -60,18 +58,63 @@ public class UsuariosServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		String email = req.getParameter("email");
+		String email = req.getParameter("username");
 		String contrasena = req.getParameter("contrasena");
-		/*String email = (String) req.getAttribute("email");
-		String contrasena = (String) req.getAttribute("contrasena");*/
 		Usuario usuario = repo.findUsuario(email);
 		if (usuario != null && contrasena.equals(usuario.getContrasena())) {
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El usuario se ha logeado correctamente";
+			resp.sendRedirect("muro.html");
 		}
 		else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response = "El usuario no se ha podido logear";
+			resp.sendRedirect("signup.html");
+		}
+		setResponse(response, resp);
+	}
+
+	@Override
+	public void doPut(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String response = null;
+		String email = req.getParameter("email");
+		String nick = req.getParameter("username");
+		String nombre = req.getParameter("nombre");
+		String apellidos = req.getParameter("apellidos");
+		String contrasena = req.getParameter("contrasena");
+		String foto = req.getParameter("foto");
+		String fecha_nacimiento = req.getParameter("fecha_nacimiento");
+		Usuario buscado = repo.findUsuario(email);
+		if (buscado!=null) {
+			if (nick == null) {
+				nombre = buscado.getNick();
+			}
+			if (nombre == null) {
+				nombre = buscado.getNombre();
+			}
+			if (apellidos == null) {
+				apellidos = buscado.getApellidos();
+			}
+			if (contrasena == null) {
+				contrasena = buscado.getContrasena();
+			}
+			if (foto == null) {
+				foto = buscado.getFoto();
+			}
+			if (fecha_nacimiento == null) {
+				fecha_nacimiento = buscado.getFecha_nacimiento();
+			}
+		}
+		Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
+		boolean realizado = repo.actualizarUsuario(usuario);
+		if (buscado!=null && realizado) {
+			resp.setStatus(HttpServletResponse.SC_OK);
+			response = "El usuario se ha actualizado correctamente";
+		}
+		else {
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response = "El usuario no se ha podido actualizar";
 		}
 		setResponse(response, resp);
 	}

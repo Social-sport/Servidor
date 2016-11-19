@@ -1,7 +1,6 @@
-package test.java.tests;
+package tests;
 
 import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.*;  // for non-hamcrest core matchers
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
@@ -18,8 +17,8 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import main.java.controlador.UsuariosServlet;
-import main.java.modelo.RepositorioUsuario;
+import controlador.UsuariosServlet;
+import modelo.RepositorioUsuario;
 
 public class UsuariosServletTest {
 
@@ -36,7 +35,6 @@ public class UsuariosServletTest {
 		request = mock(HttpServletRequest.class);
 		response = mock(HttpServletResponse.class);
 		response_writer = new StringWriter();
-
 		when(request.getParameter(anyString())).thenAnswer(new Answer<String>() {
 			public String answer(InvocationOnMock invocation) {
 				return parameters.get((String) invocation.getArguments()[0]);
@@ -46,16 +44,16 @@ public class UsuariosServletTest {
 	}
 
 	@Test
-	public void testGetErroneo() throws Exception {
-		parameters.put("email", "asd");
+	public void testLoginErroneo() throws Exception {
+		parameters.put("username", "asd");
 		parameters.put("contrasena", "asdafgh");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido logear");
 	}
 	
 	@Test
-	public void testGetOK() throws Exception {
-		parameters.put("email", "test");
+	public void testLoginOK() throws Exception {
+		parameters.put("username", "test");
 		parameters.put("contrasena", "test");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha logeado correctamente");
@@ -63,14 +61,14 @@ public class UsuariosServletTest {
 	
 	
 	@Test
-	public void testPostOK() throws Exception {
+	public void testRegistrarOK() throws Exception {
 		parameters.put("email", "try");
 		parameters.put("nombre", "try");
 		parameters.put("apellidos", "try");
 		parameters.put("contrasena", "try");
 		parameters.put("foto", "try");
 		parameters.put("fecha_nacimiento", "1900-10-10");
-		parameters.put("nick", "try");
+		parameters.put("username", "try");
 		RepositorioUsuario repoUsuario = new RepositorioUsuario();
 		//borramos porque el usuario ya existe de test anteriores
 		repoUsuario.borrarUsuario("try");
@@ -79,18 +77,44 @@ public class UsuariosServletTest {
 	}
 	
 	@Test
-	public void testPostErroneo() throws Exception {
+	public void testRegistrarErroneo() throws Exception {
 		parameters.put("email", "try");
 		parameters.put("nombre", "try");
 		parameters.put("apellidos", "try");
 		parameters.put("contrasena", "try");
 		parameters.put("foto", "try");
 		parameters.put("fecha_nacimiento", "deberianserunosnumeros");
-		parameters.put("nick", "try");
+		parameters.put("username", "try");
 		RepositorioUsuario repoUsuario = new RepositorioUsuario();
 		//borramos porque el usuario ya existe de test anteriores
 		repoUsuario.borrarUsuario("try");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido insertar");
+	}
+	
+	@Test
+	public void testActualizarOK() throws Exception {
+		parameters.put("email", "test");
+		parameters.put("nombre", "test");
+		parameters.put("apellidos", "test");
+		parameters.put("contrasena", "test");
+		parameters.put("foto", "test");
+		parameters.put("fecha_nacimiento", "1900-10-10");
+		parameters.put("username", "test");
+		servlet.doPut(request, response);
+		assertEquals(response_writer.toString(),"El usuario se ha actualizado correctamente");
+	}
+	
+	@Test
+	public void testActualizarErroneo() throws Exception {
+		parameters.put("email", "test");
+		parameters.put("nombre", "try");
+		parameters.put("apellidos", "try");
+		parameters.put("contrasena", "try");
+		parameters.put("foto", "try");
+		parameters.put("fecha_nacimiento", "asdasdasdasd");
+		parameters.put("nick", "try");
+		servlet.doPut(request, response);
+		assertEquals(response_writer.toString(),"El usuario no se ha podido actualizar");
 	}
 }

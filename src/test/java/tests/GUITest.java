@@ -32,9 +32,9 @@ public class GUITest {
 	@Test
 	public void index(){
 		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-		System.err.println("ATENCIÓN: TEST PROBADO CON TOMCAT EN LOCALHOST");
+		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
 		driver.get("http://localhost:8080/Servidor/index.html");	
-		driver.findElement(By.className("btn")).click();
+		driver.findElement(By.id("iniciar")).click();
 		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 //
@@ -58,7 +58,7 @@ public class GUITest {
 	@Test
 	public void login(){
 		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-		System.err.println("ATENCIÓN: TEST PROBADO CON TOMCAT EN LOCALHOST");
+		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
 		driver.get("http://localhost:8080/Servidor/signup.html");	
 		driver.findElement(By.id("login-form-link")).click();
 		driver.findElement(By.id("emailL")).sendKeys("test@test.test");
@@ -70,7 +70,7 @@ public class GUITest {
 	@Test
 	public void muroVacio(){
 		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-		System.err.println("ATENCIÓN: TEST PROBADO CON TOMCAT EN LOCALHOST");
+		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
 		driver.get("http://localhost:8080/Servidor/muro.html");	
 		driver.findElement(By.className("navbar-brand")).click();
 		driver.findElement(By.id("search")).sendKeys("amigo1");
@@ -89,6 +89,13 @@ public class GUITest {
 		Dimension newSize = new Dimension(700,806);
 		driver.manage().window().setSize(newSize);
 		driver.findElement(By.className("navbar-toggle")).click();
+		newSize = new Dimension(1100,806);
+		driver.manage().window().setSize(newSize);
+		driver.findElement(By.id("socialSport")).click();
+		driver.findElement(By.id("home"));
+		driver.findElement(By.id("about")).click();
+		driver.findElement(By.id("cerrarSesion")).click();
+		driver.findElement(By.id("perfil")).click();
 		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 	
@@ -117,7 +124,7 @@ public class GUITest {
 	@Test
 	public void registro() throws InterruptedException{
 		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-		System.err.println("ATENCIÓN: TEST PROBADO CON TOMCAT EN LOCALHOST");
+		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
 		driver.get("http://localhost:8080/Servidor/signup.html");	
 		driver.findElement(By.id("register-form-link")).click();
 		driver.findElement(By.id("username")).sendKeys("test");

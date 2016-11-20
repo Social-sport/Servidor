@@ -45,7 +45,16 @@ a.btn {
 #containerDeportes {
 	width: 100%;
 }
-#bSuscribete {
+#bSuscribeteFutbol {
+	font-size: 100%;
+}
+#bSuscribetePingPong{
+	font-size: 100%;
+}
+#bSuscribeteAjedrez{
+	font-size: 100%;
+}
+#bSuscribeteBasket{
 	font-size: 100%;
 }
 a.list-group-item {

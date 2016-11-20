@@ -1,17 +1,17 @@
 $(document).ready(
     function() {
 
-        $("#listSports").click(
+        $("#listSport").click(
             function(event) {
 
                 event.preventDefault();
                 $.ajax({
                     type : "GET",
                     url : "/Servidor/deportes",
-                    data : String,
-                    success : function(msg) {
-
-                        for (var i =  0; i <= msg.lenght; i++) {
+                    //data : String,
+                    success : function(ms) {
+                    	alert(ms);
+                        /*for (var i =  0; i <= msg.lenght; i++) {
 
                             $("#result").addend("<div class='list-group' id='listDeportes'>"+
                                 "<a href='#' class='list-group-item active' id='itemDeporte'>"+
@@ -27,12 +27,12 @@ $(document).ready(
                                 "<div class='col-md-3 text-center'>"+
                                 "<button type='button' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete'> Suscribete </button>"+
                                 "<h5> 14240 <small> personas </small></h5></div></a>");
-                        };
+                        };*/
 
                     },
                     error : function() {
-                        ;
-                        $("#result").load("/Servidor/listSports.html");
+                    	
+                        $("#seccion1").load("/Servidor/listSports.html");
 
                     }
                 });

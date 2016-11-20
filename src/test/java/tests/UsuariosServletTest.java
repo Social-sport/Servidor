@@ -53,7 +53,7 @@ public class UsuariosServletTest {
 	
 	@Test
 	public void testLoginOK() throws Exception {
-		parameters.put("username", "test");
+		parameters.put("email", "test");
 		parameters.put("contrasena", "test");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha logeado correctamente");

@@ -29,12 +29,15 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li>
-              <div class="searhFriend">
-           		 <ul class="navbar-right">
-             		 <li><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-search"></span> Buscar Amigos</a></li>
-            	 </ul>
-          	  </div>
+            <li id="busAmi">
+              <form class="form-inline" role="form">
+                <div class="col-sm-8 col-xs-8 form-group top_search" style="padding-right:0px;">
+                  <input type="text" class="form-control search-wrap" id="search" placeholder="Busca aquí...">
+                </div>
+                <div class="col-sm-4 col-xs-4 form-group top_search" style="padding-left:0px;">
+                  <button type="submit" class="btn btn-default search-btn">BUSCAR</button>
+                </div>
+              </form>
             </li>
             <li>
               <a href="muro.html">Home</a>

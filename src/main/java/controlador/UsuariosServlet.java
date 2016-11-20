@@ -58,7 +58,7 @@ public class UsuariosServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		String email = req.getParameter("username");
+		String email = req.getParameter("email");
 		String contrasena = req.getParameter("contrasena");
 		Usuario usuario = repo.findUsuario(email);
 		if (usuario != null && contrasena.equals(usuario.getContrasena())) {
@@ -105,18 +105,19 @@ public class UsuariosServlet extends HttpServlet {
 			if (fecha_nacimiento == null) {
 				fecha_nacimiento = buscado.getFecha_nacimiento();
 			}
+
+			Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
+			boolean realizado = repo.actualizarUsuario(usuario);
+			if (buscado!=null && realizado) {
+				resp.setStatus(HttpServletResponse.SC_OK);
+				response = "El usuario se ha actualizado correctamente";
+			}
+			else {
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response = "El usuario no se ha podido actualizar";
+			}
+			setResponse(response, resp);
 		}
-		Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
-		boolean realizado = repo.actualizarUsuario(usuario);
-		if (buscado!=null && realizado) {
-			resp.setStatus(HttpServletResponse.SC_OK);
-			response = "El usuario se ha actualizado correctamente";
-		}
-		else {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response = "El usuario no se ha podido actualizar";
-		}
-		setResponse(response, resp);
 	}
 
 	/**

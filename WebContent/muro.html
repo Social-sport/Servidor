@@ -6,10 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script type="text/javascript" src="js/sports.js"></script>
+  <!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>*/-->
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/sports.js"></script>
   <script type="text/javascript" src="js/load.js"></script>
 
   <title>Muro SocialSport</title>
@@ -19,70 +20,46 @@
   <link rel="stylesheet" href="css/muro.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
-<body>
- <div id="topBar" ></div>
- 
- <div class="container" >
-  <div class="jumbotron text-center">
-   <h1><font color=white background-color=black> Bienvenido a Social Sport </font></h1>
-   <h3><font color=white> La red social que te acercará al mundo del deporte </font></h3>
- </div>
+  <body>
+     <div id="topBar" ></div>
+     
+     <div class="container" >
+      <div class="jumbotron text-center">
+       <h1><font color=white background-color=black> Bienvenido a Social Sport </font></h1>
+       <h3><font color=white> La red social que te acercará al mundo del deporte </font></h3>
+     </div>
 
- <div class="container text-center">
-   <font color="red" size="4px" id="font"> Parece que eres nuevo en la página ... </font>
- </div>
+      <div class="row text-center">
 
- <div class="row text-center">
+       <div class="col-xs-6">
 
-   <div class="col-xs-6">
+        <h3 id="seccion">Sección de deportes</h3>
+        
+        <p>Añade los deportes que más te gustan, suscríbete a eventos existentes y crea tus propios eventos</p>
+        <p id="btnAnadir">
+        <a id="listSport" href="#añadeDeportes" class="btn btn-primary" data-toggle="modal">Añade deportes</a>
+         </p>
+        <a href="#" class="thumbnail" id="seccion1">
+          <!-- Esta foto podremos sustituirla por una captura de un muro que tiene deportes"-->
+          <img src="img/Sports.png" alt="Sports Bootstrap Theme">
+        </a>
+       
 
-    <h3 id="seccion">Sección de deportes</h3>
-    <a href="#" class="thumbnail" id="seccion1">
-      <!-- Esta foto podremos sustituirla por una captura de un muro que tiene deportes"-->
-      <img src="img/Sports.png" alt="Sports Bootstrap Theme">
-    </a>
-    <p>Añade los deportes que más te gustan, suscríbete a eventos existentes y crea tus propios eventos</p>
-
-    <a id="listSports" href="#añadeDeportes" class="btn btn-primary" data-toggle="modal">Añade deportes</a>
-
-  </div>
-  <div class="col-xs-6">
-
-    <h3 id="seccion">Sección de amigos</h3>
-    <a href="#" class="thumbnail">
-      <!-- Esta foto podremos sustituirla por una captura de un muro que tiene amigos"-->
-      <img src="img/people.png" alt="people Bootstrap  Theme">
-    </a>
-    <p>Busca y sigue a tus amigos, comparte eventos e inicia conversaciones sobre el mundo del deporte</p>
-    <a href="#" class="btn btn-success">Añade amigos</a>
-  </div>
-</div>
-</div>
-
-
-<div class="modal fade text-center" id="añadeDeportes" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4><b> Deportes disponibles: </b></h4>
       </div>
-      <div class="modal-body">
-        <!-- abrimos lista deportes -->
+      <div class="col-xs-6">
 
-        <div class="container" id="containerDeportes">
-          <div class="row">            
-			<div id="result" ></div>
-          </div>
-        </div>
-
-        <!-- cerramos lista deportes -->
-      </div>
-      <div class="modal-footer">
-        <a class="btn btn-primary" data-dismiss="modal"><b>Aceptar</b></a>
+        <h3 id="seccion">Sección de amigos</h3>
+        
+        <p>Busca y sigue a tus amigos, comparte eventos e inicia conversaciones sobre el mundo del deporte</p>
+        <p id="btnAnadir">
+        <a id="listFriends" href="#" class="btn btn-success">Añade amigos</a>
+        </p>
+        <a href="#" class="thumbnail">
+          <!-- Esta foto podremos sustituirla por una captura de un muro que tiene amigos"-->
+          <img src="img/people.png" alt="people Bootstrap  Theme">
+        </a>
       </div>
     </div>
-  </div>
-</div>
-
-</body>
+    </div>
+  </body>
 </html>

@@ -9,6 +9,10 @@ body {
 	/*background-color: #E0E0E0;*/
 }
 
+#btnAnadir {
+  padding-bottom:10px;
+
+}
 
 .jumbotron {
   /* Aqui poner la ruta de la imagen del jumbotron (donde pone "Bienvenido a Social Sport") */

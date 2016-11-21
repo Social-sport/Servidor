@@ -58,8 +58,9 @@ public class UsuariosServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		String email = req.getParameter("email");
-		String contrasena = req.getParameter("contrasena");
+		String email = req.getParameter("emailL");
+		String contrasena = req.getParameter("contrasenaL");
+		System.out.println("email: " + email + " | pass: " + contrasena);
 		Usuario usuario = repo.findUsuario(email);
 		if (usuario != null && contrasena.equals(usuario.getContrasena())) {
 			resp.setStatus(HttpServletResponse.SC_OK);

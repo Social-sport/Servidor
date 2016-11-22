@@ -23,7 +23,7 @@ public class UsuariosServlet extends HttpServlet {
 	private static RepositorioUsuario repo = new RepositorioUsuario();
 
 	/**
-	 * M�todo para a�adir usuarios a la BD a trav�s del cliente.
+	 * Metodo para insertar usuarios a la BD.
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -36,12 +36,14 @@ public class UsuariosServlet extends HttpServlet {
 		String contrasena = req.getParameter("contrasena");
 		String foto = req.getParameter("foto");
 		if (foto == null) {
+			//Por defecto sin foto
 			foto = "";
 		}
 		String fecha_nacimiento = req.getParameter("fecha_nacimiento");
 		Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
 		boolean realizado = repo.insertarUsuario(usuario);
 		if (realizado) {
+			//Inserta el usuario en la BD
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El usuario se ha insertado correctamente";
 			resp.sendRedirect("muro.html");
@@ -54,6 +56,9 @@ public class UsuariosServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
+	/**
+	 * Metodo para devolver informacion de un usuario.
+	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -63,6 +68,7 @@ public class UsuariosServlet extends HttpServlet {
 		System.out.println("email: " + email + " | pass: " + contrasena);
 		Usuario usuario = repo.findUsuario(email);
 		if (usuario != null && contrasena.equals(usuario.getContrasena())) {
+			//El usuario existe y tiene esa contrasena, logeado
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El usuario se ha logeado correctamente";
 			resp.sendRedirect("muro.html");
@@ -75,6 +81,9 @@ public class UsuariosServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
+	/**
+	 * Metodo para actualizar los datos de un usuario.
+	 */
 	@Override
 	public void doPut(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -110,6 +119,7 @@ public class UsuariosServlet extends HttpServlet {
 			Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
 			boolean realizado = repo.actualizarUsuario(usuario);
 			if (buscado!=null && realizado) {
+				//Actualiza el usuario
 				resp.setStatus(HttpServletResponse.SC_OK);
 				response = "El usuario se ha actualizado correctamente";
 			}

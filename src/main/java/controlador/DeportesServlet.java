@@ -24,8 +24,9 @@ public class DeportesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static RepositorioDeporte repo = new RepositorioDeporte();
 	private Gson gson = new Gson();
+	
 	/**
-	 * M�todo para a�adir usuarios a la BD a trav�s del cliente.
+	 * Metodo para suscribir un usuario a un deporte.
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -45,6 +46,9 @@ public class DeportesServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 	
+	/**
+	 * Metodo para dar de baja un usuario a un deporte.
+	 */
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -63,7 +67,9 @@ public class DeportesServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
-
+	/**
+	 * Metodo para devolver los deportes de la BD.
+	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -72,6 +78,7 @@ public class DeportesServlet extends HttpServlet {
 		String email = req.getParameter("email");
 		
 		if (email == null) {
+			//Devuelve los deportes almacenados en la base de datos
 			deportes = repo.listarDeportes();			
 			if (deportes.isEmpty()) {
 				response = "Error: No encuentra deportes en base de datos";
@@ -87,6 +94,7 @@ public class DeportesServlet extends HttpServlet {
 			}
 		}
 		else {
+			//Devuelve los deportes a los que esta suscrito el usuario
 			deportes = repo.listarDeportesUsuario(email);
 			if (deportes.isEmpty()) {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

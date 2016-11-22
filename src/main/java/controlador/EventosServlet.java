@@ -23,7 +23,7 @@ public class EventosServlet extends HttpServlet {
 	private static RepositorioEvento repo = new RepositorioEvento();
 
 	/**
-	 * M�todo para a�adir usuarios a la BD a trav�s del cliente.
+	 * Metodo para insertar un evento a un deporte.
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -38,6 +38,7 @@ public class EventosServlet extends HttpServlet {
 		Evento evento = new Evento(nombre,descripcion,fecha,hora,deporte,creador);
 		boolean realizado = repo.insertarEvento(evento);
 		if (realizado) {
+			//Inserta el evento del deporte en la BD
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El evento se ha insertado correctamente al deporte";			
 		}
@@ -48,6 +49,9 @@ public class EventosServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
+	/**
+	 * Metodo para borrar un evento de un deporte.
+	 */
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -56,6 +60,7 @@ public class EventosServlet extends HttpServlet {
 		int id = repo.findEvento(nombre).getId();
 		boolean realizado = repo.borrarEvento(id);
 		if (realizado) {
+			//borra el evento del deporte en la BD
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El evento se ha borrado correctamente";
 		}
@@ -66,6 +71,9 @@ public class EventosServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
+	/**
+	 * Metodo para devolver eventos.
+	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -74,10 +82,11 @@ public class EventosServlet extends HttpServlet {
 		String deporte = req.getParameter("deporte");
 		String usuario = req.getParameter("usuario");
 		if (deporte == null) {
-
+			//probablemente nueva funcionalidad
 		}
 		else {
 			if (usuario == null) {
+				//Lista los eventos del deporte
 				eventos = repo.listarEventosDeporte(deporte);
 				resp.setStatus(HttpServletResponse.SC_OK);
 				if (eventos.isEmpty()) {
@@ -88,6 +97,7 @@ public class EventosServlet extends HttpServlet {
 				}
 			}
 			else {
+				//Lista los eventos del usuario
 				eventos = repo.listarEventosUsuario(usuario);
 				if (eventos.isEmpty()) {
 					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

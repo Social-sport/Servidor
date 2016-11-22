@@ -65,7 +65,7 @@ public class DeportesServletTest {
 	
 	@Test
 	public void testASuscribirseDeporteOK() throws Exception {
-		parameters.put("deporte", "Fútbol");
+		parameters.put("deporte", "Futbol");
 		parameters.put("email", "test");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha suscrito correctamente al deporte");
@@ -73,7 +73,7 @@ public class DeportesServletTest {
 	
 	@Test
 	public void testZDarseDeBajaDeporteOK() throws Exception {
-		parameters.put("deporte", "Fútbol");
+		parameters.put("deporte", "Futbol");
 		parameters.put("email", "test");
 		servlet.doDelete(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha dado de baja correctamente del deporte");

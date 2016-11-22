@@ -67,7 +67,7 @@ public class GUITest {
 		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 	
-	@Test
+	/*@Test
 	public void muroVacio(){
 		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
 		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
@@ -97,7 +97,7 @@ public class GUITest {
 		driver.findElement(By.id("cerrarSesion")).click();
 		driver.findElement(By.id("perfil")).click();
 		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
-	}
+	}*/
 	
 //	@Test
 //	public void registro() throws InterruptedException{

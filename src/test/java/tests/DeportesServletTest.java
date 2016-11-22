@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,11 @@ import org.junit.runners.MethodSorters;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import com.google.gson.Gson;
+
 import controlador.DeportesServlet;
+import modelo.Deporte;
+import modelo.RepositorioDeporte;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DeportesServletTest {
@@ -29,6 +34,8 @@ public class DeportesServletTest {
 	private HttpServletResponse response;
 	private StringWriter response_writer;
 	private Map<String, String> parameters;
+	private RepositorioDeporte repo;
+	private Gson gson;
 
 	@Before
 	public void setUp() throws IOException {
@@ -37,6 +44,8 @@ public class DeportesServletTest {
 		request = mock(HttpServletRequest.class);
 		response = mock(HttpServletResponse.class);
 		response_writer = new StringWriter();
+		gson = new Gson();
+		repo = new RepositorioDeporte();
 		when(request.getParameter(anyString())).thenAnswer(new Answer<String>() {
 			public String answer(InvocationOnMock invocation) {
 				return parameters.get((String) invocation.getArguments()[0]);
@@ -55,16 +64,16 @@ public class DeportesServletTest {
 	
 	@Test
 	public void testASuscribirseDeporteOK() throws Exception {
-		parameters.put("deporte", "prueba");
-		parameters.put("email", "try");
+		parameters.put("deporte", "Fútbol");
+		parameters.put("email", "test");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha suscrito correctamente al deporte");
 	}
 	
 	@Test
 	public void testZDarseDeBajaDeporteOK() throws Exception {
-		parameters.put("deporte", "prueba");
-		parameters.put("email", "try");
+		parameters.put("deporte", "Fútbol");
+		parameters.put("email", "test");
 		servlet.doDelete(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha dado de baja correctamente del deporte");
 	}
@@ -81,9 +90,12 @@ public class DeportesServletTest {
 	@Test
 	public void testListarDeportes() throws Exception {
 		servlet.doGet(request, response);
-		assertEquals(response_writer.toString(),"Todos los deportes");
+		List<Deporte> deportes = repo.listarDeportes();
+		assertEquals(response_writer.toString(),gson.toJson(deportes));
 	}
 	
+	
+	/* Hacer test cuando se liste realmente un usuario
 	@Test
 	public void testListarDeportesUsuarioErroneo() throws Exception {
 		parameters.put("email", "asdasdas");
@@ -91,10 +103,10 @@ public class DeportesServletTest {
 		assertEquals(response_writer.toString(),"El usuario no existe");
 	}
 	
-	@Test
+	/*@Test 
 	public void testListarDeportesUsuarioOK() throws Exception {
-		parameters.put("email", "test");
+		parameters.put("email", "luis@socialsport.com");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"Deportes usuario");
-	}
+	}*/
 }

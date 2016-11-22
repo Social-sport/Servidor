@@ -28,7 +28,8 @@ public class RepositorioDeporte {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
-			deporte = new Deporte(rs.getString("Nombre"));
+			deporte = new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
+					rs.getString("Foto")) ;	
 			stmt.close();
 		}
 		catch (SQLException e) {
@@ -45,13 +46,15 @@ public class RepositorioDeporte {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				deportes.add(new Deporte(rs.getString("Nombre")));
+				deportes.add(new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
+										rs.getString("Foto")));				
 			}
 			stmt.close();
 		}
+		
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error en listar Deportes");
+			System.out.println("Error en listar Deportes" + e);
 		}
 		return deportes;
 	}
@@ -96,7 +99,8 @@ public class RepositorioDeporte {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				deportes.add(new Deporte(rs.getString("Nombre")));
+				deportes.add(new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
+						rs.getString("Foto")));	
 			}
 			stmt.close();
 		}

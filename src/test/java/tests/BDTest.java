@@ -39,7 +39,7 @@ public class BDTest {
 		//repoMensaje = new RepositorioMensaje();
 		repoAmigo = new RepositorioAmigo();
 	}
-
+	/*
 	@Test
 	public void testFindDeporte() {
 		assertEquals(repoDeporte.findDeporte("Fútbol").getNombre(), "Fútbol");
@@ -51,7 +51,7 @@ public class BDTest {
 		assertTrue(deportes.size()>0);
 	}
 	
-	/*@Test
+	@Test
 	public void testListarDeportesUsuario() {
 		List<Deporte> deportes = repoDeporte.listarDeportesUsuario("test");
 		assertTrue(deportes.size()>0);

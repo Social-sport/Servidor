@@ -37,6 +37,7 @@ public class GUITest {
 		driver.findElement(By.id("iniciar")).click();
 		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
+	
 //
 //	@Test
 //	public void login(){

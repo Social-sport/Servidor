@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import modelo.Deporte;
 import modelo.RepositorioDeporte;
 
+import com.google.gson.Gson;
+
 /**
  * Servlet de obtencion de usuaiors
  */
@@ -21,7 +23,7 @@ public class DeportesServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioDeporte repo = new RepositorioDeporte();
-
+	private Gson gson = new Gson();
 	/**
 	 * M�todo para a�adir usuarios a la BD a trav�s del cliente.
 	 */
@@ -61,31 +63,40 @@ public class DeportesServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
+
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
 		List<Deporte> deportes = null;
 		String email = req.getParameter("email");
+		
 		if (email == null) {
-			deportes = repo.listarDeportes();
-			resp.setStatus(HttpServletResponse.SC_OK);
+			deportes = repo.listarDeportes();			
 			if (deportes.isEmpty()) {
-				response = "No existen deportes";
+				response = "Error: No encuentra deportes en base de datos";
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				System.out.println("Error: No encuentra deportes en base de datos");
 			}
 			else {
-				response = "Todos los deportes";
+				response= gson.toJson(deportes);				
+				System.out.println("json ");
+				System.out.println("si los deportes");
+				System.out.println(response);
+				resp.setStatus(HttpServletResponse.SC_OK);
 			}
 		}
 		else {
 			deportes = repo.listarDeportesUsuario(email);
 			if (deportes.isEmpty()) {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response = "El usuario no existe";
+				response = "El usuario no ha suscrito deportes";
 			}
 			else {
-				resp.setStatus(HttpServletResponse.SC_OK);
-				response = "Deportes usuario";
+				resp.setStatus(HttpServletResponse.SC_OK);				
+				response= gson.toJson(deportes);				
+				System.out.println("si los Deportes usuario con json");
+				System.out.println(response);
 			}
 		}
 		setResponse(response, resp);
@@ -100,8 +111,8 @@ public class DeportesServlet extends HttpServlet {
 	 *            response
 	 */
 	private void setResponse(String response, HttpServletResponse resp) {
-		resp.setContentType("application/json");
-		try {
+		resp.setContentType("application/json");	   	    
+		try {			
 			PrintWriter out = resp.getWriter();
 			out.print(response);
 			out.flush();

@@ -12,6 +12,7 @@ public class Deporte {
 		this.nombre = nombre;
 		Descripcion = descripcion;
 		Foto = foto;
+		
 	}
 
 	public String getNombre() {

@@ -74,7 +74,7 @@ div.list-group-item.active small {
 @media all and (max-width:1200px) and (min-width:992px){
 	#bSuscribete{
 	text-align: center;
-	padding: 10px 0;}
+	padding: 10px 0; }
 }
 #bSuscribete {
   font-size: 100%;

@@ -32,7 +32,7 @@ $(document).ready(
 
                     },
                     error : function(ms) {
-                    	//alert("entra al error");
+                    	//alert("error");
                     	$("#seccion1").html("<div class='alert alert-danger lead'>"+ms+"</div>");
                     }
                 });

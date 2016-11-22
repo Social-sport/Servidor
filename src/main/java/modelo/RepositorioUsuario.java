@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 
 import baseDatos.ConexionBD;
 
@@ -18,9 +20,41 @@ public class RepositorioUsuario {
 		ConexionBD.iniciarConexion();
 		this.conexion = ConexionBD.getConexion();
 	}
+	
+	/**
+	 * Lista los deportes almacenados en la BD
+	 */
+	public List<Usuario> listarUsuariosBusqueda(String name) {
+		
+		List<Usuario> Usuarios = new LinkedList<Usuario>();		
+		String sql = "SELECT * FROM Usuario WHERE nombre='"+name+"'";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
+							rs.getString("apellidos"),rs.getString("contrasena"),
+							rs.getString("fecha_nacimiento"),rs.getString("foto"),
+							rs.getString("nick")));			
+			}
+			stmt.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en listar Usuarios" + e);
+		}
+		
+		Usuario u = findUsuario(name);
+		if (u!=null) {
+			Usuarios.add(u);
+		}	
+
+		return Usuarios;
+	}
 
 	/**
-	 * Devuelve la información del usuario con email <email>
+	 * Devuelve la informaciï¿½n del usuario con email <email>
 	 */
 	public Usuario findUsuario(String email) {
 		Usuario usuario = null;
@@ -77,7 +111,7 @@ public class RepositorioUsuario {
 	}
 
 	/**
-	 * Actualiza la información del usuario <usuario>
+	 * Actualiza la informaciï¿½n del usuario <usuario>
 	 */
 	public boolean actualizarUsuario (Usuario usuario) {
 		String sql = "UPDATE Usuario SET nombre=\""+usuario.getNombre()+"\","

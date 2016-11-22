@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import modelo.Usuario;
 import modelo.RepositorioUsuario;
 
+import com.google.gson.Gson;
 
 /**
  * Servlet de obtencion de usuaiors
@@ -21,6 +23,7 @@ public class UsuariosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioUsuario repo = new RepositorioUsuario();
+	private Gson gson = new Gson();
 
 	/**
 	 * Metodo para insertar usuarios a la BD.
@@ -63,20 +66,42 @@ public class UsuariosServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
+		String tipo = req.getParameter("tipo");
 		String email = req.getParameter("emailL");
 		String contrasena = req.getParameter("contrasenaL");
-		System.out.println("email: " + email + " | pass: " + contrasena);
-		Usuario usuario = repo.findUsuario(email);
-		if (usuario != null && contrasena.equals(usuario.getContrasena())) {
-			//El usuario existe y tiene esa contrasena, logeado
-			resp.setStatus(HttpServletResponse.SC_OK);
-			response = "El usuario se ha logeado correctamente";
-			resp.sendRedirect("muro.html");
+		
+		if (tipo.equals("Buscar")) {
+			
+			String name = req.getParameter("search");
+			List<Usuario> usuarios = repo.listarUsuariosBusqueda(name);				
+			if (usuarios.isEmpty()) {				
+				response = "No se encuentran usuarios por: " +name;
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}else{					
+				response= gson.toJson(usuarios);				
+				System.out.println("json con usuarios buscados");				
+				System.out.println(response);
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
 		}
-		else {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response = "El usuario no se ha podido logear";
-			resp.sendRedirect("signup.html");
+		if (tipo.equals("initSesion")) {
+
+			
+			System.out.println("email: " + email + " | pass: " + contrasena);
+			Usuario usuario = repo.findUsuario(email);
+
+			if (usuario != null && contrasena.equals(usuario.getContrasena())) {
+				//El usuario existe y tiene esa contrasena, logeado
+				
+				response = "El usuario se ha logeado correctamente";
+				resp.sendRedirect("muro.html");
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
+			else {
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response = "El usuario no se ha podido logear";
+				resp.sendRedirect("signup.html");
+			}
 		}
 		setResponse(response, resp);
 	}

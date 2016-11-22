@@ -31,9 +31,8 @@ $(document).ready(
                         });
 
                     },
-                    error : function(ms) {
-                    	//alert("error");
-                    	$("#seccion1").html("<div class='alert alert-danger lead'>"+ms+"</div>");
+                    error : function() {                    	
+                    	$("#seccion1").html("<div class='alert alert-danger lead'>Error: No encuentra deportes en base de datos</div>");
                     }
                 });
         });

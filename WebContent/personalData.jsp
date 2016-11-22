@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  	<meta charset="utf-8">
+  	<%@page pageEncoding="UTF-8"%> 
     <title>Event</title>
   </head>
   <body>
@@ -13,20 +13,19 @@
 
               <br />
               <div class="row">
-                <form class="form-horizontal main_form text-left" action="/Servidor/usuarios" role = "form" method="put"  id="contact_form">
+                <form class="form-horizontal main_form text-left" action="/Servidor/usuarios" method="PUT"  id="contact_form">
                   <fieldset>
-                  
-                  	<!-- Text input-->
+
                     <div class="form-group col-md-12">
-                      <label class="col-md-10 control-label" >Emai</label> 
+                      <label class="col-md-10 control-label" >Email</label> 
                       <div class="col-md-12 inputGroupContainer">
                         <div class="input-group">
-                          <input type="text" name="email" id="email" placeholder="Provisional-No deberia pedirlo" 
+                          <input type="email" disabled="disabled" name="email" id="email" value="${sessionScope.email}"
                           class="form-control" >
                         </div>
                       </div>
                     </div>
-                    
+
                     <div class="form-group col-md-12">
                       <label class="col-md-10 control-label">Nombre</label>  
                       <div class="col-md-12 inputGroupContainer">
@@ -41,8 +40,7 @@
                       <label class="col-md-10 control-label" >Apellidos</label> 
                       <div class="col-md-12 inputGroupContainer">
                         <div class="input-group">
-                          <input name="apellidos" id="apellidos" placeholder="Apellidos" 
-                          class="form-control"  type="text">
+                          <input name="apellidos" placeholder="Primer Apellido" class="form-control"  type="text">
                         </div>
                       </div>
                     </div>
@@ -61,7 +59,7 @@
                       <label class="col-md-10 control-label">Contraseña</label>  
                       <div class="col-md-12 inputGroupContainer">
                         <div class="input-group">
-                          <input  name="password" class="form-control"  type="password">
+                          <input  name="contrasena" class="form-control"  type="password">
                         </div>
                       </div>
                     </div>
@@ -70,7 +68,7 @@
                       <label class="col-md-10 control-label">Nueva Contraseña</label>  
                       <div class="col-md-12 inputGroupContainer">
                         <div class="input-group">
-                          <input  name="newPassword" placeholder="Nueva Contraseña" class="form-control"  type="password">
+                          <input  name="newContrasena" placeholder="Nueva Contraseña" class="form-control"  type="password">
                         </div>
                       </div>
                     </div>
@@ -79,7 +77,7 @@
                       <label class="col-md-10 control-label">Confirmar Nueva Contraseña</label>  
                       <div class="col-md-12 inputGroupContainer">
                         <div class="input-group">
-                          <input  name="confirmPassword" placeholder="Confirmar Nueva Contraseña" class="form-control"  type="password">
+                          <input  name="confirmNewContrasena" placeholder="Confirmar Nueva Contraseña" class="form-control"  type="password">
                         </div>
                       </div>
                     </div>                    
@@ -96,9 +94,8 @@
                     <!-- Button -->
                     <div class="form-group col-md-10">
                       <div class="col-md-6"> 
-                      	<input type="submit" name="update-submit" id="update-submit" 
-                      			class="btn btn-primary" value="Actualizar">                      
-                        
+                        <input type="submit" name="update-submit" id="update-submit" 
+                          class="btn btn-primary" value="Actualizar"> 
                         <a href="#profile" class="btn btn-primary" data-toggle="tab">Cancelar</a>                        
                       </div>
                     </div>

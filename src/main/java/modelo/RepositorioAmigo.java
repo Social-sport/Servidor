@@ -21,9 +21,6 @@ public class RepositorioAmigo {
 		this.conexion = ConexionBD.getConexion();
 	}
 
-	/**
-	 * Inserta el amigo <amigo> a la BD
-	 */
 	public boolean insertarAmigo(Amigo amigo) {
 		String sql = "INSERT INTO Amigos"
 				+ "(usuario, amigo, fecha)"
@@ -40,9 +37,6 @@ public class RepositorioAmigo {
 		}
 	}
 
-	/**
-	 * Borra un amigo <amigo> del usuario <usuario> de la BD
-	 */
 	public boolean borrarAmigo(String usuario, String amigo) {
 		String sql = "DELETE FROM Amigos WHERE usuario=\""+usuario+"\" AND amigo=\""+amigo+"\"";
 		try {
@@ -57,9 +51,6 @@ public class RepositorioAmigo {
 		}
 	}
 
-	/**
-	 * Lista los amigos del usuario <usuario>
-	 */
 	public List<Amigo> listarAmigos (String usuario) {
 		List<Amigo> amigos = new LinkedList<Amigo>();
 		String sql = "SELECT * FROM Amigos WHERE usuario ='"+usuario+"'";

@@ -10,7 +10,8 @@ import java.sql.SQLException;
 public class ConexionBD {
 
 	private static Connection conexion = null;
-	private static String db4free = "jdbc:mysql://db4free.net:3306/socialsport?user=socialsport&password=socialsport";
+	//private static String db4free = "jdbc:mysql://db4free.net:3306/socialsport?user=socialsport&password=socialsport";
+	private static String db4free = "jdbc:mysql://localhost:3306/socialsport?user=root&password=root";
 	//private static String openshift = "jdbc:mysql://127.11.148.2:3306/socialsport?user=adminNhxVfzE&password=wf-QyTaE11-l";
 
 	/**

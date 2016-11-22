@@ -11,7 +11,6 @@ body {
 
 #btnAnadir {
   padding-bottom:10px;
-
 }
 
 .jumbotron {
@@ -21,7 +20,8 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  /*font-family: myFirstFont;*/
+  font-family: myFirstFont;
+  text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black;
 }
 
 P {
@@ -39,43 +39,28 @@ a.btn {
 }
 @font-face {
     font-family: myFirstFont;
-    src: url('airstrikelaser.ttf');
+    src: url('../img/airstrikelaser.ttf');
 }
 
-#containerDeportes {
-	width: 100%;
-}
-#bSuscribeteFutbol {
-	font-size: 100%;
-}
-#bSuscribetePingPong{
-	font-size: 100%;
-}
-#bSuscribeteAjedrez{
-	font-size: 100%;
-}
-#bSuscribeteBasket{
-	font-size: 100%;
-}
-a.list-group-item {
-    height:auto;
-    min-height:100px;
-}
-a.list-group-item.active small {
-    color:#fff;
-}
-div.list-group-item {
-    height:auto;
-    min-height:100px;
-}
-div.list-group-item.active small {
-    color:#fff;
-}
-@media all and (max-width:1200px) and (min-width:992px){
-	#bSuscribete{
-	text-align: center;
-	padding: 10px 0; }
+#listDeportes {
+	margin-bottom: 10px;
+  border-radius: 10px;
 }
 #bSuscribete {
-  font-size: 100%;
+	font-size: 100%;
+}
+form.list-group-item {
+  height:auto;
+  min-height:120px;
+  color:#fff;
+}
+form.list-group-item.active small {
+  color:#fff;
+}
+
+@media all and (max-width:1200px) and (min-width:992px){
+  #bSuscribete {
+    text-align: center;
+    padding: 10px 0;
+  }
 }

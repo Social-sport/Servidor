@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <%@page pageEncoding="UTF-8"%> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
     <!-- <script src="js/profile.js"></script> -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -15,10 +16,51 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/profile.js"></script>
     <script type="text/javascript" src="js/load.js"></script>
+    <script type="text/javascript">
+    function getUser(){
+      var user='${sessionScope.nick}'
+      alert("Start GET")
+
+      $.ajax({
+        type : "GET",
+        url : "/Servidor/deportesSuscritos",
+        success : function(msg) {
+          if (msg.length == 0) {
+            $("#seccion1").html("<img src='img/Sports.png' alt='Sports Bootstrap Theme'>");
+          }
+          else{
+            $("#seccion1").html("<div></div>");
+            for (var i = 0; i < msg.length; i++){
+              var deporte = msg[i];
+              $("#seccion1").append(
+                    "<form action='/Servidor/deportes' method='POST' class='list-group-item active' id='listDeportes'>"+
+                        "<div class='media col-md-3'>"+
+                            "<figure class='pull-left'>"+
+                                "<img class='media-object img-rounded img-responsive'  src='"+deporte.foto+"' alt='placehold.it/350x250' >"+
+                            "</figure>"+
+                        "</div>"+
+                        "<div class='col-md-6'>"+
+                            "<input type='hidden' name='deporte' value='"+deporte.nombre+"'>"+
+                            "<h4 class='list-group-item-heading'>"+deporte.nombre+"</h4>"+
+                            "<p class='list-group-item-text'> "+deporte.descripcion+" </p>"+
+                        "</div>"+
+                        "<div class='col-md-3 text-center'>"+
+                        "<h5> 14240 <small> personas </small></h5>"+
+                        "</div>"+
+                    "</form>");
+            };
+          };
+        },
+        error : function(msg) {
+          $("#seccion1").html("<div>"+msg+"</div>");
+        }
+      });
+    }
+    </script>
 
     <title>Perfil de Usuario</title>
   </head>
-  <body>
+  <body onload="getUser();">
 	<div id="topBar" ></div>
 	
     <section>
@@ -28,16 +70,14 @@
 
           <div class="col-md- col-sm-4 col-xs-12">
             <img src="http://www.newlifefamilychiropractic.net/wp-content/uploads/2014/07/300x300.gif" class="img-responsive"/>
-            <h6>Jenifer Smith</h6>
+            <h6>${sessionScope.nick}</h6>
           </div><!--col-md-4 col-sm-4 col-xs-12 close-->
 
           <div class="col-md- col-sm-4 col-xs-12" id="perfilInfo">
-            <h5>Jenifer Smith</h5>
-            <p>Web Designer / Develpor </p>
+            <h5>${sessionScope.nombre} ${sessionScope.apellidos}</h5>
+            <p>Deportista</p>
             <ul>
-              <li><span class="glyphicon glyphicon-home"></span> 555 street Address,toledo 43606 U.S.A.</li>
-              <li><span class="glyphicon glyphicon-phone"></span> <a href="#" title="call">(+021) 956 789123</a></li>
-              <li><span class="glyphicon glyphicon-envelope"></span><a href="#" title="mail">jenifer123@gmail.com</a></li>
+              <li><span class="glyphicon glyphicon-envelope"></span><a href="#" title="mail">${sessionScope.email}</a></li>
             </ul>
           </div>
 
@@ -53,7 +93,7 @@
             </a>
           </li>
           <li>
-            <a href="#mySports" role="tab" data-toggle="tab">
+            <a href="#mySports" role="tab" data-toggle="tab" id="btnDeportes">
               <i class="fa fa-futbol-o"></i> Mis Deportes
             </a>
           </li>
@@ -86,13 +126,11 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-          
+
           <div class="tab-pane fade " id="mySports">
             <div class="container fom-main">
-              <div class="row">
-                <div class="col-sm-12">
-                    <h2 class="register">Mis Deportes</h2>
-                </div><!--col-sm-12 close-->
+              <h2 class="register">Mis Deportes</h2>
+              <div class="row" id="seccion1">
               </div><!--row close-->
             </div><!--container close -->          
           </div><!--tab-pane close-->
@@ -108,13 +146,13 @@
               <div class="col-xs-6 tab-paneEvent">
                 <h2 class="Subtittle">Creados</h2>
                   <p>No has creado a ningun evento</p>
-                  <a href="#createEvent" class="btn btn-primary" data-toggle="tab">Crear Evento</a>
+                  <a href="#createEvent" id="creaEvent" class="btn btn-primary" data-toggle="tab">Crear Evento</a>
               </div><!--column close-->
      
               <div class="col-xs-6 tab-paneEvent">
                 <h2 class="Subtittle">Suscritos</h2>
                   <p>No te has suscrito a ningun evento</p>
-                  <a href="muro.html" class="btn btn-primary">Ver Eventos</a>
+                  <a href="muro.jsp" class="btn btn-primary">Ver Eventos</a>
               </div><!--column close-->
 
             </div><!--container close --> 
@@ -161,23 +199,19 @@
                       <tbody>
                         <tr>      
                           <td>Nombre</td>
-                          <td>: jenifer</td> 
+                          <td>: ${sessionScope.nombre}</td> 
                         </tr>
                         <tr>    
                           <td>Apellidos</td>
-                          <td>: smith</td>       
+                          <td>: ${sessionScope.apellidos}</td>       
                         </tr>
                         <tr>    
                           <td>Edad</td>
-                          <td>: 36</td>       
+                          <td>: ${sessionScope.fecha}</td>       
                         </tr>
                         <tr>    
                           <td>País</td>
                           <td>: España</td>       
-                        </tr>
-                        <tr>
-                          <td>Ciudad</td>
-                          <td>: Zaragoza</td> 
                         </tr>
                       </tbody>
                     </table>
@@ -194,11 +228,11 @@
                         </tr>
                         <tr>    
                           <td>Experiencia</td>
-                          <td>: 3 años</td>       
+                          <td>: No Disponible</td>       
                         </tr>
                         <tr>    
                           <td>Movil</td>
-                          <td>: (+6283) 456 789</td>       
+                          <td>: No Disponible</td>       
                         </tr>
                       </tbody>
                     </table>

@@ -4,16 +4,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import com.google.gson.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.Deporte;
 import modelo.RepositorioDeporte;
-
-import com.google.gson.Gson;
 
 /**
  * Servlet de obtencion de usuaiors
@@ -23,32 +24,39 @@ public class DeportesServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioDeporte repo = new RepositorioDeporte();
-	private Gson gson = new Gson();
-	
+
 	/**
-	 * Metodo para suscribir un usuario a un deporte.
+	 * M�todo para a�adir usuarios a la BD a trav�s del cliente.
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		HttpSession session = req.getSession();
+		
 		String response = null;
-		String email = req.getParameter("email");
+		String email = session.getAttribute("email").toString();
 		String deporte = req.getParameter("deporte");
+		boolean suscrito = repo.verificarSuscripcionDeporte(email);
 		boolean realizado = repo.suscribirseDeporte(deporte,email);
-		if (realizado) {
+		if (!(suscrito) && realizado) {
 			resp.setStatus(HttpServletResponse.SC_OK);
+			resp.sendRedirect("muro.jsp");
 			response = "El usuario se ha suscrito correctamente al deporte";
+		}
+		else if (suscrito){
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			resp.sendRedirect("muro.jsp");
+			response = "El usuario ya se encuentra suscrito al deporte";
 		}
 		else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			resp.sendRedirect("muro.jsp");
 			response = "El usuario no se ha podido suscribir al deporte";
 		}
 		setResponse(response, resp);
 	}
 	
-	/**
-	 * Metodo para dar de baja un usuario a un deporte.
-	 */
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -67,45 +75,24 @@ public class DeportesServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
-	/**
-	 * Metodo para devolver los deportes de la BD.
-	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		HttpSession session = req.getSession();
+		Gson gson = new Gson();
+		
 		String response = null;
 		List<Deporte> deportes = null;
-		String email = req.getParameter("email");
+		deportes = repo.listarDeportes();
 		
-		if (email == null) {
-			//Devuelve los deportes almacenados en la base de datos
-			deportes = repo.listarDeportes();			
-			if (deportes.isEmpty()) {
-				response = "Error: No encuentra deportes en base de datos";
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				System.out.println("Error: No encuentra deportes en base de datos");
-			}
-			else {
-				response= gson.toJson(deportes);				
-				System.out.println("json ");
-				System.out.println("si los deportes");
-				System.out.println(response);
-				resp.setStatus(HttpServletResponse.SC_OK);
-			}
+		if (deportes.isEmpty()) {
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "No existen deportes");
 		}
 		else {
-			//Devuelve los deportes a los que esta suscrito el usuario
-			deportes = repo.listarDeportesUsuario(email);
-			if (deportes.isEmpty()) {
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response = "El usuario no ha suscrito deportes";
-			}
-			else {
-				resp.setStatus(HttpServletResponse.SC_OK);				
-				response= gson.toJson(deportes);				
-				System.out.println("si los Deportes usuario con json");
-				System.out.println(response);
-			}
+			resp.setStatus(HttpServletResponse.SC_OK);
+			response = gson.toJson(deportes);
 		}
 		setResponse(response, resp);
 	}
@@ -119,8 +106,8 @@ public class DeportesServlet extends HttpServlet {
 	 *            response
 	 */
 	private void setResponse(String response, HttpServletResponse resp) {
-		resp.setContentType("application/json");	   	    
-		try {			
+		resp.setContentType("application/json");
+		try {
 			PrintWriter out = resp.getWriter();
 			out.print(response);
 			out.flush();

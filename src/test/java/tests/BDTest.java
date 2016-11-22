@@ -39,10 +39,10 @@ public class BDTest {
 		//repoMensaje = new RepositorioMensaje();
 		repoAmigo = new RepositorioAmigo();
 	}
-	/*
+
 	@Test
 	public void testFindDeporte() {
-		assertEquals(repoDeporte.findDeporte("Fútbol").getNombre(), "Fútbol");
+		assertEquals(repoDeporte.findDeporte("prueba").getNombre(), "prueba");
 	}
 
 	@Test
@@ -59,17 +59,17 @@ public class BDTest {
 	
 	@Test
 	public void testASuscribirseDeporte() {
-		assertTrue(repoDeporte.suscribirseDeporte("Fútbol","test"));
+		assertTrue(repoDeporte.suscribirseDeporte("prueba","try"));
 	}
 	
 	@Test
 	public void testZDarseDeBajaDeporte() {
-		assertTrue(repoDeporte.darseDeBajaDeporte("Fútbol","test"));
+		assertTrue(repoDeporte.darseDeBajaDeporte("prueba","try"));
 	}
 
 	@Test
 	public void testFindUsuario() {
-		assertEquals(repoDeporte.findDeporte("Fútbol").getNombre(), "Fútbol");
+		assertEquals(repoDeporte.findDeporte("prueba").getNombre(), "prueba");
 	}
 
 	@Test
@@ -93,23 +93,23 @@ public class BDTest {
 
 	@Test
 	public void testFindComentario() {
-		assertEquals(repoDeporte.findDeporte("Fútbol").getNombre(), "Fútbol");
+		assertEquals(repoDeporte.findDeporte("prueba").getNombre(), "prueba");
 	}
 
 	@Test
+	public void testFindEvento() {
+		assertEquals(repoEvento.findEvento("prueba").getDeporte(), "prueba");
+	}
+	
+	@Test
 	public void testAInsertarEvento() {
-		Evento evento = new Evento("prueba","try","00", "00", "Fútbol", "prueba");
+		Evento evento = new Evento("prueba","try","00", "00", "prueba", "test");
 		assertTrue(repoEvento.insertarEvento(evento));
 	}
 	
 	@Test
-	public void testFindEvento() {
-		assertEquals(repoEvento.findEvento("prueba").getDeporte(), "Fútbol");
-	}
-	
-	@Test
 	public void testListarEventosDeporte() {
-		assertFalse(repoEvento.listarEventosDeporte("Fútbol").isEmpty());
+		assertFalse(repoEvento.listarEventosDeporte("prueba").isEmpty());
 	}
 	
 	@Test
@@ -136,6 +136,6 @@ public class BDTest {
 
 	@Test
 	public void testFindMensaje() {
-		assertEquals(repoDeporte.findDeporte("Fútbol").getNombre(), "Fútbol");
-	}*/
+		assertEquals(repoDeporte.findDeporte("prueba").getNombre(), "prueba");
+	}
 }

@@ -1,5 +1,6 @@
 //tab js//
 $(document).ready(function(e) {
+
   $('.form').find('input, textarea').on('keyup blur focus', function (e) {
     var $this = $(this), label = $this.prev('label');
 
@@ -65,6 +66,6 @@ $(document).ready(function(e) {
   });
 });
 
-$.get('UsuariosServlet', {a:'ab', b:'abc'}, function (data){
+/*$.get('UsuariosServlet', {a:'ab', b:'abc'}, function (data){
   alert(data.getNick);
-});
+});*/

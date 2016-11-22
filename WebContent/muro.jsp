@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <%@page pageEncoding="UTF-8"%> 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-  <!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>*/-->
-  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script type="text/javascript" src="js/sports.js"></script>
   <script type="text/javascript" src="js/load.js"></script>
+  <script type="text/javascript" src="js/eventMuro.js"></script>
+  <script type="text/javascript" src="js/eventMuro.js"></script>
+
+  <script type="text/javascript">
+    function getNombre(){
+      var nombre='${sessionScope.nombre}';
+    }
+  </script>
 
   <title>Muro SocialSport</title>
   <!-- Latest compiled and minified CSS -->
@@ -20,45 +25,42 @@
   <link rel="stylesheet" href="css/muro.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
-  <body>
-     <div id="topBar" ></div>
-     
-     <div class="container" >
-      <div class="jumbotron text-center">
-       <h1><font color=white background-color=black> Bienvenido a Social Sport </font></h1>
-       <h3><font color=white> La red social que te acercará al mundo del deporte </font></h3>
-     </div>
+<body onload="getNombre();">
+  <div id="topBar" ></div>
+ 
+  <div class="container" >
+    <div class="jumbotron text-center">
+      <h1><font color=white background-color=black> Bienvenido a Social Sport </font></h1>
+      <h3><font color=white> La red social que te acercará al mundo del deporte </font></h3>
+    </div>
 
-      <div class="row text-center">
+    <div class="row text-center">
 
-       <div class="col-xs-6">
+      <div class="col-xs-6">
 
         <h3 id="seccion">Sección de deportes</h3>
-        
         <p>Añade los deportes que más te gustan, suscríbete a eventos existentes y crea tus propios eventos</p>
         <p id="btnAnadir">
-        <a id="listSport" href="#añadeDeportes" class="btn btn-primary" data-toggle="modal">Añade deportes</a>
-         </p>
+          <a id='listSport' class='btn btn-primary' data-toggle='modal'>Añade deportes</a>
+        </p>
+        <p id="textEventDis"></p>
         <div class="thumbnail" id="seccion1">
-          <!-- Esta foto podremos sustituirla por una captura de un muro que tiene deportes"-->
-          <img src="img/Sports.png" alt="Sports Bootstrap Theme">
-        </div>       
-
+        </div>
       </div>
+
       <div class="col-xs-6">
 
         <h3 id="seccion">Sección de amigos</h3>
-        
         <p>Busca y sigue a tus amigos, comparte eventos e inicia conversaciones sobre el mundo del deporte</p>
         <p id="btnAnadir">
-        <a id="listFriends" href="#" class="btn btn-success">Añade amigos</a>
+          <a id="listFriends" href="#" class="btn btn-success">Añade amigos</a>
         </p>
-        <div class="thumbnail" id="seccion2">
+        <a href="#" class="thumbnail">
           <!-- Esta foto podremos sustituirla por una captura de un muro que tiene amigos"-->
           <img src="img/people.png" alt="people Bootstrap  Theme">
-        </div>
+        </a>
       </div>
     </div>
-    </div>
-  </body>
+  </div>
+</body>
 </html>

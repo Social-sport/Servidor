@@ -27,7 +27,6 @@ public class UsuariosServletTest {
 	private HttpServletResponse response;
 	private StringWriter response_writer;
 	private Map<String, String> parameters;
-	
 
 	@Before
 	public void setUp() throws IOException {
@@ -54,14 +53,14 @@ public class UsuariosServletTest {
 	
 	@Test
 	public void testLoginOK() throws Exception {
-		parameters.put("emailL", "test");
-		parameters.put("contrasenaL", "test");
+		parameters.put("email", "test");
+		parameters.put("contrasena", "test");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha logeado correctamente");
 	}
 	
 	
-	/*@Test
+	@Test
 	public void testRegistrarOK() throws Exception {
 		parameters.put("email", "try");
 		parameters.put("nombre", "try");
@@ -75,7 +74,7 @@ public class UsuariosServletTest {
 		repoUsuario.borrarUsuario("try");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha insertado correctamente");
-	}*/
+	}
 	
 	@Test
 	public void testRegistrarErroneo() throws Exception {

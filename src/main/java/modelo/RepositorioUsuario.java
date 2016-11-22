@@ -19,9 +19,6 @@ public class RepositorioUsuario {
 		this.conexion = ConexionBD.getConexion();
 	}
 
-	/**
-	 * Devuelve la información del usuario con email <email>
-	 */
 	public Usuario findUsuario(String email) {
 		Usuario usuario = null;
 		String sql = "SELECT * FROM Usuario WHERE email='"+email+"'";
@@ -39,9 +36,6 @@ public class RepositorioUsuario {
 		return usuario;
 	}
 
-	/**
-	 * Inserta el usuario <usuario> en la BD
-	 */
 	public boolean insertarUsuario(Usuario usuario) {
 		String sql = "INSERT INTO Usuario"
 				+ "(email, nombre, apellidos, contrasena, fecha_nacimiento, foto, nick)"
@@ -59,9 +53,6 @@ public class RepositorioUsuario {
 		}
 	}
 
-	/**
-	 * Borra el usuario con email <email> de la BD
-	 */
 	public boolean borrarUsuario(String email) {
 		String sql = "DELETE FROM Usuario WHERE email=\""+email+"\"";
 		try {
@@ -76,9 +67,6 @@ public class RepositorioUsuario {
 		}
 	}
 
-	/**
-	 * Actualiza la información del usuario <usuario>
-	 */
 	public boolean actualizarUsuario (Usuario usuario) {
 		String sql = "UPDATE Usuario SET nombre=\""+usuario.getNombre()+"\","
 				+ "apellidos=\""+usuario.getApellidos()+"\", contrasena=\""+usuario.getContrasena()+"\", "

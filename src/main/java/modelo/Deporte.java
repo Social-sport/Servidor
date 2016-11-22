@@ -3,16 +3,13 @@ package modelo;
 public class Deporte {
 
 	private String nombre;
-	private String Descripcion;
-	private String Foto;
-
-	
+	private String descripcion;
+	private String foto;
 
 	public Deporte(String nombre, String descripcion, String foto) {
-		this.nombre = nombre;
-		Descripcion = descripcion;
-		Foto = foto;
-		
+		this.nombre=nombre;
+		this.descripcion=descripcion;
+		this.foto=foto;
 	}
 
 	public String getNombre() {
@@ -24,20 +21,18 @@ public class Deporte {
 	}
 
 	public String getDescripcion() {
-		return Descripcion;
+		return descripcion;
 	}
 
 	public void setDescripcion(String descripcion) {
-		Descripcion = descripcion;
+		this.descripcion = descripcion;
 	}
 
 	public String getFoto() {
-		return Foto;
+		return foto;
 	}
 
 	public void setFoto(String foto) {
-		Foto = foto;
+		this.foto = foto;
 	}
-	
-	
 }

@@ -21,9 +21,6 @@ public class RepositorioDeporte {
 		this.conexion = ConexionBD.getConexion();
 	}
 
-	/**
-	 * Devuelve la información del deporte con nombre <nombre> almacenado en la BD
-	 */
 	public Deporte findDeporte(String nombre) {
 		Deporte deporte = null;
 		String sql = "SELECT * FROM Deporte WHERE Nombre='"+nombre+"'";
@@ -31,8 +28,7 @@ public class RepositorioDeporte {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
-			deporte = new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
-					rs.getString("Foto")) ;	
+			deporte = new Deporte(rs.getString("Nombre"), rs.getString("Descripcion"), rs.getString("Foto"));
 			stmt.close();
 		}
 		catch (SQLException e) {
@@ -42,9 +38,6 @@ public class RepositorioDeporte {
 		return deporte;
 	}
 
-	/**
-	 * Lista los deportes almacenados en la BD
-	 */
 	public List<Deporte> listarDeportes() {
 		List<Deporte> deportes = new LinkedList<Deporte>();
 		String sql = "SELECT * FROM Deporte";
@@ -52,22 +45,17 @@ public class RepositorioDeporte {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				deportes.add(new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
-										rs.getString("Foto")));				
+				deportes.add(new Deporte(rs.getString("Nombre"), rs.getString("Descripcion"), rs.getString("Foto")));
 			}
 			stmt.close();
 		}
-		
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error en listar Deportes" + e);
+			System.out.println("Error en listar Deportes");
 		}
 		return deportes;
 	}
 
-	/**
-	 * Suscribe al usuario con email <email> al deporte con nombre <nombre>
-	 */
 	public boolean suscribirseDeporte(String nombre, String email) {
 		String sql = "INSERT INTO DeporteSuscrito (deporte,usuario)VALUES "
 				+ "('"+nombre+"','"+email+"')";
@@ -83,9 +71,20 @@ public class RepositorioDeporte {
 		}
 	}
 	
-	/**
-	 * Da de baja al usuario con email <email> al deporte con nombre <nombre>
-	 */
+	public boolean verificarSuscripcionDeporte(String email) {
+		String sql = "SELECT deporte FROM DeporteSuscrito WHERE usuario='"+email+"'";
+		try {
+			Statement stmt = conexion.createStatement();
+			stmt.execute(sql);
+			stmt.close();
+			return true;
+		}
+		catch (SQLException e) {
+			System.out.println("El usuario "+email+" ya se encuentra suscrito al deporte");
+			return false;
+		}
+	}
+	
 	public boolean darseDeBajaDeporte(String nombre, String email) {
 		String sql = "DELETE FROM DeporteSuscrito WHERE deporte = '"+nombre+"' AND usuario = '"+email+"'";
 		try {
@@ -104,19 +103,14 @@ public class RepositorioDeporte {
 			return false;
 		}
 	}
-	
-	/**
-	 * Lista los deportes del usuario con email <email>
-	 */
 	public List<Deporte> listarDeportesUsuario(String email) {
 		List<Deporte> deportes = new LinkedList<Deporte>();
-		String sql = "SELECT Deporte.Nombre FROM Deporte,DeporteSuscrito WHERE Deporte.Nombre=DeporteSuscrito.deporte AND DeporteSuscrito.usuario='"+email+"'";
+		String sql = "SELECT Deporte.Nombre, Deporte.Descripcion, Deporte.Foto FROM Deporte,DeporteSuscrito WHERE Deporte.Nombre=DeporteSuscrito.deporte AND DeporteSuscrito.usuario='"+email+"'";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				deportes.add(new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
-						rs.getString("Foto")));	
+				deportes.add(new Deporte(rs.getString("Nombre"), rs.getString("Descripcion"), rs.getString("Foto")));
 			}
 			stmt.close();
 		}

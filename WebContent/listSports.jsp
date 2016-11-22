@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <%@page pageEncoding="UTF-8"%> 
 </head>
 <body>
 
   <div class="list-group" id="listDeportes">
 
-    <div class="list-group-item active" id="itemDeporte">
+    <a href="#" class="list-group-item active" id="itemDeporte">
       <div class="media col-md-3">
         <figure class="pull-left">
           <img class="media-object img-rounded img-responsive"  src="http://www.extraescolaresgeniales.com/wp-content/uploads/2016/07/Ping-pong1.jpg" alt="placehold.it/350x250" >
@@ -15,39 +15,37 @@
       </div>
       <div class="col-md-6">
         <h4 class="list-group-item-heading"> Ping pong </h4>
-        <p class="list-group-item-text"> El tenis de mesa (tambi√©n conocido 
-        popularmente como ping-pong o pimp√≥n)         
-         </p>
+        <p class="list-group-item-text"> El tenis de mesa (tambiÈn conocido 
+        popularmente como ping-pong o pimpÛn) </p>
       </div>
       <div class="col-md-3 text-center">
 
-        <button type="button" class="btn btn-default btn-lg btn-block"  id = "bSuscribetePingPong"> Suscribete </button>
-        <h5> 14240 <small> personas </small></h5>
+        <button type="button" class="btn btn-default btn-lg btn-block"  id = "bSuscribete"> Suscribete </button>
+        <h5> 10 <small> personas </small></h5>
       </div>
-    </div>
+    </a>
 
 
-    <div class="list-group-item"  id="itemDeporte">
+    <a href="#" class="list-group-item"  id="itemDeporte">
       <div class="media col-md-3">
         <figure class="pull-left">
           <img class="media-object img-rounded img-responsive" src="http://img.planetafobal.com/2016/02/copa-america-centenario-ball-nike-2016-350x250.jpg" alt="placehold.it/350x250" >
         </figure>
       </div>
       <div class="col-md-6">
-        <h4 class="list-group-item-heading"> F√∫tbol </h4>
-        <p class="list-group-item-text">El f√∫tbol o balompi√© (ingl√©s brit√°nico football),
-           Es el deporte m√°s popular del mundo.        
-         </p>
+        <h4 class="list-group-item-heading"> F˙tbol </h4>
+        <p class="list-group-item-text"> El f˙tbol o balompiÈ (inglÈs brit·nico football),
+           Es el deporte m·s popular del mundo. </p>
       </div>
       <div class="col-md-3 text-center">
 
-        <button type="button" class="btn btn-default btn-lg btn-block" id = "bSuscribeteFutbol">Suscribete</button>
-        <h5> 12424 <small> personas </small></h5>
+        <button type="button" class="btn btn-default btn-lg btn-block" id = "bSuscribete">Suscribete</button>
+        <h5> 124 <small> personas </small></h5>
       </div>
-    </div>
+    </a>
 
 
-    <div class="list-group-item"  id="itemDeporte">
+    <a href="#" class="list-group-item"  id="itemDeporte">
       <div class="media col-md-3">
         <figure class="pull-left">
           <img class="media-object img-rounded img-responsive" src="http://www.fedevanlacke.com.ar/agregados/fotos/9043113194d75ffeb9b1fc_h.jpg" alt="placehold.it/350x250">
@@ -55,18 +53,16 @@
       </div>
       <div class="col-md-6">
         <h4 class="list-group-item-heading"> Baloncesto </h4>
-        <p class="list-group-item-text"> baloncesto, basquetbol o b√°squetbol, basketball. 
-       
-        </p>
+        <p class="list-group-item-text"> baloncesto, basquetbol o b·squetbol, basketball. </p>
       </div>
       <div class="col-md-3 text-center">
 
-        <button type="button" class="btn btn-default btn-lg btn-block"  id = "bSuscribeteBasket">Suscribete</button>
-        <h5> 13540 <small> personas </small></h5>
+        <button type="button" class="btn btn-default btn-lg btn-block"  id = "bSuscribete">Suscribete</button>
+        <h5> 110 <small> personas </small></h5>
       </div>
-    </div>
+    </a>
 
-    <div class="list-group-item"  id="itemDeporte">
+    <a href="#" class="list-group-item"  id="itemDeporte">
       <div class="media col-md-3">
         <figure class="pull-left">
           <img class="media-object img-rounded img-responsive" src="/Servidor/img/Ajedrez.jpg" alt="placehold.it/350x250">
@@ -74,19 +70,16 @@
       </div>
       <div class="col-md-6">
         <h4 class="list-group-item-heading"> Ajedrez </h4>
-        <p class="list-group-item-text"> El ajedrez en su versi√≥n de competici√≥n est√° considerado 
-         deporte.
+        <p class="list-group-item-text"> El ajedrez en su versiÛn de competiciÛn est· considerado deporte.
         </p>
       </div>
       <div class="col-md-3 text-center">
 
-        <button type="button" class="btn btn-default btn-lg btn-block"  id = "bSuscribeteAjedrez">Suscribete</button>
-        <h5> 13540 <small> personas </small></h5>
+        <button type="button" class="btn btn-default btn-lg btn-block"  id = "bSuscribete">Suscribete</button>
+        <h5> 10 <small> personas </small></h5>
       </div>
-    </div>
+    </a>
 
   </div>
-
-
 </body>
 </html>

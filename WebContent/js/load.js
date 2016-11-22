@@ -1,18 +1,18 @@
 $(document).ready(
     function() {
-    	$("#topBar").load("topBar.html");
+    	$("#topBar").load("topBar.jsp");
     	
     	$("#creaEvent").click(
                 function(event) {
                 	
-                	$("#cEvent").load("Event.html");
+                	$("#cEvent").load("Event.jsp");
                 	
         });
     	
     	$("#editDat").click(
                 function(event) {
                 	
-                	$("#editData").load("personalData.html");
+                	$("#editData").load("personalData.jsp");
                 	
         });
     	

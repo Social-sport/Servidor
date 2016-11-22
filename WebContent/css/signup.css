@@ -8,10 +8,13 @@ background: url("../img/Sport.jpg") no-repeat center center fixed;
 border-radius: 6px;
 background: rgba(0, 0, 0, 0.7);
 }
+
 h1, p{
 text-align: center;
 color: #fff;
 font-family: 'Noto Sans', sans-serif;
+padding-top: 10px;
+padding-bottom: 10px;
 }
 
 .panel-login {

@@ -26,7 +26,7 @@ public class AmigosServlet extends HttpServlet {
 	private static RepositorioUsuario repoUsuario = new RepositorioUsuario();
 
 	/**
-	 * Metodo para seguir a un usuario.
+	 * M�todo para a�adir usuarios a la BD a trav�s del cliente.
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -37,7 +37,6 @@ public class AmigosServlet extends HttpServlet {
 		String fecha = req.getParameter("fecha");
 		Amigo amigo = new Amigo(usuario,amigoSeguido,fecha);
 		boolean realizado = repoAmigo.insertarAmigo(amigo);
-		//inserta un amigo en la BD
 		if (realizado) {
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El amigo se ha insertado correctamente";
@@ -49,9 +48,6 @@ public class AmigosServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
-	/**
-	 * Metodo para borrar un amigo del usuario.
-	 */
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -59,7 +55,6 @@ public class AmigosServlet extends HttpServlet {
 		String usuario = req.getParameter("usuario");
 		String amigo = req.getParameter("amigo");
 		boolean realizado = repoAmigo.borrarAmigo(usuario,amigo);
-		//elimina el amigo en la BD
 		if (realizado) {
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El amigo se ha borrado correctamente";
@@ -71,9 +66,6 @@ public class AmigosServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
-	/**
-	 * Metodo para devolver los amigos de un usuario.
-	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -86,7 +78,6 @@ public class AmigosServlet extends HttpServlet {
 			response = "El usuario no existe";
 		}
 		else {
-			//devuelve los amigos del usuario
 			resp.setStatus(HttpServletResponse.SC_OK);
 			amigos = repoAmigo.listarAmigos(usuario);
 			if (amigos.isEmpty()) {

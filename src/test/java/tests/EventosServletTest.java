@@ -37,7 +37,6 @@ public class EventosServletTest {
 		request = mock(HttpServletRequest.class);
 		response = mock(HttpServletResponse.class);
 		response_writer = new StringWriter();
-		
 		when(request.getParameter(anyString())).thenAnswer(new Answer<String>() {
 			public String answer(InvocationOnMock invocation) {
 				return parameters.get((String) invocation.getArguments()[0]);
@@ -52,7 +51,7 @@ public class EventosServletTest {
 		parameters.put("descripcion", "test servlet");
 		parameters.put("fecha", "13/11/2016");
 		parameters.put("hora", "19:26");
-		parameters.put("deporte", "Futbol");
+		parameters.put("deporte", "prueba");
 		parameters.put("creador", "test");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El evento se ha insertado correctamente al deporte");
@@ -67,7 +66,7 @@ public class EventosServletTest {
 	
 	@Test
 	public void testListarEventosDeporte() throws Exception {
-		parameters.put("deporte", "Futbol");
+		parameters.put("deporte", "prueba");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"Eventos deporte");
 	}
@@ -75,7 +74,7 @@ public class EventosServletTest {
 	@Test
 	public void testListarEventosUsuario() throws Exception {
 		parameters.put("usuario", "test");
-		parameters.put("deporte", "Futbol");
+		parameters.put("deporte", "prueba");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario no tiene eventos");
 	}

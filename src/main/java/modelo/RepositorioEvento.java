@@ -21,9 +21,6 @@ public class RepositorioEvento {
 		this.conexion = ConexionBD.getConexion();
 	}
 
-	/**
-	 * Devuelve la información del evento con nombre <nombre>
-	 */
 	public Evento findEvento(String nombre) {
 		Evento evento = null;
 		try {
@@ -42,9 +39,6 @@ public class RepositorioEvento {
 		return evento;
 	}
 
-	/**
-	 * Lista los eventos del deporte con nombre <deporte>
-	 */
 	public List<Evento> listarEventosDeporte(String deporte) {
 		List<Evento> eventos = new LinkedList<Evento>();
 		String sql = "SELECT * FROM Evento WHERE deporte ='"+deporte+"'";
@@ -65,9 +59,6 @@ public class RepositorioEvento {
 		return eventos;
 	}
 
-	/**
-	 * Lista los eventos del usuario con email <email>
-	 */
 	public List<Evento> listarEventosUsuario(String email) {
 		List<Evento> eventos = new LinkedList<Evento>();
 		String sql = "SELECT * FROM Evento,EventoSuscrito WHERE idEvento = id AND Usuario ='"+email+"'";
@@ -88,9 +79,6 @@ public class RepositorioEvento {
 		return eventos;
 	}
 
-	/**
-	 * Lista los eventos creados por el usuario con email <email>
-	 */
 	public List<Evento> listarMisEventos(String email) {
 		List<Evento> eventos = new LinkedList<Evento>();
 		String sql = "SELECT * FROM Evento WHERE creador ='"+email+"'";
@@ -111,9 +99,6 @@ public class RepositorioEvento {
 		return eventos;
 	}
 
-	/**
-	 * Inserta el evento <evento> en la BD
-	 */
 	public boolean insertarEvento(Evento evento) {
 		String sql = "INSERT INTO Evento (nombre,descripcion,fecha,hora,deporte,creador) VALUES "
 				+ "('"+evento.getNombre()+"','"+evento.getDescripcion()+"','"+evento.getFecha()+"','"+evento.getHora()+"','"+evento.getDeporte()+"','"+evento.getCreador()+"')";
@@ -129,9 +114,6 @@ public class RepositorioEvento {
 		}
 	}
 
-	/**
-	 * Borra el evento con id <id> de la BD
-	 */
 	public boolean borrarEvento(int id) {
 		String sql = "DELETE FROM Evento WHERE id='"+id+"'";
 		try {
@@ -146,9 +128,6 @@ public class RepositorioEvento {
 		}
 	}
 
-	/**
-	 * Suscribe al usuario con email <email> al evento con id <id>
-	 */
 	public boolean suscribirseEvento(int id, String email) {
 		String sql = "INSERT INTO EventoSuscrito (idEvento,usuario)VALUES "
 				+ "('"+id+"','"+email+"')";
@@ -164,10 +143,7 @@ public class RepositorioEvento {
 		}
 	}
 
-	/**
-	 * Da de baja al usuario con email <email> del evento con id <id>
-	 */
-	public boolean darseDeBajaEvento(int id, String email) {
+	public boolean darseDeBajaEvento(String email) {
 		String sql = "DELETE FROM EventoSuscrito WHERE usuario='"+email+"'";
 		try {
 			Statement stmt = conexion.createStatement();

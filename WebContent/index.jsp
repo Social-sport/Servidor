@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <%@page pageEncoding="UTF-8"%> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Social sport</title>
@@ -26,7 +25,7 @@
             <p class="lead">Bienvenido a Social Sport, un poderoso medio por el cual deportistas y aficionados se dan encuentro para compartir su pasión:<br>El mundo del deporte.
             </p>
 
-            <p class="lead"><a class="btn btn-lg btn-info" id="iniciar" href="signup.html">Iniciar</a></p>
+            <p class="lead"><a class="btn btn-lg btn-info" href="signup.jsp">Iniciar</a></p>
           </div>
 
           <div class="mastfoot">

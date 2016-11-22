@@ -72,6 +72,7 @@
 									</div>
 									<div class="form-group">
 										<input type="date" name="fecha_nacimiento" id="fecha_nacimiento" tabindex="1" class="form-control" placeholder="Fecha de nacimiento">
+										<input type="hidden" name="tipo" id="tipo" tabindex="1" class="form-control" value="registro">
 									</div>
 									<div class="form-group">
 										<div class="row">

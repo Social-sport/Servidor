@@ -19,7 +19,6 @@
     <script type="text/javascript">
     function getUser(){
       var user='${sessionScope.nick}'
-      alert("Start GET")
 
       $.ajax({
         type : "GET",

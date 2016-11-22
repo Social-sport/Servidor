@@ -4,8 +4,10 @@ body {
 }
 
 #listDeportes {
-	margin-bottom: 10px;
 	border-radius: 10px;
+	width: 650px;
+	margin: 0 auto;
+	margin-bottom: 10px;
 }
 
 #seccion1{

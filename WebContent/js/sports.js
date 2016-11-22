@@ -8,32 +8,32 @@ $(document).ready(
                 $.ajax({
                     type : "GET",
                     url : "/Servidor/deportes",
-                    //data : String,
-                    success : function(ms) {
-                    	alert(ms);
-                        /*for (var i =  0; i <= msg.lenght; i++) {
+                    dataType: "JSON",                    
+                    success : function(listSport) {
 
-                            $("#result").addend("<div class='list-group' id='listDeportes'>"+
-                                "<a href='#' class='list-group-item active' id='itemDeporte'>"+
-                                "<a href='#' class='list-group-item active' id='itemDeporte'>"+
+                        $("#seccion1").html("<div></div>");
+                    	
+                    	$.each(listSport, function(i,item){                      
+
+                            $("#seccion1").append("<div class='list-group' id='listDeportes'>"+                                
+                                "<div class='list-group-item active' id='itemDeporte'>"+
                                 "<div class='media col-md-3'>"+
                                 "<figure class='pull-left'>"+
-                                "<img class='media-object img-rounded img-responsive'  src="+msg.img +" alt='placehold.it/350x250' >"+
+                                "<img class='media-object img-rounded img-responsive'  src="+listSport[i].Foto +" alt='placehold.it/350x250' >"+
                                 "</figure>"+
                                 "</div>"+
                                 "<div class='col-md-6'>"+
-                                "<h4 class='list-group-item-heading'>"+msg.name +"</h4>"+
-                                "<p class='list-group-item-text'> "+msg.Descrip +" </p></div>"+                                
+                                "<h4 class='list-group-item-heading'>"+listSport[i].nombre +"</h4>"+
+                                "<p class='list-group-item-text'> "+listSport[i].Descripcion +" </p></div>"+                                
                                 "<div class='col-md-3 text-center'>"+
                                 "<button type='button' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete'> Suscribete </button>"+
-                                "<h5> 14240 <small> personas </small></h5></div></a>");
-                        };*/
+                                "<h5> 14240 <small> personas </small></h5></div></div>");
+                        });
 
                     },
-                    error : function() {
-                    	
-                        $("#seccion1").load("/Servidor/listSports.html");
-
+                    error : function(ms) {
+                    	//alert("entra al error");
+                    	$("#seccion1").html("<div class='alert alert-danger lead'>"+ms+"</div>");
                     }
                 });
         });

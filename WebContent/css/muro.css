@@ -64,3 +64,18 @@ a.list-group-item {
 a.list-group-item.active small {
     color:#fff;
 }
+div.list-group-item {
+    height:auto;
+    min-height:100px;
+}
+div.list-group-item.active small {
+    color:#fff;
+}
+@media all and (max-width:1200px) and (min-width:992px){
+	#bSuscribete{
+	text-align: center;
+	padding: 10px 0;}
+}
+#bSuscribete {
+  font-size: 100%;
+}

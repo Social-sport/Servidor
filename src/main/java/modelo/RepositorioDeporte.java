@@ -69,7 +69,7 @@ public class RepositorioDeporte {
 	 * Suscribe al usuario con email <email> al deporte con nombre <nombre>
 	 */
 	public boolean suscribirseDeporte(String nombre, String email) {
-		String sql = "INSERT INTO DeporteSuscrito (deporte,usuario)VALUES "
+		String sql = "INSERT INTO DeporteSuscrito (deporte,usuario) VALUES "
 				+ "('"+nombre+"','"+email+"')";
 		try {
 			Statement stmt = conexion.createStatement();

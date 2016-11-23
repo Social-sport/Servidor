@@ -31,8 +31,9 @@ public class DeportesServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
 		String response = null;
-		String email = req.getParameter("email");
+		String email = req.getSession().getAttribute("email").toString();
 		String deporte = req.getParameter("deporte");
 		boolean realizado = repo.suscribirseDeporte(deporte,email);
 		if (realizado) {

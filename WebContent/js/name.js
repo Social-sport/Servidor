@@ -6,7 +6,16 @@ $(document).ready(
             dataType: "JSON",
             success : function(ms) {
             	
-            	document.getElementById("perfil").innerHTML = ms.nombre;            	
+            	document.getElementById("perfil").innerHTML = ms.nombre;  
+            	document.getElementById("nickUserP").innerHTML = ms.nick; 
+            	document.getElementById("fullNameP").innerHTML = ms.nombre + " " + ms.apellidos; 
+            	document.getElementById("mailUserP").innerHTML = ms.email;
+            	document.getElementById("nameP").innerHTML = ": " + ms.nombre;  
+            	document.getElementById("lastNameP").innerHTML = ": " + ms.apellidos;  
+            	document.getElementById("fechaP").innerHTML = ": " + ms.fecha_nacimiento; 
+            	
+            	$("#imgUserP").attr("src", ms.foto);
+            	$("#mailUserEP").val(ms.email);
             },
             error : function() {           	
             		

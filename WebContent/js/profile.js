@@ -65,6 +65,6 @@ $(document).ready(function(e) {
   });
 });
 
-$.get('UsuariosServlet', {a:'ab', b:'abc'}, function (data){
+/*$.get('UsuariosServlet', {a:'ab', b:'abc'}, function (data){
   alert(data.getNick);
-});
+});*/

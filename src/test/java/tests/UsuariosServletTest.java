@@ -100,7 +100,7 @@ public class UsuariosServletTest {
 		parameters.put("nombre", "test");
 		parameters.put("apellidos", "test");
 		parameters.put("contrasena", "test");
-		parameters.put("foto", "test");
+		parameters.put("foto", "/Servidor/img/profile.jpg");
 		parameters.put("fecha_nacimiento", "1900-10-10");
 		parameters.put("username", "test");
 		servlet.doPut(request, response);

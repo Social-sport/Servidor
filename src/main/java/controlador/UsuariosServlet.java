@@ -110,7 +110,7 @@ public class UsuariosServlet extends HttpServlet {
 			
 			if (usuario != null && contrasena.equals(usuario.getContrasena())) {
 				//El usuario existe y tiene esa contrasena, logeado
-				session= req.getSession(); 
+				session = req.getSession(); 
 				createSession(session, usuario);
 				response = "El usuario se ha logeado correctamente";
 				resp.sendRedirect("muro.html");

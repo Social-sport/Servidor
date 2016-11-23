@@ -90,6 +90,7 @@ public class DeportesServletTest {
 	
 	@Test
 	public void testListarDeportes() throws Exception {
+		parameters.put("tipoDeport", "ListAllSports");
 		servlet.doGet(request, response);
 		List<Deporte> deportes = repo.listarDeportes();
 		assertEquals(response_writer.toString(),gson.toJson(deportes));

@@ -76,24 +76,26 @@ public class DeportesServlet extends HttpServlet {
 		String response = null;
 		List<Deporte> deportes = null;
 		String email = req.getParameter("email");
+		String tipo = req.getParameter("tipoDeport");
 		
-		if (email == null) {
+		if (tipo.equals("ListAllSports")) {
 			//Devuelve los deportes almacenados en la base de datos
 			deportes = repo.listarDeportes();			
 			if (deportes.isEmpty()) {
 				response = "{ 'Error': 'No encuentra deportes en base de datos' }";				
-				System.out.println("Error: No encuentra deportes en base de datos");
+				System.out.println(response);
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);				
 			}
-			else {
-				
+			else {				
 				response= gson.toJson(deportes);				
 				System.out.println("json con deportes");				
 				System.out.println(response);
 				resp.setStatus(HttpServletResponse.SC_OK);
 			}
 		}
-		else {
+		
+		if (tipo.equals("ListUserSports")) {			
+			
 			//Devuelve los deportes a los que esta suscrito el usuario
 			deportes = repo.listarDeportesUsuario(email);
 			if (deportes.isEmpty()) {
@@ -107,7 +109,9 @@ public class DeportesServlet extends HttpServlet {
 				System.out.println("si los Deportes usuario con json");
 				System.out.println(response);
 			}
+			
 		}
+				
 		setResponse(response, resp);
 	}
 

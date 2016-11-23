@@ -85,7 +85,6 @@ public class UsuariosServlet extends HttpServlet {
 			}
 		}
 		if (tipo.equals("initSesion")) {
-
 			
 			System.out.println("email: " + email + " | pass: " + contrasena);
 			Usuario usuario = repo.findUsuario(email);

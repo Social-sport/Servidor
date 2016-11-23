@@ -42,7 +42,7 @@ public class RepositorioUsuario {
 		
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error en listar Usuarios" + e);
+			System.out.println("Error en listar Usuarios " + e);
 		}
 		
 		Usuario u = findUsuario(name);

@@ -35,11 +35,11 @@ public class UsuariosServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session= req.getSession();  
 		String response = null;
-		String email = req.getParameter("email");
+		String email = req.getParameter("emailR");
 		String nick = req.getParameter("username");
 		String nombre = req.getParameter("nombre");
 		String apellidos = req.getParameter("apellidos");
-		String contrasena = req.getParameter("contrasena");
+		String contrasena = req.getParameter("contrasenaR");
 		String foto = req.getParameter("foto");
 		if (foto == null) {
 			//Por defecto sin foto

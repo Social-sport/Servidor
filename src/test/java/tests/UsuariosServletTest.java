@@ -64,16 +64,16 @@ public class UsuariosServletTest {
 	
 	/*@Test
 	public void testRegistrarOK() throws Exception {
-		parameters.put("email", "try@try");
-		parameters.put("nombre", "try2");
+		parameters.put("emailR", "trys@trys");
+		parameters.put("nombre", "trys2");
 		parameters.put("apellidos", "try");
-		parameters.put("contrasena", "try");
+		parameters.put("contrasenaR", "try");
 		parameters.put("foto", "try");
 		parameters.put("fecha_nacimiento", "1900-10-10");
-		parameters.put("username", "try2");
+		parameters.put("username", "trys2");
 		RepositorioUsuario repoUsuario = new RepositorioUsuario();
 		//borramos porque el usuario ya existe de test anteriores
-		repoUsuario.borrarUsuario("try@try");
+		repoUsuario.borrarUsuario("trys@trys");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha insertado correctamente");
 	}*/

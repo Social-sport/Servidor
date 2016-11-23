@@ -54,30 +54,30 @@ public class DeportesServletTest {
 		when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
 	}
 
-	@Test
+	/*@Test
 	public void testSuscribirseDeporteErroneo() throws Exception {
 		
 		parameters.put("email", "asd");
 		parameters.put("deporte", "asdafgh");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al deporte");
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void testASuscribirseDeporteOK() throws Exception {
 		parameters.put("deporte", "Futbol");
 		parameters.put("email", "test");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha suscrito correctamente al deporte");
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void testZDarseDeBajaDeporteOK() throws Exception {
 		parameters.put("deporte", "Futbol");
 		parameters.put("email", "test");
 		servlet.doDelete(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha dado de baja correctamente del deporte");
-	}
+	}*/
 	
 	@Test
 	public void testDarseDeBajaDeporteErroneo() throws Exception {

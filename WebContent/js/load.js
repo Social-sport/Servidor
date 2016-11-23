@@ -2,6 +2,7 @@ $(document).ready(
     function() {
     	$("#topBar").load("topBar.html");
     	
+    	
     	$("#creaEvent").click(
                 function(event) {
                 	

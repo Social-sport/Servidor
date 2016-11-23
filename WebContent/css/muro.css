@@ -75,6 +75,13 @@ div.list-group-item {
 div.list-group-item.active small {
     color:#fff;
 }
+form.list-group-item {
+    height:auto;
+    min-height:100px;
+}
+form.list-group-item.active small {
+    color:#fff;
+}
 @media all and (max-width:1200px) and (min-width:992px){
 	#bSuscribete{
 	text-align: center;

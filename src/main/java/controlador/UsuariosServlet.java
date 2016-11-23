@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.Usuario;
 import modelo.RepositorioUsuario;
@@ -24,6 +25,7 @@ public class UsuariosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static RepositorioUsuario repo = new RepositorioUsuario();
 	private Gson gson = new Gson();
+	HttpSession session;
 
 	/**
 	 * Metodo para insertar usuarios a la BD.
@@ -31,6 +33,7 @@ public class UsuariosServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		HttpSession session= req.getSession();  
 		String response = null;
 		String email = req.getParameter("email");
 		String nick = req.getParameter("username");
@@ -49,6 +52,7 @@ public class UsuariosServlet extends HttpServlet {
 			//Inserta el usuario en la BD
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El usuario se ha insertado correctamente";
+			createSession(session, usuario);
 			resp.sendRedirect("muro.html");
 		}
 		else {
@@ -64,11 +68,26 @@ public class UsuariosServlet extends HttpServlet {
 	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+			throws ServletException, IOException {		
+	       
+
 		String response = null;
 		String tipo = req.getParameter("tipo");
 		String email = req.getParameter("emailL");
 		String contrasena = req.getParameter("contrasenaL");
+		
+		System.out.println("tipo=: "+tipo);
+		
+		if (tipo ==null) {
+			System.out.println("entra al if sesion");
+			
+			Usuario u = repo.findUsuario((String)session.getAttribute("email"));				
+			response= gson.toJson(u);
+			System.out.println("json con sesion");				
+			System.out.println(response);
+			resp.setStatus(HttpServletResponse.SC_OK);
+			tipo ="";
+		}
 		
 		if (tipo.equals("Buscar")) {
 			
@@ -88,10 +107,11 @@ public class UsuariosServlet extends HttpServlet {
 			
 			System.out.println("email: " + email + " | pass: " + contrasena);
 			Usuario usuario = repo.findUsuario(email);
-
+			
 			if (usuario != null && contrasena.equals(usuario.getContrasena())) {
 				//El usuario existe y tiene esa contrasena, logeado
-				
+				session= req.getSession(); 
+				createSession(session, usuario);
 				response = "El usuario se ha logeado correctamente";
 				resp.sendRedirect("muro.html");
 				resp.setStatus(HttpServletResponse.SC_OK);
@@ -172,5 +192,14 @@ public class UsuariosServlet extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void createSession(HttpSession session, Usuario usuario){
+		session.setAttribute("email", usuario.getEmail());
+		session.setAttribute("nick", usuario.getNick());
+		session.setAttribute("nombre", usuario.getNombre());
+		session.setAttribute("apellidos", usuario.getApellidos());
+		session.setAttribute("fecha", usuario.getFecha_nacimiento());
+		session.setAttribute("foto", usuario.getFoto());
 	}
 }

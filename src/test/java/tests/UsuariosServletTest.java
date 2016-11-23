@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,7 @@ public class UsuariosServletTest {
 	private UsuariosServlet servlet;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
+	private HttpSession session;
 	private StringWriter response_writer;
 	private Map<String, String> parameters;
 	
@@ -35,6 +37,7 @@ public class UsuariosServletTest {
 		servlet = new UsuariosServlet();
 		request = mock(HttpServletRequest.class);
 		response = mock(HttpServletResponse.class);
+		session = mock(HttpSession.class);
 		response_writer = new StringWriter();
 		when(request.getParameter(anyString())).thenAnswer(new Answer<String>() {
 			public String answer(InvocationOnMock invocation) {
@@ -42,6 +45,7 @@ public class UsuariosServletTest {
 			}
 		});
 		when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
+		when(request.getSession()).thenReturn(session);
 	}
 
 	@Test
@@ -53,16 +57,16 @@ public class UsuariosServletTest {
 		assertEquals(response_writer.toString(),"El usuario no se ha podido logear");
 	}
 	
-	/*@Test
+	@Test
 	public void testLoginOK() throws Exception {
 		parameters.put("emailL", "try@mail.com");
 		parameters.put("contrasenaL", "try");
 		parameters.put("tipo", "initSesion");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha logeado correctamente");
-	}*/
+	}
 	
-	/*@Test
+	@Test
 	public void testRegistrarOK() throws Exception {
 		parameters.put("emailR", "trys@trys");
 		parameters.put("nombre", "trys2");
@@ -76,7 +80,7 @@ public class UsuariosServletTest {
 		repoUsuario.borrarUsuario("trys@trys");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha insertado correctamente");
-	}*/
+	}
 	
 	@Test
 	public void testRegistrarErroneo() throws Exception {

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import modelo.Deporte;
 import modelo.RepositorioDeporte;
+import modelo.RepositorioUsuario;
 
 import com.google.gson.Gson;
 
@@ -23,17 +24,17 @@ public class DeportesServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioDeporte repo = new RepositorioDeporte();
+	private static RepositorioUsuario repoUsuario = new RepositorioUsuario();
 	private Gson gson = new Gson();
-	
+
 	/**
 	 * Metodo para suscribir un usuario a un deporte.
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
 		String response = null;
-		String email = req.getSession().getAttribute("email").toString();
+		String email = (String)req.getSession().getAttribute("email");
 		String deporte = req.getParameter("deporte");
 		boolean realizado = repo.suscribirseDeporte(deporte,email);
 		if (realizado) {
@@ -46,7 +47,7 @@ public class DeportesServlet extends HttpServlet {
 		}
 		setResponse(response, resp);
 	}
-	
+
 	/**
 	 * Metodo para dar de baja un usuario a un deporte.
 	 */
@@ -78,7 +79,7 @@ public class DeportesServlet extends HttpServlet {
 		List<Deporte> deportes = null;
 		String email = req.getParameter("email");
 		String tipo = req.getParameter("tipoDeport");
-		
+
 		if (tipo.equals("ListAllSports")) {
 			//Devuelve los deportes almacenados en la base de datos
 			deportes = repo.listarDeportes();		
@@ -94,23 +95,27 @@ public class DeportesServlet extends HttpServlet {
 				resp.setStatus(HttpServletResponse.SC_OK);
 			}
 		}
-		
-		if (tipo.equals("ListUserSports")) {			
-			
-			//Devuelve los deportes a los que esta suscrito el usuario
-			deportes = repo.listarDeportesUsuario(email);
-			if (deportes.isEmpty()) {
+
+		if (tipo.equals("ListUserSports")) {
+			if (repoUsuario.findUsuario(email) == null) {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				//response = "El usuario no ha suscrito deportes";
-				response = "{'Error': 'El usuario no ha suscrito deportes'}";
+				response = "El usuario no existe";
 			}
 			else {
-				resp.setStatus(HttpServletResponse.SC_OK);				
-				response= gson.toJson(deportes);				
-				System.out.println("si los Deportes usuario con json");
-				System.out.println(response);
+				//Devuelve los deportes a los que esta suscrito el usuario
+				deportes = repo.listarDeportesUsuario(email);
+				if (deportes.isEmpty()) {
+					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					//response = "{'Error': 'El usuario no ha suscrito deportes'}";
+				}
+				else {
+					resp.setStatus(HttpServletResponse.SC_OK);				
+					//response= gson.toJson(deportes);				
+					System.out.println("si los Deportes usuario con json");
+					System.out.println(response);
+				}
+				response= gson.toJson(deportes);
 			}
-			
 		}
 		setResponse(response, resp);
 	}

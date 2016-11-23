@@ -32,47 +32,55 @@ public class GUITest {
 	@Test
 	public void index(){
 		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
-		driver.get("http://localhost:8080/Servidor/index.html");	
+		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/");	
 		driver.findElement(By.id("iniciar")).click();
 		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 	
-//
-//	@Test
-//	public void login(){
-//		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-//		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/signup.html");			
-//		//driver.findElement(By.xpath(".//*[@id='account']/a")).click();
-//		driver.findElement(By.id("login-form-link")).click();
-//		driver.findElement(By.id("username")).sendKeys("test");
-//		driver.findElement(By.id("contrasena")).sendKeys("test");
-//		driver.findElement(By.id("login-submit")).click();
-//		/*try{
-//			element = driver.findElement (By.xpath(".//*[@id='account_logout']/a"));
-//		}catch (Exception e){
-//		}*/
-//		//Assert.assertNotNull(element);
-//		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
-//	}
+
 
 	@Test
 	public void login(){
 		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
-		driver.get("http://localhost:8080/Servidor/signup.html");	
+		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/signup.html");	
 		driver.findElement(By.id("login-form-link")).click();
 		driver.findElement(By.id("emailL")).sendKeys("test@test.test");
 		driver.findElement(By.id("contrasenaL")).sendKeys("test");
+		driver.findElement(By.id("remember")).click();
 		driver.findElement(By.id("login-submit")).click();
 		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 	
-	/*@Test
+	@Test
+	public void perfil(){
+		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
+		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/muro.html");	
+		driver.findElement(By.id("perfil")).click();
+		driver.findElement(By.id("mySportsButton")).click();
+		driver.findElement(By.id("myEventsButton")).click();
+		driver.findElement(By.id("creadosCrearEventoButton")).click();
+		driver.findElement(By.id("perfil")).click();
+		driver.findElement(By.id("myEventsButton")).click();
+		driver.findElement(By.id("verEventosButton")).click();
+		driver.findElement(By.id("perfil")).click();
+		driver.findElement(By.id("myFriendsButton")).click();
+		driver.findElement(By.id("myMessagesButton")).click();
+		driver.findElement(By.id("creaEvent")).click();
+		driver.findElement(By.id("nombre")).sendKeys("Nombre de prueba");
+		driver.findElement(By.id("hora")).sendKeys("Hora del evento");
+		driver.findElement(By.id("fecha")).sendKeys("Fecha del evento");
+		driver.findElement(By.id("descripcion")).sendKeys("Lorem ipsum dolor sit amet, "
+				+ "consectetur adipiscing elit. Integer eget lacus et massa vestibulum "
+				+ "scelerisque. Nulla ac leo sed orci egestas viverra ac a elit.");
+		driver.findElement(By.id("deporte")).click();
+		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
+	}
+	
+	@Test
 	public void muroVacio(){
 		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
 		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
-		driver.get("http://localhost:8080/Servidor/muro.html");	
+		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/muro.html");	
 		driver.findElement(By.className("navbar-brand")).click();
 		driver.findElement(By.id("search")).sendKeys("amigo1");
 		driver.findElement(By.id("buttonBuscar")).click();
@@ -95,30 +103,11 @@ public class GUITest {
 		driver.findElement(By.id("socialSport")).click();
 		driver.findElement(By.id("home"));
 		driver.findElement(By.id("about")).click();
-		driver.findElement(By.id("cerrarSesion")).click();
 		driver.findElement(By.id("perfil")).click();
+		driver.findElement(By.id("home"));
+		driver.findElement(By.id("cerrarSesion")).click();
 		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
-	}*/
-	
-//	@Test
-//	public void registro() throws InterruptedException{
-//		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-//		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/signup.html");	
-//		//driver.findElement(By.xpath(".//*[@id='account']/a")).click();
-//		driver.findElement(By.id("register-form-link")).click();
-//		//driver.findElement(By.id("username")).sendKeys("selenium");
-//		driver.findElement(By.id("apellidos")).sendKeys("selenium");
-//		driver.findElement(By.id("email")).sendKeys("selenium@selenium");
-//		//driver.findElement(By.id("contrasena")).sendKeys("selenium");
-//		driver.findElement(By.id("fecha_nacimiento")).sendKeys("16-11-2016");
-//		driver.findElement(By.id("register-submit")).click();
-//		/*try{
-//			element = driver.findElement (By.xpath(".//*[@id='account_logout']/a"));
-//		}catch (Exception e){
-//		}*/
-//		//Assert.assertNotNull(element);
-//		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
-//	}
+	}
 	
 	
 	
@@ -126,19 +115,13 @@ public class GUITest {
 	public void registro() throws InterruptedException{
 		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
 		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
-		driver.get("http://localhost:8080/Servidor/signup.html");	
+		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/signup.html");	
 		driver.findElement(By.id("register-form-link")).click();
 		driver.findElement(By.id("username")).sendKeys("test");
-		try {
-			driver.findElement(By.id("emailR")).sendKeys("test@test.test");
-			driver.findElement(By.id("contrasenaR")).sendKeys("testtesttest");
-		}
-		catch(ElementNotVisibleException e){
-			System.out.println("---------- ERROR ----------");
-			System.err.println(e.getMessage());
-			System.out.println("---------- ERROR ----------");
-		}	
-		driver.findElement(By.id("apellidos")).sendKeys("test");
+		driver.findElement(By.id("emailR")).sendKeys("test@test.test");
+		driver.findElement(By.id("contrasenaR")).sendKeys("testtesttest");
+		driver.findElement(By.id("nombre")).sendKeys("Test");
+		driver.findElement(By.id("apellidos")).sendKeys("Test");
 		driver.findElement(By.id("fecha_nacimiento")).sendKeys("16-11-2016");
 		driver.findElement(By.id("register-submit")).click();
 		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());

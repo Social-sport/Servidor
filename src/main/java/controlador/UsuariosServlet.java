@@ -43,7 +43,7 @@ public class UsuariosServlet extends HttpServlet {
 		String foto = req.getParameter("foto");
 		if (foto == null) {
 			//Por defecto sin foto
-			foto = "";
+			foto = "../img/profile.jpg";
 		}
 		String fecha_nacimiento = req.getParameter("fecha_nacimiento");
 		Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);

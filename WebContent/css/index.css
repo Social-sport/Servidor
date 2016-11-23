@@ -30,12 +30,10 @@ a:hover {
  * Base structure
  */
 
-h1{
+h1, p{
   font-family: 'Noto Sans', sans-serif;
-}
-
-p{
-  font-family: 'Noto Sans', sans-serif;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 @font-face {

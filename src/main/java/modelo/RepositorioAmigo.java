@@ -28,6 +28,8 @@ public class RepositorioAmigo {
 		String sql = "INSERT INTO Amigos"
 				+ "(usuario, amigo, fecha)"
 				+ " VALUES (\""+amigo.getUsuario()+"\",\""+amigo.getAmigo()+"\",\""+amigo.getFecha()+"\")";
+		
+		System.out.println(sql);
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.executeUpdate(sql);

@@ -22,7 +22,7 @@ $(document).ready(
                                 "</div>"+
                                 "<div class='col-md-6'>"+
                                     "<input type='hidden' name='tipoFriendSuscribe' value='SuscribeFriend' id='tipoFriendSuscribe'/>"+
-                                    "<input type='hidden' name='amigo' value='"+search[i].nombre+"'>"+
+                                    "<input type='hidden' name='emailAmigo' value='"+search[i].email+"'>"+
                                     "<h4 class='list-group-item-heading'>"+search[i].nombre+"</h4>"+
                                     "<p class='list-group-item-text'> "+search[i].apellidos+" </p>"+
                                 "</div>"+

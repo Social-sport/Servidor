@@ -2,6 +2,8 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.Amigo;
 import modelo.RepositorioAmigo;
@@ -31,10 +34,16 @@ public class AmigosServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String response = null;
-		String usuario = req.getParameter("usuario");
-		String amigoSeguido = req.getParameter("amigo");
-		String fecha = req.getParameter("fecha");
+		HttpSession session = (HttpSession) req.getSession(); 
+		String response = null;		
+		String usuario = (String)session.getAttribute("email");
+		System.out.println("usuario: "+usuario);
+		String amigoSeguido = req.getParameter("emailAmigo");
+		System.out.println("amigoSeguido: "+amigoSeguido);
+		Date fech = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        String fecha = format.format(fech);
+		
 		Amigo amigo = new Amigo(usuario,amigoSeguido,fecha);
 		boolean realizado = repoAmigo.insertarAmigo(amigo);
 		//inserta un amigo en la BD
@@ -80,6 +89,7 @@ public class AmigosServlet extends HttpServlet {
 		String response = null;
 		List<Amigo> amigos = null;
 		String usuario = req.getParameter("usuario");
+		
 		Usuario buscado = repoUsuario.findUsuario(usuario);
 		if (usuario == null || buscado == null) {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

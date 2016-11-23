@@ -33,7 +33,7 @@ public class UsuariosServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		HttpSession session= req.getSession();  
+		session= req.getSession();  
 		String response = null;
 		String email = req.getParameter("emailR");
 		String nick = req.getParameter("username");
@@ -50,10 +50,10 @@ public class UsuariosServlet extends HttpServlet {
 		boolean realizado = repo.insertarUsuario(usuario);
 		if (realizado) {
 			//Inserta el usuario en la BD
-			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El usuario se ha insertado correctamente";
 			createSession(session, usuario);
 			resp.sendRedirect("muro.html");
+			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 		else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

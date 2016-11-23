@@ -5,7 +5,6 @@ $(document).ready(
             url : "/Servidor/usuarios",            
             dataType: "JSON",
             success : function(ms) {
-            	
             	document.getElementById("perfil").innerHTML = ms.nombre;  
             	document.getElementById("nickUserP").innerHTML = ms.nick; 
             	document.getElementById("fullNameP").innerHTML = ms.nombre + " " + ms.apellidos; 
@@ -17,9 +16,8 @@ $(document).ready(
             	$("#imgUserP").attr("src", ms.foto);
             	$("#mailUserEP").val(ms.email);
             },
-            error : function() {           	
-            		
-              alert("problema con encontrar el usuario: sesion no valida");
+            error : function() {
+              alert("sesion no iniciada");
               window.location.replace("/Servidor/");
             }
             

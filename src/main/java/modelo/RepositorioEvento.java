@@ -22,7 +22,7 @@ public class RepositorioEvento {
 	}
 
 	/**
-	 * Devuelve la información del evento con nombre <nombre>
+	 * Devuelve la informacion del evento con nombre <nombre>
 	 */
 	public Evento findEvento(String nombre) {
 		Evento evento = null;

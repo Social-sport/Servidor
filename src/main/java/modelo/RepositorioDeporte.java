@@ -22,7 +22,7 @@ public class RepositorioDeporte {
 	}
 
 	/**
-	 * Devuelve la información del deporte con nombre <nombre> almacenado en la BD
+	 * Devuelve la informacion del deporte con nombre <nombre> almacenado en la BD
 	 */
 	public Deporte findDeporte(String nombre) {
 		Deporte deporte = null;

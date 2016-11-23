@@ -33,33 +33,95 @@ public class UsuariosServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+
 		session= req.getSession();  
 		String response = null;
-		String email = req.getParameter("emailR");
-		String nick = req.getParameter("username");
-		String nombre = req.getParameter("nombre");
-		String apellidos = req.getParameter("apellidos");
-		String contrasena = req.getParameter("contrasenaR");
-		String foto = req.getParameter("foto");
-		if (foto == null) {
-			//Por defecto sin foto
-			foto = "/Servidor/img/profile.jpg";
+		String email = null;
+		String nick = null;
+		String nombre = null;
+		String apellidos = null;
+		String contrasena = null;
+		String foto = null;
+		String fecha_nacimiento = null;
+		
+		String tipoPost = req.getParameter("tipoPost");
+		System.out.println("tipoPost=: "+tipoPost);
+		
+		if (tipoPost.equals("Actualizar")) {
+			
+			email = session.getAttribute("email").toString();
+			nick = req.getParameter("nick");
+			nombre = req.getParameter("nombre");
+			apellidos = req.getParameter("apellidos");
+			contrasena = req.getParameter("contrasena");
+			foto = req.getParameter("foto");
+			fecha_nacimiento = req.getParameter("fecha_nacimiento");
+			Usuario buscado = repo.findUsuario(email);
+			
+			if (buscado!=null) {
+				if (nick.equals("")) {
+					nick = buscado.getNick();
+				}
+				if (nombre.equals("")) {
+					nombre = buscado.getNombre();
+				}
+				if (apellidos.equals("")) {
+					apellidos = buscado.getApellidos();
+				}
+				if (contrasena == "") {
+					contrasena = buscado.getContrasena();
+				}
+				if (foto.equals("")) {
+					foto = buscado.getFoto();
+				}
+				if (fecha_nacimiento.equals("")) {
+					fecha_nacimiento = buscado.getFecha_nacimiento();
+				}
+
+				Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
+				boolean realizado = repo.actualizarUsuario(usuario);
+				if (buscado!=null && realizado) {
+					//Actualiza el usuario
+					resp.sendRedirect("profile.html");
+					response = "El usuario se ha actualizado correctamente";
+					resp.setStatus(HttpServletResponse.SC_OK);
+				}
+				else {
+					response = "El usuario no se ha podido actualizar";
+					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				}
+			}
 		}
-		String fecha_nacimiento = req.getParameter("fecha_nacimiento");
-		Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
-		boolean realizado = repo.insertarUsuario(usuario);
-		if (realizado) {
-			//Inserta el usuario en la BD
-			response = "El usuario se ha insertado correctamente";
-			createSession(session, usuario);
-			resp.sendRedirect("muro.html");
-			resp.setStatus(HttpServletResponse.SC_OK);
+		
+		if (tipoPost.equals("Registro")) {
+			email = req.getParameter("emailR");
+			nick = req.getParameter("username");
+			nombre = req.getParameter("nombre");
+			apellidos = req.getParameter("apellidos");
+			contrasena = req.getParameter("contrasenaR");
+			foto = req.getParameter("foto");
+			if (foto == null) {
+				//Por defecto sin foto
+				foto = "/Servidor/img/profile.jpg";
+			}
+			fecha_nacimiento = req.getParameter("fecha_nacimiento");
+			Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
+			boolean realizado = repo.insertarUsuario(usuario);
+			if (realizado) {
+				//Inserta el usuario en la BD
+				response = "El usuario se ha insertado correctamente";
+				createSession(session, usuario);
+				resp.sendRedirect("muro.html");
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
+			else {
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response = "El usuario no se ha podido insertar";
+				resp.sendRedirect("signup.html");
+			}
 		}
-		else {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response = "El usuario no se ha podido insertar";
-			resp.sendRedirect("signup.html");
-		}
+		
 		setResponse(response, resp);
 	}
 	
@@ -135,56 +197,6 @@ public class UsuariosServlet extends HttpServlet {
 		}
 		
 		setResponse(response, resp);
-	}
-
-	/**
-	 * Metodo para actualizar los datos de un usuario.
-	 */
-	@Override
-	public void doPut(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		String response = null;
-		String email = req.getParameter("email");
-		String nick = req.getParameter("username");
-		String nombre = req.getParameter("nombre");
-		String apellidos = req.getParameter("apellidos");
-		String contrasena = req.getParameter("contrasena");
-		String foto = req.getParameter("foto");
-		String fecha_nacimiento = req.getParameter("fecha_nacimiento");
-		Usuario buscado = repo.findUsuario(email);
-		if (buscado!=null) {
-			if (nick == null) {
-				nombre = buscado.getNick();
-			}
-			if (nombre == null) {
-				nombre = buscado.getNombre();
-			}
-			if (apellidos == null) {
-				apellidos = buscado.getApellidos();
-			}
-			if (contrasena == null) {
-				contrasena = buscado.getContrasena();
-			}
-			if (foto == null) {
-				foto = buscado.getFoto();
-			}
-			if (fecha_nacimiento == null) {
-				fecha_nacimiento = buscado.getFecha_nacimiento();
-			}
-
-			Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
-			boolean realizado = repo.actualizarUsuario(usuario);
-			if (buscado!=null && realizado) {
-				//Actualiza el usuario
-				resp.setStatus(HttpServletResponse.SC_OK);
-				response = "El usuario se ha actualizado correctamente";
-			}
-			else {
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response = "El usuario no se ha podido actualizar";
-			}
-			setResponse(response, resp);
-		}
 	}
 
 	/**

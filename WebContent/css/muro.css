@@ -25,7 +25,7 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  /*font-family: myFirstFont;*/
+  font-family: myFirstFont;
 }
 
 P {
@@ -43,7 +43,7 @@ a.btn {
 }
 @font-face {
     font-family: myFirstFont;
-    src: url('airstrikelaser.ttf');
+    src: url('../img/airstrikelaser.ttf');
 }
 
 #containerDeportes {

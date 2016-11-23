@@ -62,14 +62,21 @@ public class UsuariosServlet extends HttpServlet {
 		}
 		setResponse(response, resp);
 	}
+	
+	private void Sesion(HttpServletRequest req, Usuario usuario){
+				
+		session = req.getSession();		
+		session.setAttribute("usuario",usuario);
+		
+	}
+	
 
 	/**
 	 * Metodo para devolver informacion de un usuario.
 	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {		
-	       
+			throws ServletException, IOException {	       
 
 		String response = null;
 		String tipo = req.getParameter("tipo");
@@ -79,8 +86,6 @@ public class UsuariosServlet extends HttpServlet {
 		System.out.println("tipo=: "+tipo);
 		
 		if (tipo ==null) {
-			System.out.println("entra al if sesion");
-			
 			Usuario u = repo.findUsuario((String)session.getAttribute("email"));				
 			response= gson.toJson(u);
 			System.out.println("json con sesion");				
@@ -122,6 +127,13 @@ public class UsuariosServlet extends HttpServlet {
 				resp.sendRedirect("signup.html");
 			}
 		}
+		
+		if (tipo.equals("closeSesion")) {			
+			session = req.getSession(); 
+			session.invalidate();
+			resp.setStatus(HttpServletResponse.SC_OK);			
+		}
+		
 		setResponse(response, resp);
 	}
 

@@ -20,7 +20,17 @@ $(document).ready(
             error : function() {           	
             		
               alert("problema con encontrar el usuario: sesion no valida");
+              window.location.replace("/Servidor/");
             }
             
-          });    	
+          });
+    	
+    	$("#cerrarSesion").click(
+                function(event) {
+                    event.preventDefault();
+                    $.get('usuarios', {tipo:'closeSesion'}, function (data){
+                    	window.location.replace("/Servidor/");
+                    	});                    
+    	
+          });
     });

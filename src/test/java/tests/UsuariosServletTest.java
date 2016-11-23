@@ -46,33 +46,34 @@ public class UsuariosServletTest {
 
 	@Test
 	public void testLoginErroneo() throws Exception {
-		parameters.put("email", "asd");
-		parameters.put("contrasena", "asdafgh");
+		parameters.put("emailL", "asd");
+		parameters.put("contrasenaL", "asdafgh");
+		parameters.put("tipo", "initSesion");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido logear");
 	}
 	
-	@Test
+	/*@Test
 	public void testLoginOK() throws Exception {
-		parameters.put("emailL", "test");
-		parameters.put("contrasenaL", "test");
+		parameters.put("emailL", "try@mail.com");
+		parameters.put("contrasenaL", "try");
+		parameters.put("tipo", "initSesion");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha logeado correctamente");
-	}
-	
+	}*/
 	
 	/*@Test
 	public void testRegistrarOK() throws Exception {
-		parameters.put("email", "try");
-		parameters.put("nombre", "try");
+		parameters.put("email", "try@try");
+		parameters.put("nombre", "try2");
 		parameters.put("apellidos", "try");
 		parameters.put("contrasena", "try");
 		parameters.put("foto", "try");
 		parameters.put("fecha_nacimiento", "1900-10-10");
-		parameters.put("username", "try");
+		parameters.put("username", "try2");
 		RepositorioUsuario repoUsuario = new RepositorioUsuario();
 		//borramos porque el usuario ya existe de test anteriores
-		repoUsuario.borrarUsuario("try");
+		repoUsuario.borrarUsuario("try@try");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha insertado correctamente");
 	}*/

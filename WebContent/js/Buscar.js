@@ -17,7 +17,7 @@ $(document).ready(
                             $("#seccion2,#seccionAmigos").append("<form action='/Servidor/amigos' method='POST' class='list-group-item active'  id='listSearchs'>"+
                                     "<div class='media col-md-3'>"+
                                     "<figure class='pull-left'>"+
-                                        "<img class='media-object img-rounded img-responsive'  src='"+ search[i].Foto+"' alt='placehold.it/350x250' >"+
+                                        "<img class='media-object img-rounded img-responsive'  src='"+ search[i].foto+"' alt='placehold.it/350x250' >"+
                                     "</figure>"+
                                 "</div>"+
                                 "<div class='col-md-6'>"+

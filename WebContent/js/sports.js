@@ -27,7 +27,7 @@ $(document).ready(
                                         "<input type='hidden' name='tipoDeporte' value='SuscribeSports' id='nameDeport'/>"+
                                         "<input type='hidden' name='deporte' value='"+listSport[i].nombre+"'>"+
                                         "<h4 class='list-group-item-heading'>"+listSport[i].nombre+"</h4>"+
-                                        "<p class='list-group-item-text'> "+listSport[i].Descripcion+" </p>"+
+                                        "<p class='list-group-item-text' id='list-group-item-text'> "+listSport[i].Descripcion+" </p>"+
                                     "</div>"+
                                     "<div class='col-md-3 text-center'>"+
                                         "<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Suscribete'>"+

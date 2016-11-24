@@ -86,6 +86,11 @@ form.list-group-item.active small {
 	#bSuscribete{
 	text-align: center;
 	padding: 10px 0; }
+	
+	#bSeguir {
+	text-align: center;
+	padding: 10px 10px;;
+	}
 }
 #bSuscribete {
   font-size: 100%;
@@ -93,11 +98,45 @@ form.list-group-item.active small {
 #bSeguir {
   font-size: 100%;
 }
+
+@media all and (max-width:375px){
+	
+	#bSuscribete{
+		padding: 0;
+		text-align: center;
+		margin: 10px 0;
+		padding: 10px 5px;
+		font-size: 90%;
+	}
+	#bSeguir {
+		padding: 0;
+		text-align: center;
+		margin: 10px 0;
+		padding: 10px 5px;
+		font-size: 90%;
+	}
+	#list-group-item-text{
+		font-size: 80%;
+	}
+}
+
 @media all and (max-width:320px){
 	
 	#bSuscribete{
+		padding: 0;
 		text-align: center;
 		margin: 10px 0;
+		padding: 10px 0px;
 		font-size: 80%;
+	}
+	#bSeguir {
+		padding: 0;
+		text-align: center;
+		margin: 10px 0;
+		padding: 10px 0px;
+		font-size: 80%;
+	}
+	#list-group-item-text{
+		font-size: 70%;
 	}
 }

@@ -110,7 +110,7 @@ public class RepositorioDeporte {
 	 */
 	public List<Deporte> listarDeportesUsuario(String email) {
 		List<Deporte> deportes = new LinkedList<Deporte>();
-		String sql = "SELECT Deporte.Nombre FROM Deporte,DeporteSuscrito WHERE Deporte.Nombre=DeporteSuscrito.deporte AND DeporteSuscrito.usuario='"+email+"'";
+		String sql = "SELECT Deporte.Nombre, Deporte.Descripcion, Deporte.Foto FROM Deporte,DeporteSuscrito WHERE Deporte.Nombre=DeporteSuscrito.deporte AND DeporteSuscrito.usuario='"+email+"'";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);

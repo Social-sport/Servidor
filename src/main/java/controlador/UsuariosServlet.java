@@ -166,7 +166,19 @@ public class UsuariosServlet extends HttpServlet {
 			resp.setStatus(HttpServletResponse.SC_OK);
 			tipo ="";
 		}
-		
+		if (tipo.equals("ListEveryUsers")) {			
+			
+			List<Usuario> usuarios = repo.ListEveryUsers();				
+			if (usuarios.isEmpty()) {				
+				response = "No se encuentran usuarios";
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}else{					
+				response= gson.toJson(usuarios);				
+				System.out.println("json con todos los usuarios");				
+				System.out.println(response);
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
+		}
 		if (tipo.equals("Buscar")) {
 			
 			String name = req.getParameter("search");

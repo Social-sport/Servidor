@@ -21,8 +21,31 @@ public class RepositorioUsuario {
 		this.conexion = ConexionBD.getConexion();
 	}
 	
+	public List<Usuario> ListEveryUsers() {
+		List<Usuario> Usuarios = new LinkedList<Usuario>();		
+		String sql = "SELECT * FROM Usuario";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
+							rs.getString("apellidos"),rs.getString("contrasena"),
+							rs.getString("fecha_nacimiento"),rs.getString("foto"),
+							rs.getString("nick")));			
+			}
+			stmt.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en listar Usuarios " + e);
+		}			
+
+		return Usuarios;
+	}
+	
 	/**
-	 * Lista los deportes almacenados en la BD
+	 * Lista los usuarios almacenados en la BD
 	 */
 	public List<Usuario> listarUsuariosBusqueda(String name) {
 		
@@ -129,4 +152,6 @@ public class RepositorioUsuario {
 			return false;
 		}
 	}
+
+	
 }

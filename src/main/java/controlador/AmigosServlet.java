@@ -34,7 +34,7 @@ public class AmigosServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("entra al post amigo servlet ");
+		
 		HttpSession session = (HttpSession) req.getSession(); 
 		String response = null;		
 		String usuario = (String)session.getAttribute("email");

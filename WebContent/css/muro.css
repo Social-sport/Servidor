@@ -93,3 +93,11 @@ form.list-group-item.active small {
 #bSeguir {
   font-size: 100%;
 }
+@media all and (max-width:320px){
+	
+	#bSuscribete{
+		text-align: center;
+		margin: 10px 0;
+		font-size: 80%;
+	}
+}

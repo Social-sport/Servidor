@@ -42,6 +42,8 @@ public class UsuariosServlet extends HttpServlet {
 		String nombre = null;
 		String apellidos = null;
 		String contrasena = null;
+		String newContrasena = null;
+		String confNewContrasena = null;
 		String foto = null;
 		String fecha_nacimiento = null;
 		
@@ -55,10 +57,19 @@ public class UsuariosServlet extends HttpServlet {
 			nombre = req.getParameter("nombre");
 			apellidos = req.getParameter("apellidos");
 			contrasena = req.getParameter("contrasena");
+			newContrasena = req.getParameter("newContrasena");
+			confNewContrasena = req.getParameter("confirmNewContrasena");
 			foto = req.getParameter("foto");
 			fecha_nacimiento = req.getParameter("fecha_nacimiento");
 			Usuario buscado = repo.findUsuario(email);
-			
+
+			if (!(newContrasena.equals(""))) {
+				if (newContrasena.equals(confNewContrasena)) {
+					if (contrasena.equals(buscado.getContrasena())) {
+						contrasena = newContrasena;
+					}
+				}
+			}
 			if (buscado!=null) {
 				if (nick.equals("")) {
 					nick = buscado.getNick();

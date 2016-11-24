@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -94,6 +95,7 @@ public class AmigosServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String response = null;
 		List<Amigo> amigos = null;
+		List<Usuario> amigosUser = new LinkedList<>();
 		String email = req.getSession().getAttribute("email").toString();
 		
 		Usuario buscado = repoUsuario.findUsuario(email);
@@ -107,19 +109,19 @@ public class AmigosServlet extends HttpServlet {
 			//devuelve los amigos del usuario
 			amigos = repoAmigo.listarAmigos(email);
 			if (amigos.isEmpty()) {
-				response = gson.toJson(amigos);
-				System.out.println("json con amigos: "+response);
-				resp.sendRedirect("muro.html");
-				resp.setStatus(HttpServletResponse.SC_OK);
+				response = gson.toJson(amigosUser);
+				System.out.println("json vacio con amigos: "+response);
 			}
 			else {
-				response = gson.toJson(amigos);
-				System.out.println("json con amigos: "+response);
-				resp.sendRedirect("muro.html");
-				resp.setStatus(HttpServletResponse.SC_OK);
+				for (Amigo ami : amigos) {
+					amigosUser.add(repoUsuario.findUsuario(ami.getAmigo()));
+				}
+				response = gson.toJson(amigosUser);
+				System.out.println("json lleno con amigos: "+response);
 			}
 		}
 		setResponse(response, resp);
+		resp.sendRedirect("muro.html");
 	}
 
 	/**

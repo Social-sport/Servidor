@@ -2,7 +2,7 @@ $(document).ready(
 	function() {
 
 
-		$.get('deportes', {tipoDeport:'ListUserSports',email:'luis@socialsport'}, function (listSport){
+		$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){
 
 				if (listSport.length == 0) {
             		$("#seccion1").html("<img src='img/Sports.png' alt='Sports Bootstrap Theme'>");

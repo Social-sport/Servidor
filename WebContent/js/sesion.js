@@ -17,7 +17,7 @@ $(document).ready(
             	$("#mailUserEP").val(ms.email);
             },
             error : function() {
-              alert("sesion no iniciada");
+              
               window.location.replace("/Servidor/");
             }
             

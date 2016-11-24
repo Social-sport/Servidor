@@ -11,6 +11,10 @@ $(document).ready(
                     data : $("#tipoDeport").serialize(),
                     dataType: "JSON",                    
                     success : function(listSport) {
+                    	
+                    	if (listSport.length == 0) {
+                    		$("#seccion1").html("<div><h3 id='seccion'>Ya estas Suscrito a todos los Deportes</h3></div>");
+                  		}else{
 
                         $("#seccion1").html("<div><h3 id='seccion'>Deportes Disponibles</h3></div>");
                         
@@ -37,6 +41,7 @@ $(document).ready(
                                 "</form>");
                         });
 
+                  		};
                     },
                     error : function() {                    	
                     	$("#seccion1").html("<div class='alert alert-danger lead'>Error: No encuentra deportes en base de datos</div>");

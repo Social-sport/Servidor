@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.Deporte;
 import modelo.RepositorioDeporte;
@@ -36,14 +38,15 @@ public class DeportesServlet extends HttpServlet {
 		String response = null;
 		String email = (String)req.getSession().getAttribute("email");
 		String deporte = req.getParameter("deporte");
+		
 		boolean realizado = repo.suscribirseDeporte(deporte,email);
 		if (realizado) {
 			resp.setStatus(HttpServletResponse.SC_OK);
-			response = "El usuario se ha suscrito correctamente al deporte";
+			resp.sendRedirect("muro.html");
 		}
 		else {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response = "El usuario no se ha podido suscribir al deporte";
+			resp.setStatus(HttpServletResponse.SC_OK);
+			resp.sendRedirect("muro.html");
 		}
 		setResponse(response, resp);
 	}
@@ -77,26 +80,54 @@ public class DeportesServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String response = null;
 		List<Deporte> deportes = null;
-		String email = req.getParameter("email");
+		List<Deporte> deportesSus = null;
+		List<Deporte> deportesDef = new LinkedList<Deporte>();
+		String email = (String)req.getSession().getAttribute("email");
 		String tipo = req.getParameter("tipoDeport");
+		String deporte = req.getParameter("deporte");
 
-		if (tipo.equals("ListAllSports")) {
-			//Devuelve los deportes almacenados en la base de datos
-			deportes = repo.listarDeportes();		
-			if (deportes.isEmpty()) {
-				response = "{ 'Error': 'No encuentra deportes en base de datos' }";				
-				System.out.println(response);
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);				
-			}
-			else {				
-				response= gson.toJson(deportes);	
+		if (tipo.equals("ListAllSports")) {			
+			deportes = repo.listarDeportes();	
+			deportesSus = repo.listarDeportesUsuario(email);
+
+			if (deportesSus.isEmpty()) {
+				deportesDef = deportes;
+			} else {
+				for (int i = 0; i < deportes.size(); i++) {
+					
+					for (int j = 0; j < deportesSus.size(); j++) {
+						
+						if (!(deportes.get(i).getNombre().equals(deportesSus.get(j).getNombre()))) {
+							
+							if (!(deportesDef.contains(deportes.get(i)))& !(deportesSus.contains(deportes.get(i)))) {
+								deportesDef.add(deportes.get(i));
+							}
+						}
+						
+					}
+					
+				}
+
+			}							
+				response= gson.toJson(deportesDef);	
 				System.out.println("json con deportes");				
 				System.out.println(response);
 				resp.setStatus(HttpServletResponse.SC_OK);
-			}
+			
 		}
-
-		if (tipo.equals("ListUserSports")) {
+		if (tipo.equals("DesSuscribe")) {
+			
+			if(repo.darseDeBajaDeporte(deporte,email)){
+				resp.setStatus(HttpServletResponse.SC_OK);
+				resp.sendRedirect("muro.html");
+			}else{
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response = "El usuario no existe";
+			}
+			
+		}
+		if (tipo.equals("ListUserSports")) {			
+				
 			if (repoUsuario.findUsuario(email) == null) {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response = "El usuario no existe";
@@ -105,16 +136,15 @@ public class DeportesServlet extends HttpServlet {
 				//Devuelve los deportes a los que esta suscrito el usuario
 				deportes = repo.listarDeportesUsuario(email);
 				if (deportes.isEmpty()) {
-					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-					//response = "{'Error': 'El usuario no ha suscrito deportes'}";
+					resp.setStatus(HttpServletResponse.SC_OK);
+					response = "{'Error': 'El usuario no ha suscrito deportes'}";
 				}
-				else {
-					resp.setStatus(HttpServletResponse.SC_OK);				
-					//response= gson.toJson(deportes);				
+				else {			
+					response= gson.toJson(deportes);				
 					System.out.println("si los Deportes usuario con json");
 					System.out.println(response);
 				}
-				response= gson.toJson(deportes);
+				
 			}
 		}
 		setResponse(response, resp);

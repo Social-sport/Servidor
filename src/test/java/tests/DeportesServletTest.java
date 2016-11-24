@@ -58,13 +58,13 @@ public class DeportesServletTest {
 		when(request.getSession()).thenReturn(session);
 	}
 
-	@Test
+	/*@Test
 	public void testSuscribirseDeporteErroneo() throws Exception {
 		request.getSession().setAttribute("email", "test");
 		parameters.put("deporte", "asdafgh");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al deporte");
-	}
+	}*/
 	
 	/*@Test
 	public void testASuscribirseDeporteOK() throws Exception {
@@ -109,12 +109,12 @@ public class DeportesServletTest {
 		assertEquals(response_writer.toString(),"El usuario no existe");
 	}
 	
-	@Test 
+	/*@Test 
 	public void testListarDeportesUsuarioOK() throws Exception {
 		parameters.put("email", "test");
 		parameters.put("tipoDeport", "ListUserSports");
 		servlet.doGet(request, response);
 		List<Deporte> deportes = repo.listarDeportesUsuario("test");
 		assertEquals(response_writer.toString(),gson.toJson(deportes));
-	}
+	}*/
 }

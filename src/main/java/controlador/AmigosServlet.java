@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import modelo.Amigo;
 import modelo.RepositorioAmigo;
 import modelo.RepositorioUsuario;
@@ -27,6 +29,7 @@ public class AmigosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static RepositorioAmigo repoAmigo = new RepositorioAmigo();
 	private static RepositorioUsuario repoUsuario = new RepositorioUsuario();
+	private Gson gson = new Gson();
 
 	/**
 	 * Metodo para seguir a un usuario.
@@ -49,13 +52,14 @@ public class AmigosServlet extends HttpServlet {
 		boolean realizado = repoAmigo.insertarAmigo(amigo);
 		//inserta un amigo en la BD
 		if (realizado) {
-			
 			response = "El amigo se ha insertado correctamente";
 			resp.setStatus(HttpServletResponse.SC_OK);
+			resp.sendRedirect("muro.html");
 		}
 		else {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response = "El amigo no se ha podido insertar";
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			resp.sendRedirect("muro.html");
 		}
 		setResponse(response, resp);
 	}
@@ -90,22 +94,29 @@ public class AmigosServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String response = null;
 		List<Amigo> amigos = null;
-		String usuario = req.getParameter("usuario");
+		String email = req.getSession().getAttribute("email").toString();
 		
-		Usuario buscado = repoUsuario.findUsuario(usuario);
-		if (usuario == null || buscado == null) {
+		Usuario buscado = repoUsuario.findUsuario(email);
+		System.out.println(email);
+		if (email == null || buscado == null) {
+			System.out.println("Usuario no encontrado");
+			resp.sendRedirect("signup.html");
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response = "El usuario no existe";
 		}
 		else {
 			//devuelve los amigos del usuario
-			resp.setStatus(HttpServletResponse.SC_OK);
-			amigos = repoAmigo.listarAmigos(usuario);
+			amigos = repoAmigo.listarAmigos(email);
 			if (amigos.isEmpty()) {
-				response = "El usuario no tiene amigos";
+				response = gson.toJson(amigos);
+				System.out.println("json con amigos: "+response);
+				resp.sendRedirect("muro.html");
+				resp.setStatus(HttpServletResponse.SC_OK);
 			}
 			else {
-				response = "Amigos";
+				response = gson.toJson(amigos);
+				System.out.println("json con amigos: "+response);
+				resp.sendRedirect("muro.html");
+				resp.setStatus(HttpServletResponse.SC_OK);
 			}
 		}
 		setResponse(response, resp);

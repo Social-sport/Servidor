@@ -18,8 +18,8 @@ $(document).ready(
 					"<div class='col-md-6'>"+
 					"<input type='hidden' name='tipoDeport' value='DesSuscribe' id='nameDeport'/>"+
 					"<input type='hidden' name='deporte' value='"+listUsers[i].email+"'>"+
-					"<h4 class='list-group-item-heading'>"+listUsers[i].usuario+"</h4>"+
-					"<p class='list-group-item-text'> "+listUsers[i].amigo+" </p>"+
+					"<h4 class='list-group-item-heading'>"+listUsers[i].nombre+"</h4>"+
+					"<p class='list-group-item-text'> "+listUsers[i].apellidos+" </p>"+
 					"</div>"+
 					"<div class='col-md-3 text-center'>"+
 					"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Eliminar'>"+

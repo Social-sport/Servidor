@@ -5,7 +5,7 @@ $(document).ready(
             url : "/Servidor/usuarios",            
             dataType: "JSON",
             success : function(ms) {
-            	document.getElementById("perfil").innerHTML = ms.nombre;  
+            	document.getElementById("username").innerHTML = ms.nombre;  
             	document.getElementById("nickUserP").innerHTML = ms.nick; 
             	document.getElementById("fullNameP").innerHTML = ms.nombre + " " + ms.apellidos; 
             	document.getElementById("mailUserP").innerHTML = ms.email;

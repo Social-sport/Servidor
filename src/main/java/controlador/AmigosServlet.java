@@ -34,6 +34,7 @@ public class AmigosServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		System.out.println("entra al post amigo servlet ");
 		HttpSession session = (HttpSession) req.getSession(); 
 		String response = null;		
 		String usuario = (String)session.getAttribute("email");
@@ -48,8 +49,9 @@ public class AmigosServlet extends HttpServlet {
 		boolean realizado = repoAmigo.insertarAmigo(amigo);
 		//inserta un amigo en la BD
 		if (realizado) {
-			resp.setStatus(HttpServletResponse.SC_OK);
+			
 			response = "El amigo se ha insertado correctamente";
+			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 		else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

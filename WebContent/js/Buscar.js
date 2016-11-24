@@ -27,7 +27,7 @@ $(document).ready(
                                     "<p class='list-group-item-text'> "+search[i].apellidos+" </p>"+
                                 "</div>"+
                                 "<div class='col-md-3 text-center'>"+
-                                    "<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Seguir'>"+
+                                    "<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSeguir' value='Seguir'>"+
                                 "<h5> 140 <small> Seguidores </small></h5>"+
                                 "</div>"+ 
                             "</form>");

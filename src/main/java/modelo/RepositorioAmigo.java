@@ -29,7 +29,7 @@ public class RepositorioAmigo {
 				+ "(usuario, amigo, fecha)"
 				+ " VALUES (\""+amigo.getUsuario()+"\",\""+amigo.getAmigo()+"\",\""+amigo.getFecha()+"\")";
 		
-		System.out.println(sql);
+		
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.executeUpdate(sql);

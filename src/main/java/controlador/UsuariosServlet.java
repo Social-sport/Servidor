@@ -25,7 +25,7 @@ public class UsuariosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static RepositorioUsuario repo = new RepositorioUsuario();
 	private Gson gson = new Gson();
-	HttpSession session;
+	
 
 	/**
 	 * Metodo para insertar usuarios a la BD.
@@ -35,7 +35,7 @@ public class UsuariosServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 
-		session= req.getSession();  
+		HttpSession session = req.getSession();  
 		String response = null;
 		String email = null;
 		String nick = null;
@@ -117,19 +117,23 @@ public class UsuariosServlet extends HttpServlet {
 				foto = "/Servidor/img/profile.jpg";
 			}
 			fecha_nacimiento = req.getParameter("fecha_nacimiento");
-			Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
-			boolean realizado = repo.insertarUsuario(usuario);
-			if (realizado) {
-				//Inserta el usuario en la BD
-				response = "El usuario se ha insertado correctamente";
-				createSession(session, usuario);
-				resp.sendRedirect("muro.html");
-				resp.setStatus(HttpServletResponse.SC_OK);
-			}
-			else {
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response = "El usuario no se ha podido insertar";
-				resp.sendRedirect("signup.html");
+			
+			if (email != "" && nick != "" && nombre != "" && apellidos != "" && contrasena != "" && fecha_nacimiento != "") {
+				Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
+				boolean realizado = repo.insertarUsuario(usuario);
+				
+				if (realizado) {
+					//Inserta el usuario en la BD
+					response = "El usuario se ha insertado correctamente";
+					createSession(session, usuario);
+					resp.sendRedirect("muro.html");
+					resp.setStatus(HttpServletResponse.SC_OK);
+				}
+				else {
+					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					response = "El usuario no se ha podido insertar";
+					resp.sendRedirect("signup.html");
+				}
 			}
 		}
 		
@@ -138,7 +142,7 @@ public class UsuariosServlet extends HttpServlet {
 	
 	private void Sesion(HttpServletRequest req, Usuario usuario){
 				
-		session = req.getSession();		
+		HttpSession session = req.getSession();		
 		session.setAttribute("usuario",usuario);
 		
 	}
@@ -152,13 +156,14 @@ public class UsuariosServlet extends HttpServlet {
 			throws ServletException, IOException {	       
 
 		String response = null;
+		HttpSession session = req.getSession();
 		String tipo = req.getParameter("tipo");
 		String email = req.getParameter("emailL");
 		String contrasena = req.getParameter("contrasenaL");
 		
 		System.out.println("tipo=: "+tipo);
 		
-		if (tipo ==null) {
+		if (tipo == null) {
 			Usuario u = repo.findUsuario((String)session.getAttribute("email"));				
 			response= gson.toJson(u);
 			System.out.println("json con sesion");				

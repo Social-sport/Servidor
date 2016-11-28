@@ -124,7 +124,7 @@ public class RepositorioEvento {
 			return true;
 		}
 		catch (SQLException e) {
-			System.out.println("Error al insertar evento");
+			System.out.println("Error al insertar evento "+evento.getNombre());
 			return false;
 		}
 	}
@@ -132,8 +132,8 @@ public class RepositorioEvento {
 	/**
 	 * Borra el evento con id <id> de la BD
 	 */
-	public boolean borrarEvento(int id) {
-		String sql = "DELETE FROM Evento WHERE id='"+id+"'";
+	public boolean borrarEvento(String nombre) {
+		String sql = "DELETE FROM Evento WHERE nombre='"+nombre+"'";
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.executeUpdate(sql);

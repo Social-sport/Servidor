@@ -57,8 +57,7 @@ public class EventosServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String response = null;
 		String nombre = req.getParameter("nombre");
-		int id = repo.findEvento(nombre).getId();
-		boolean realizado = repo.borrarEvento(id);
+		boolean realizado = repo.borrarEvento(nombre);
 		if (realizado) {
 			//borra el evento del deporte en la BD
 			resp.setStatus(HttpServletResponse.SC_OK);

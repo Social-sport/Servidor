@@ -53,7 +53,7 @@ public class EventosServletTest {
 		parameters.put("fecha", "13/11/2016");
 		parameters.put("hora", "19:26");
 		parameters.put("deporte", "Futbol");
-		parameters.put("creador", "test");
+		parameters.put("creador", "test@test.com");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El evento se ha insertado correctamente al deporte");
 	}

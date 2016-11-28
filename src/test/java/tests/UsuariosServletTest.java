@@ -59,8 +59,8 @@ public class UsuariosServletTest {
 	
 	@Test
 	public void testLoginOK() throws Exception {
-		parameters.put("emailL", "try@mail.com");
-		parameters.put("contrasenaL", "try");
+		parameters.put("emailL", "test@test.com");
+		parameters.put("contrasenaL", "test");
 		parameters.put("tipo", "initSesion");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha logeado correctamente");

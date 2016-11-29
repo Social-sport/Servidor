@@ -3,12 +3,12 @@ $(document).ready(
 		$.get('amigos', function (listUsers){
 
 			if (listUsers.length == 0) {
-        		$("#seccion2").html("<img src='img/people.png' alt='people Bootstrap  Theme'>");
+        		$("#seccion2,#seccionAmigos").html("<img src='img/people.png' alt='people Bootstrap  Theme'>");
       		}else{
-      			$("#seccion2").html("<div><h3 id='seccion'>Amigos Seguidos</h3></div>");
+      			$("#seccion2,#seccionAmigos").html("<div><h3 id='seccion'>Amigos Seguidos</h3></div>");
 				$.each(listUsers, function(i,item) {
 
-					$("#seccion2").append("<form action='/Servidor/amigos' method='DELETE'  class='list-group-item active'  id='listSearchs'>"+
+					$("#seccion2,#seccionAmigos").append("<form action='/Servidor/amigos' method='DELETE'  class='list-group-item active'  id='listSearchs'>"+
 
 					"<div class='media col-md-3'>"+
 					"<figure class='pull-left'>"+

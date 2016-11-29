@@ -33,9 +33,7 @@ public class UsuariosServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-
-		HttpSession session = req.getSession();  
+				 
 		String response = null;
 		String email = null;
 		String nick = null;
@@ -52,7 +50,7 @@ public class UsuariosServlet extends HttpServlet {
 		
 		if (tipoPost.equals("Actualizar")) {
 			
-			email = session.getAttribute("email").toString();
+			email = req.getSession().getAttribute("email").toString();
 			nick = req.getParameter("nick");
 			nombre = req.getParameter("nombre");
 			apellidos = req.getParameter("apellidos");
@@ -125,6 +123,7 @@ public class UsuariosServlet extends HttpServlet {
 				if (realizado) {
 					//Inserta el usuario en la BD
 					response = "El usuario se ha insertado correctamente";
+					HttpSession session = req.getSession(); 
 					createSession(session, usuario);
 					resp.sendRedirect("muro.html");
 					resp.setStatus(HttpServletResponse.SC_OK);
@@ -140,91 +139,98 @@ public class UsuariosServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 	
-	private void Sesion(HttpServletRequest req, Usuario usuario){
-				
-		HttpSession session = req.getSession();		
-		session.setAttribute("usuario",usuario);
-		
-	}
-	
-
 	/**
 	 * Metodo para devolver informacion de un usuario.
 	 */
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {	       
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String response = null;
-		HttpSession session = req.getSession();
 		String tipo = req.getParameter("tipo");
-		String email = req.getParameter("emailL");
-		String contrasena = req.getParameter("contrasenaL");
-		
-		System.out.println("tipo=: "+tipo);
-		
-		if (tipo == null) {
-			Usuario u = repo.findUsuario((String)session.getAttribute("email"));				
-			response= gson.toJson(u);
-			System.out.println("json con sesion");				
-			System.out.println(response);
-			resp.setStatus(HttpServletResponse.SC_OK);
-			tipo ="";
-		}
-		if (tipo.equals("ListEveryUsers")) {			
-			
-			List<Usuario> usuarios = repo.ListEveryUsers();				
-			if (usuarios.isEmpty()) {				
-				response = "No se encuentran usuarios";
-				resp.setStatus(HttpServletResponse.SC_OK);
-			}else{					
-				response= gson.toJson(usuarios);				
-				System.out.println("json con todos los usuarios");				
-				System.out.println(response);
-				resp.setStatus(HttpServletResponse.SC_OK);
-			}
-		}
-		if (tipo.equals("Buscar")) {
-			
-			String name = req.getParameter("search");
-			List<Usuario> usuarios = repo.listarUsuariosBusqueda(name);				
-			if (usuarios.isEmpty()) {				
-				response = "No se encuentran usuarios por: " +name;
-				resp.setStatus(HttpServletResponse.SC_OK);
-			}else{					
-				response= gson.toJson(usuarios);				
-				System.out.println("json con usuarios buscados");				
-				System.out.println(response);
-				resp.setStatus(HttpServletResponse.SC_OK);
-			}
-		}
+		System.out.println("tipo=: " + tipo);
+
 		if (tipo.equals("initSesion")) {
-			
+
+			String email = req.getParameter("emailL");
+			String contrasena = req.getParameter("contrasenaL");
+
 			System.out.println("email: " + email + " | pass: " + contrasena);
 			Usuario usuario = repo.findUsuario(email);
-			
+
 			if (usuario != null && contrasena.equals(usuario.getContrasena())) {
-				//El usuario existe y tiene esa contrasena, logeado
-				session = req.getSession(); 
+				// El usuario existe y tiene esa contrasena, logeado
+				HttpSession session = req.getSession();
 				createSession(session, usuario);
 				response = "El usuario se ha logeado correctamente";
 				resp.sendRedirect("muro.html");
 				resp.setStatus(HttpServletResponse.SC_OK);
-			}
-			else {
+			} else {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response = "El usuario no se ha podido logear";
 				resp.sendRedirect("signup.html");
 			}
+			setResponse(response, resp);
+
+		} else {
+			if (SessionisActive(req, resp)) {
+
+				String email = (String) req.getSession().getAttribute("email");
+				
+				if (tipo.equals("infosesion")) {
+					Usuario u = repo.findUsuario(email);
+					response = gson.toJson(u);
+					System.out.println("json con sesion: " + response);
+					resp.setStatus(HttpServletResponse.SC_OK);
+				}
+				if (tipo.equals("ListEveryUsers")) {
+					List<Usuario> usuarios = repo.ListEveryUsers(email);
+					if (usuarios.isEmpty()) {
+						response = "No se encuentran usuarios";
+						resp.setStatus(HttpServletResponse.SC_OK);
+					} else {
+						response = gson.toJson(usuarios);
+						System.out.println("json con todos los usuarios");
+						System.out.println(response);
+						resp.setStatus(HttpServletResponse.SC_OK);
+					}
+				}
+				if (tipo.equals("Buscar")) {
+					String name = req.getParameter("search");
+					List<Usuario> usuarios = repo.listarUsuariosBusqueda(name);
+					if (usuarios.isEmpty()) {
+						response = "No se encuentran usuarios por: " + name;
+						resp.setStatus(HttpServletResponse.SC_OK);
+					} else {
+						response = gson.toJson(usuarios);
+						System.out.println("json con usuarios buscados");
+						System.out.println(response);
+						resp.setStatus(HttpServletResponse.SC_OK);
+					}
+				}
+				if (tipo.equals("closeSesion")) {
+					req.getSession().invalidate();
+					resp.setStatus(HttpServletResponse.SC_OK);
+				}
+				setResponse(response, resp);
+			}
 		}
+
+	}
+
+	private boolean SessionisActive(HttpServletRequest req, HttpServletResponse resp) {
 		
-		if (tipo.equals("closeSesion")) {			
-			session = req.getSession(); 
-			session.invalidate();
-			resp.setStatus(HttpServletResponse.SC_OK);			
-		}
+		if (req.getSession(false) != null) {
+			System.out.println("si existe sesion");
+			return true;
+		}else{
+			System.out.println("no hay sesion iniciada");
+			String response = "";
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			setResponse(response, resp);
+			return false;
+		}	
 		
-		setResponse(response, resp);
+		
 	}
 
 	/**
@@ -247,6 +253,7 @@ public class UsuariosServlet extends HttpServlet {
 	}
 	
 	private void createSession(HttpSession session, Usuario usuario){
+		//session.setAttribute("usuario",usuario);
 		session.setAttribute("email", usuario.getEmail());
 		session.setAttribute("nick", usuario.getNick());
 		session.setAttribute("nombre", usuario.getNombre());

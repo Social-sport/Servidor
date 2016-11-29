@@ -21,9 +21,9 @@ public class RepositorioUsuario {
 		this.conexion = ConexionBD.getConexion();
 	}
 	
-	public List<Usuario> ListEveryUsers() {
+	public List<Usuario> ListEveryUsers(String email) {
 		List<Usuario> Usuarios = new LinkedList<Usuario>();		
-		String sql = "SELECT * FROM Usuario";
+		String sql = "SELECT * FROM Usuario WHERE email !='"+email+"'";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);

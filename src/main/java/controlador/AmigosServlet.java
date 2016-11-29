@@ -109,8 +109,8 @@ public class AmigosServlet extends HttpServlet {
 			//devuelve los amigos del usuario
 			amigos = repoAmigo.listarAmigos(email);
 			if (amigos.isEmpty()) {
-				response = gson.toJson(amigosUser);
-				System.out.println("json vacio con amigos: "+response);
+				System.out.println("vacio amigos");
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 			else {
 				for (Amigo ami : amigos) {
@@ -118,10 +118,12 @@ public class AmigosServlet extends HttpServlet {
 				}
 				response = gson.toJson(amigosUser);
 				System.out.println("json lleno con amigos: "+response);
+				resp.sendRedirect("muro.html");
+				resp.setStatus(HttpServletResponse.SC_OK);
 			}
 		}
 		setResponse(response, resp);
-		resp.sendRedirect("muro.html");
+		
 	}
 
 	/**

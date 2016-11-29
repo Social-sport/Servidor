@@ -73,7 +73,7 @@ public class UsuariosServletTest {
 		parameters.put("nombre", "trys2");
 		parameters.put("apellidos", "try");
 		parameters.put("contrasenaR", "try");
-		parameters.put("foto", "try");
+		parameters.put("foto", "/Servidor/img/profile.jpg");
 		parameters.put("fecha_nacimiento", "1900-10-10");
 		parameters.put("username", "trys3");
 		RepositorioUsuario repoUsuario = new RepositorioUsuario();
@@ -90,8 +90,8 @@ public class UsuariosServletTest {
 		parameters.put("nombre", "try");
 		parameters.put("apellidos", "try");
 		parameters.put("contrasena", "try");
-		parameters.put("foto", "try");
-		parameters.put("fecha_nacimiento", "deberianserunosnumeros");
+		parameters.put("foto", "/Servidor/img/profile.jpg");
+		parameters.put("fecha_nacimiento", "10/12/2012");
 		parameters.put("username", "try");
 		RepositorioUsuario repoUsuario = new RepositorioUsuario();
 		//borramos porque el usuario ya existe de test anteriores

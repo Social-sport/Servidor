@@ -155,7 +155,7 @@ public class UsuariosServlet extends HttpServlet {
 
 			System.out.println("email: " + email + " | pass: " + contrasena);
 			Usuario usuario = repo.findUsuario(email);
-
+			
 			if (usuario != null && contrasena.equals(usuario.getContrasena())) {
 				// El usuario existe y tiene esa contrasena, logeado
 				HttpSession session = req.getSession();
@@ -163,10 +163,13 @@ public class UsuariosServlet extends HttpServlet {
 				response = "El usuario se ha logeado correctamente";
 				resp.sendRedirect("muro.html");
 				resp.setStatus(HttpServletResponse.SC_OK);
-			} else {
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				System.out.println(response);
+			} else {				
 				response = "El usuario no se ha podido logear";
+				System.out.println(response);
 				resp.sendRedirect("signup.html");
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				
 			}
 			setResponse(response, resp);
 

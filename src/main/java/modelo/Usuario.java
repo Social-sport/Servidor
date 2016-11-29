@@ -76,4 +76,12 @@ public class Usuario {
 	public void setFecha_nacimiento(String fecha_nacimiento) {
 		this.fecha_nacimiento = fecha_nacimiento;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [email=" + email + ", nombre=" + nombre + ", apellidos=" + apellidos + ", contrasena="
+				+ contrasena + ", fecha_nacimiento=" + fecha_nacimiento + ", foto=" + foto + ", nick=" + nick + "]";
+	}
+	
+	
 }

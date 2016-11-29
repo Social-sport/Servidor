@@ -42,10 +42,12 @@ public class DeportesServlet extends HttpServlet {
 		if (realizado) {
 			resp.setStatus(HttpServletResponse.SC_OK);
 			resp.sendRedirect("muro.html");
+			response = "El usuario se ha suscrito correctamente al deporte";
 		}
 		else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resp.sendRedirect("muro.html");
+			response = "El usuario no se ha podido suscribir al deporte";
 		}
 		setResponse(response, resp);
 	}
@@ -109,6 +111,13 @@ public class DeportesServlet extends HttpServlet {
 			response = gson.toJson(deportes);
 			System.out.println("si los Deportes usuario con json: " + response);			
 			resp.setStatus(HttpServletResponse.SC_OK);
+		}
+		if (tipo.equals("AllSports")) {
+
+			deportes = repo.listarDeportes();
+			response = gson.toJson(deportes);			
+			resp.setStatus(HttpServletResponse.SC_OK);
+
 		}
 		setResponse(response, resp);
 	}

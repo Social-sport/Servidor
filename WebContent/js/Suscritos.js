@@ -1,16 +1,16 @@
 $(document).ready(
 	function() {
 
-
 		$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){
 
 				if (listSport.length == 0) {
-            		$("#seccion1").html("<img src='img/Sports.png' alt='Sports Bootstrap Theme'>");
+            		$("#seccionSports").html("<h2 class='register'>No tienes Deportes suscritos</h2>");
+            		
           		}else{
-          			$("#seccion1").html("<div><h3 id='seccion'>Deportes Suscritos</h3></div>");
+          			$("#seccionSports").html("<div><h3 id='seccion'>Deportes Suscritos</h3></div>");
 					$.each(listSport, function(i,item){
 
-						$("#seccion1").append("<form action='/Servidor/deportes' method='GET'  class='list-group-item active'  id='listSearchs'>"+
+						$("#seccionSports").append("<form action='/Servidor/deportes' method='GET'  class='list-group-item active'  id='listSearchs'>"+
 
 						"<div class='media col-md-3'>"+
 						"<figure class='pull-left'>"+

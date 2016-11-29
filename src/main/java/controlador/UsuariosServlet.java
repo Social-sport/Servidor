@@ -25,7 +25,6 @@ public class UsuariosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static RepositorioUsuario repo = new RepositorioUsuario();
 	private Gson gson = new Gson();
-	
 
 	/**
 	 * Metodo para insertar usuarios a la BD.
@@ -147,7 +146,7 @@ public class UsuariosServlet extends HttpServlet {
 
 		String response = null;
 		String tipo = req.getParameter("tipo");
-		System.out.println("tipo=: " + tipo);
+		System.out.println("tipo= " + tipo);
 
 		if (tipo.equals("initSesion")) {
 
@@ -217,7 +216,7 @@ public class UsuariosServlet extends HttpServlet {
 
 	}
 
-	private boolean SessionisActive(HttpServletRequest req, HttpServletResponse resp) {
+	private boolean SessionisActive(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
 		if (req.getSession(false) != null) {
 			System.out.println("si existe sesion");
@@ -226,10 +225,10 @@ public class UsuariosServlet extends HttpServlet {
 			System.out.println("no hay sesion iniciada");
 			String response = "";
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			resp.sendRedirect("signup.html");
 			setResponse(response, resp);
 			return false;
 		}	
-		
 		
 	}
 

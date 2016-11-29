@@ -136,7 +136,6 @@ public class AmigosServlet extends HttpServlet {
 	 */
 	private void setResponse(String response, HttpServletResponse resp) {
 		resp.setContentType("application/json");
-		System.out.println(resp.getStatus()+ " hola");
 		try {
 			PrintWriter out = resp.getWriter();
 			out.print(response);

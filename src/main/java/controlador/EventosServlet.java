@@ -120,8 +120,7 @@ public class EventosServlet extends HttpServlet {
 	 *            response
 	 */
 	private void setResponse(String response, HttpServletResponse resp) {
-		resp.setContentType("application/json");
-		System.out.println(resp.getStatus()+ " hola");
+		resp.setContentType("application/json");		
 		try {
 			PrintWriter out = resp.getWriter();
 			out.print(response);

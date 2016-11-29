@@ -43,6 +43,31 @@ public class RepositorioDeporte {
 	}
 
 	/**
+	 * Lista los deportes disponibles para un usuario
+	 */
+	public List<Deporte> listarDeportesDisponibles(String email) {
+		List<Deporte> deportes = new LinkedList<Deporte>();
+		String sql = "SELECT * FROM Deporte WHERE Deporte.Nombre NOT IN (SELECT DeporteSuscrito.deporte"
+				+ " FROM DeporteSuscrito WHERE DeporteSuscrito.usuario = '" + email + "')";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				deportes.add(new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
+										rs.getString("Foto")));				
+			}
+			System.out.println("listados los Deportes Disponibles");
+			stmt.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en listar Deportes" + e);
+		}
+		return deportes;
+	}
+	
+	/**
 	 * Lista los deportes almacenados en la BD
 	 */
 	public List<Deporte> listarDeportes() {

@@ -12,6 +12,11 @@ body {
 	margin: 0 auto;
 }
 
+#seccionSports{
+	width: 650px;
+	margin: 0 auto;
+}
+
 /*nav css*/
 .form-inline {
 	padding-top: 10px;

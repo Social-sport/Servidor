@@ -44,7 +44,7 @@ public class DeportesServlet extends HttpServlet {
 			resp.sendRedirect("muro.html");
 		}
 		else {
-			resp.setStatus(HttpServletResponse.SC_OK);
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resp.sendRedirect("muro.html");
 		}
 		setResponse(response, resp);
@@ -75,76 +75,40 @@ public class DeportesServlet extends HttpServlet {
 	 * Metodo para devolver los deportes de la BD.
 	 */
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String response = null;
 		List<Deporte> deportes = null;
-		List<Deporte> deportesSus = null;
-		List<Deporte> deportesDef = new LinkedList<Deporte>();
-		String email = (String)req.getSession().getAttribute("email");
+		String email = (String) req.getSession().getAttribute("email");
 		String tipo = req.getParameter("tipoDeport");
 		String deporte = req.getParameter("deporte");
 
-		if (tipo.equals("ListAllSports")) {			
-			deportes = repo.listarDeportes();	
-			deportesSus = repo.listarDeportesUsuario(email);
+		if (tipo.equals("AvailableSports")) {
 
-			if (deportesSus.isEmpty()) {
-				deportesDef = deportes;
-			} else {
-				for (int i = 0; i < deportes.size(); i++) {
-					
-					for (int j = 0; j < deportesSus.size(); j++) {
-						
-						if (!(deportes.get(i).getNombre().equals(deportesSus.get(j).getNombre()))) {
-							
-							if (!(deportesDef.contains(deportes.get(i)))& !(deportesSus.contains(deportes.get(i)))) {
-								deportesDef.add(deportes.get(i));
-							}
-						}
-						
-					}
-					
-				}
+			deportes = repo.listarDeportesDisponibles(email);
+			response = gson.toJson(deportes);
+			System.out.println("json con deportes");
+			System.out.println(response);
+			resp.setStatus(HttpServletResponse.SC_OK);
 
-			}							
-				response= gson.toJson(deportesDef);	
-				System.out.println("json con deportes");				
-				System.out.println(response);
-				resp.setStatus(HttpServletResponse.SC_OK);
-			
 		}
 		if (tipo.equals("DesSuscribe")) {
-			
-			if(repo.darseDeBajaDeporte(deporte,email)){
+
+			if (repo.darseDeBajaDeporte(deporte, email)) {
 				resp.setStatus(HttpServletResponse.SC_OK);
 				resp.sendRedirect("muro.html");
-			}else{
+			} else {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response = "El usuario no existe";
 			}
-			
+
 		}
-		if (tipo.equals("ListUserSports")) {			
-				
-			if (repoUsuario.findUsuario(email) == null) {
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response = "El usuario no existe";
-			}
-			else {
-				//Devuelve los deportes a los que esta suscrito el usuario
-				deportes = repo.listarDeportesUsuario(email);
-				if (deportes.isEmpty()) {
-					resp.setStatus(HttpServletResponse.SC_OK);
-					response = "{'Error': 'El usuario no ha suscrito deportes'}";
-				}
-				else {			
-					response= gson.toJson(deportes);				
-					System.out.println("si los Deportes usuario con json");
-					System.out.println(response);
-				}
-				
-			}
+		if (tipo.equals("ListUserSports")) {
+
+			// Devuelve los deportes a los que esta suscrito el usuario
+			deportes = repo.listarDeportesUsuario(email);
+			response = gson.toJson(deportes);
+			System.out.println("si los Deportes usuario con json: " + response);			
+			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 		setResponse(response, resp);
 	}

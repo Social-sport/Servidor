@@ -75,7 +75,6 @@ public class UsuariosServlet extends HttpServlet {
 				}
 			}
 			
-			
 			if (buscado!=null) {
 				String rutaFoto = getServletContext().getRealPath("/") + "img/uploads/" + buscado.getNick() + ".jpg";
 				if (nick.equals("")) {
@@ -90,13 +89,13 @@ public class UsuariosServlet extends HttpServlet {
 				if (contrasena.equals("")) {
 					contrasena = buscado.getContrasena();
 				}
-				if (foto.equals("")) {
-					foto = buscado.getFoto();
-				}
 				if (fecha_nacimiento.equals("")) {
 					fecha_nacimiento = buscado.getFecha_nacimiento();
 				}
-				if (!foto.equals("")) {
+				if (foto.equals("")) {
+					foto = buscado.getFoto();
+				}
+				else {
 					InputStream is = partFoto.getInputStream();
 					File fileFoto = new File(rutaFoto);
 					FileOutputStream ous = new FileOutputStream(fileFoto);

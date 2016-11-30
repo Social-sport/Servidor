@@ -29,7 +29,6 @@ public class RepositorioAmigo {
 				+ "(usuario, amigo, fecha)"
 				+ " VALUES (\""+amigo.getUsuario()+"\",\""+amigo.getAmigo()+"\",\""+amigo.getFecha()+"\")";
 		
-		
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.executeUpdate(sql);
@@ -58,42 +57,51 @@ public class RepositorioAmigo {
 			return false;
 		}
 	}
-
-	public List<Amigo> listarSeguidos (String usuario) {
-		List<Amigo> amigos = new LinkedList<Amigo>();
-		String sql = "SELECT * FROM Amigos WHERE usuario ='"+usuario+"'";
+		
+	public List<Usuario> listarSeguidos (String email) {
+		List<Usuario> usuarios = new LinkedList<Usuario>();
+		String sql = "SELECT * FROM Usuario WHERE Usuario.email IN (SELECT Amigos.amigo"
+				+ " FROM Amigos WHERE Amigos.usuario ='"+email+"')";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				amigos.add(new Amigo(rs.getString("usuario"),rs.getString("amigo"),
-						rs.getString("fecha")));
+				usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
+							rs.getString("apellidos"),rs.getString("contrasena"),
+							rs.getString("fecha_nacimiento"),rs.getString("foto"),
+							rs.getString("nick")));		
 			}
 			stmt.close();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error en listar mis Eventos");
+			System.out.println("Error en listar seguidos");
 		}
-		return amigos;
+		return usuarios;
 	}
 	
-	public List<Amigo> listarSeguidores (String usuario) {
-		List<Amigo> amigos = new LinkedList<Amigo>();
-		String sql = "SELECT * FROM Amigos WHERE amigo ='"+usuario+"'";
+	public List<Usuario> listarSeguidores (String email) {
+		List<Usuario> usuarios = new LinkedList<Usuario>();
+		String sql = "SELECT * FROM Usuario WHERE Usuario.email IN (SELECT Amigos.usuario"
+				+ " FROM Amigos WHERE Amigos.amigo ='"+email+"')";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				amigos.add(new Amigo(rs.getString("usuario"),rs.getString("amigo"),
-						rs.getString("fecha")));
+				usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
+							rs.getString("apellidos"),rs.getString("contrasena"),
+							rs.getString("fecha_nacimiento"),rs.getString("foto"),
+							rs.getString("nick")));	
 			}
 			stmt.close();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error en listar mis Eventos");
+			System.out.println("Error en listar mis seguidores");
 		}
-		return amigos;
+		return usuarios;
 	}
+	
+	
+	
 }

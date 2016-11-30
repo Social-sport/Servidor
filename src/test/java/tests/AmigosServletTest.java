@@ -65,11 +65,11 @@ public class AmigosServletTest {
 		assertEquals(response_writer.toString(),"El amigo se ha borrado correctamente");
 	}
 	
-	/*@Test
+	@Test
 	public void testListarAmigos() throws Exception {
 		parameters.put("usuario", "null");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"Amigos");
-	}*/
+	}
 	
 }

@@ -7,7 +7,7 @@ body {
 	width: 650px;
 }
 
-#seccionAmigos{
+#seccionSeguidores{
 	width: 650px;
 	margin: 0 auto;
 }
@@ -607,7 +607,7 @@ h4.pro-title {
 	#busAmi{
 		width: 720px;
 	}
-	#seccionAmigos{
+	#seccionSeguidores{
 		width: 600px;
 		margin: 0 auto;
 	}
@@ -633,7 +633,7 @@ h4.pro-title {
 		width: 600px;
 	}
 	
-	#seccionAmigos{
+	#seccionSeguidores{
 		width: 550px;
 		margin: 0 auto;
 	}
@@ -649,7 +649,7 @@ h4.pro-title {
 	#busAmi{
 		width: 560px;
 	}
-	#seccionAmigos{
+	#seccionSeguidores{
 		width: 500px;
 		margin: 0 auto;
 	}
@@ -665,7 +665,7 @@ h4.pro-title {
 	#busAmi{
 		width: 500px;
 	}
-	#seccionAmigos{
+	#seccionSeguidores{
 		width: 450px;
 		margin: 0 auto;
 	}
@@ -718,7 +718,7 @@ h4.pro-title {
 	.bio-table>tbody>tr>td {
 		font-size: 13px;
 	}
-	#seccionAmigos{
+	#seccionSeguidores{
 		width: 350px;
 		margin: 0 auto;
 	}
@@ -748,7 +748,7 @@ h4.pro-title {
 	.nav-menu li a {
 		font-size: 11px;
 	}
-	#seccionAmigos{
+	#seccionSeguidores{
 		width: 310px;
 		margin: 0 auto;
 	}
@@ -769,7 +769,7 @@ h4.pro-title {
 		font-size: 11px;
 	}
 	
-	#seccionAmigos{
+	#seccionSeguidores{
 		width: 250px;
 		margin: 0 auto;
 	}

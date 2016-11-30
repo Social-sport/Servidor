@@ -70,26 +70,26 @@ public class AmigosServlet extends HttpServlet {
 	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String response = null;
-		List<Amigo> amigos = null;
-		List<Usuario> amigosUser = new LinkedList<>();
+		String response = null;		
+		List<Usuario> listSeguidores = new LinkedList<>();
+		List<Usuario> listSeguidos = new LinkedList<>();
 		String email = req.getSession().getAttribute("email").toString();
 		String tipo = req.getParameter("tipoRelacion");
 
 		System.out.println("usuario a buscar seguidor/es: " + email);
+		
 		if (tipo.equals("listSeguidos")) {
-
+			
+			listSeguidos = repoAmigo.listarSeguidos(email);			
+			response = gson.toJson(listSeguidos);
+			System.out.println("json lleno con Seguidos: " + response);			
+			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 		if (tipo.equals("listSeguidores")) {
 
-			amigos = repoAmigo.listarSeguidores(email);
-
-			for (Amigo ami : amigos) {
-				amigosUser.add(repoUsuario.findUsuario(ami.getUsuario()));
-			}
-			
-			response = gson.toJson(amigosUser);
-			System.out.println("json lleno con amigos: " + response);			
+			listSeguidores = repoAmigo.listarSeguidores(email);			
+			response = gson.toJson(listSeguidores);
+			System.out.println("json lleno con Seguidores: " + response);			
 			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 

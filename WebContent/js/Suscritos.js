@@ -7,7 +7,7 @@ $(document).ready(
             		$("#seccionSports").html("<h2 class='register'>No tienes Deportes suscritos</h2>");
             		
           		}else{
-          			$("#seccionSports").html("<div><h3 id='seccion'>Deportes Suscritos</h3></div>");
+          			$("#seccionSports").html("<h2 class='register'>Deportes suscritos</h2>");
 					$.each(listSport, function(i,item){
 
 						$("#seccionSports").append("<form action='/Servidor/deportes' method='GET'  class='list-group-item active'  id='listSearchs'>"+

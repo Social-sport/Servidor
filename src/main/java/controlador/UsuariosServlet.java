@@ -1,15 +1,20 @@
 package controlador;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import modelo.Usuario;
 import modelo.RepositorioUsuario;
@@ -19,6 +24,7 @@ import com.google.gson.Gson;
 /**
  * Servlet de obtencion de usuaiors
  */
+@MultipartConfig
 @WebServlet(value = "/usuarios", name = "UsuariosServlet")
 public class UsuariosServlet extends HttpServlet {
 
@@ -56,10 +62,11 @@ public class UsuariosServlet extends HttpServlet {
 			contrasena = req.getParameter("contrasena");
 			newContrasena = req.getParameter("newContrasena");
 			confNewContrasena = req.getParameter("confirmNewContrasena");
-			foto = req.getParameter("foto");
+			Part partFoto = req.getPart("foto");
+			foto = getFilename(partFoto);
 			fecha_nacimiento = req.getParameter("fecha_nacimiento");
 			Usuario buscado = repo.findUsuario(email);
-
+			
 			if (!(newContrasena.equals(""))) {
 				if (newContrasena.equals(confNewContrasena)) {
 					if (contrasena.equals(buscado.getContrasena())) {
@@ -67,7 +74,10 @@ public class UsuariosServlet extends HttpServlet {
 					}
 				}
 			}
+			
+			
 			if (buscado!=null) {
+				String rutaFoto = getServletContext().getRealPath("/") + "img/uploads/" + buscado.getNick() + ".jpg";
 				if (nick.equals("")) {
 					nick = buscado.getNick();
 				}
@@ -77,7 +87,7 @@ public class UsuariosServlet extends HttpServlet {
 				if (apellidos.equals("")) {
 					apellidos = buscado.getApellidos();
 				}
-				if (contrasena == "") {
+				if (contrasena.equals("")) {
 					contrasena = buscado.getContrasena();
 				}
 				if (foto.equals("")) {
@@ -85,6 +95,19 @@ public class UsuariosServlet extends HttpServlet {
 				}
 				if (fecha_nacimiento.equals("")) {
 					fecha_nacimiento = buscado.getFecha_nacimiento();
+				}
+				if (!foto.equals("")) {
+					InputStream is = partFoto.getInputStream();
+					File fileFoto = new File(rutaFoto);
+					FileOutputStream ous = new FileOutputStream(fileFoto);
+					int dato = is.read();
+					while (dato != -1) {
+						ous.write(dato);
+						dato = is.read();
+					}
+					is.close();
+					ous.close();
+					foto = "/Servidor/img/uploads/" + buscado.getNick() + ".jpg";
 				}
 
 				Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
@@ -263,4 +286,16 @@ public class UsuariosServlet extends HttpServlet {
 		session.setAttribute("fecha", usuario.getFecha_nacimiento());
 		session.setAttribute("foto", usuario.getFoto());
 	}
+	
+	private static String getFilename(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                String filename = cd.substring(cd.indexOf('=') + 1).trim()
+                        .replace("\"", "");
+                return filename.substring(filename.lastIndexOf('/') + 1)
+                        .substring(filename.lastIndexOf('\\') + 1);
+            }
+        }
+        return null;
+    }
 }

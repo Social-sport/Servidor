@@ -1,14 +1,14 @@
 $(document).ready(
 	function() {		
-		$.get('amigos', function (listUsers){
+		$.get('amigos', {tipoRelacion:'listSeguidores'}, function (listUsers){   
 
 			if (listUsers.length == 0) {
-        		$("#seccion2,#seccionAmigos").html("<img src='img/people.png' alt='people Bootstrap  Theme'>");
+        		$("#seccionSeguidores").html("<h2 class='register'>No tienes Seguidores</h2>");
       		}else{
-      			$("#seccion2,#seccionAmigos").html("<div><h3 id='seccion'>Amigos Seguidos</h3></div>");
+      			$("#seccionSeguidores").html("<h2 class='register'>Seguidores</h2>");
 				$.each(listUsers, function(i,item) {
 
-					$("#seccion2,#seccionAmigos").append("<form action='/Servidor/amigos' method='DELETE'  class='list-group-item active'  id='listSearchs'>"+
+					$("#seccionSeguidores").append("<form action='/Servidor/amigos' method='DELETE'  class='list-group-item active'  id='listSearchs'>"+
 
 					"<div class='media col-md-3'>"+
 					"<figure class='pull-left'>"+

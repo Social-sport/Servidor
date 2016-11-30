@@ -64,6 +64,38 @@ public class AmigosServlet extends HttpServlet {
 		}
 		setResponse(response, resp);
 	}
+	
+	/**
+	 * Metodo para devolver los amigos de un usuario.
+	 */
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String response = null;
+		List<Amigo> amigos = null;
+		List<Usuario> amigosUser = new LinkedList<>();
+		String email = req.getSession().getAttribute("email").toString();
+		String tipo = req.getParameter("tipoRelacion");
+
+		System.out.println("usuario a buscar seguidor/es: " + email);
+		if (tipo.equals("listSeguidos")) {
+
+		}
+		if (tipo.equals("listSeguidores")) {
+
+			amigos = repoAmigo.listarSeguidores(email);
+
+			for (Amigo ami : amigos) {
+				amigosUser.add(repoUsuario.findUsuario(ami.getUsuario()));
+			}
+			
+			response = gson.toJson(amigosUser);
+			System.out.println("json lleno con amigos: " + response);			
+			resp.setStatus(HttpServletResponse.SC_OK);
+		}
+
+		setResponse(response, resp);
+
+	}
 
 	/**
 	 * Metodo para borrar un amigo del usuario.
@@ -87,45 +119,7 @@ public class AmigosServlet extends HttpServlet {
 		setResponse(response, resp);
 	}
 
-	/**
-	 * Metodo para devolver los amigos de un usuario.
-	 */
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		String response = null;
-		List<Amigo> amigos = null;
-		List<Usuario> amigosUser = new LinkedList<>();
-		String email = req.getSession().getAttribute("email").toString();
-		
-		Usuario buscado = repoUsuario.findUsuario(email);
-		System.out.println(email);
-		if (email == null || buscado == null) {
-			System.out.println("Usuario no encontrado");
-			resp.sendRedirect("signup.html");
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		}
-		else {
-			//devuelve los amigos del usuario
-			amigos = repoAmigo.listarAmigos(email);
-			if (amigos.isEmpty()) {
-				System.out.println("vacio amigos");
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			}
-			else {
-				for (Amigo ami : amigos) {
-					amigosUser.add(repoUsuario.findUsuario(ami.getAmigo()));
-				}
-				response = gson.toJson(amigosUser);
-				System.out.println("json lleno con amigos: "+response);
-				resp.sendRedirect("muro.html");
-				resp.setStatus(HttpServletResponse.SC_OK);
-			}
-		}
-		setResponse(response, resp);
-		
-	}
-
+	
 	/**
 	 * Agrega una respuesta a la response
 	 * 

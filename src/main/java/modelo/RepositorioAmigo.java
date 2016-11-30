@@ -59,12 +59,28 @@ public class RepositorioAmigo {
 		}
 	}
 
-	/**
-	 * Lista los amigos del usuario <usuario>
-	 */
-	public List<Amigo> listarAmigos (String usuario) {
+	public List<Amigo> listarSeguidos (String usuario) {
 		List<Amigo> amigos = new LinkedList<Amigo>();
 		String sql = "SELECT * FROM Amigos WHERE usuario ='"+usuario+"'";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				amigos.add(new Amigo(rs.getString("usuario"),rs.getString("amigo"),
+						rs.getString("fecha")));
+			}
+			stmt.close();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en listar mis Eventos");
+		}
+		return amigos;
+	}
+	
+	public List<Amigo> listarSeguidores (String usuario) {
+		List<Amigo> amigos = new LinkedList<Amigo>();
+		String sql = "SELECT * FROM Amigos WHERE amigo ='"+usuario+"'";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);

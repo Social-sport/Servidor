@@ -48,19 +48,19 @@ public class EventosServletTest {
 
 	@Test
 	public void testAInsertarEventos() throws Exception {
-		parameters.put("nombre", "tryTest");
+		parameters.put("nombre", "Event");
 		parameters.put("descripcion", "test servlet");
 		parameters.put("fecha", "13/11/2016");
 		parameters.put("hora", "19:26");
 		parameters.put("deporte", "Futbol");
-		parameters.put("creador", "test@test.com");
+		parameters.put("creador", "john@socialsport.com");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El evento se ha insertado correctamente al deporte");
 	}
 	
 	@Test
 	public void testZBorrarEventos() throws Exception {
-		parameters.put("nombre", "tryTest");
+		parameters.put("nombre", "Event");
 		servlet.doDelete(request, response);
 		assertEquals(response_writer.toString(),"El evento se ha borrado correctamente");
 	}
@@ -74,7 +74,7 @@ public class EventosServletTest {
 	
 	@Test
 	public void testListarEventosUsuario() throws Exception {
-		parameters.put("usuario", "test");
+		parameters.put("usuario", "john@socialsport.com");
 		parameters.put("deporte", "Futbol");
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario no tiene eventos");

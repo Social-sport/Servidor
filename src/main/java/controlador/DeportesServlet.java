@@ -2,7 +2,6 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import modelo.Deporte;
 import modelo.RepositorioDeporte;
-import modelo.RepositorioUsuario;
 
 import com.google.gson.Gson;
 
@@ -25,7 +23,6 @@ public class DeportesServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioDeporte repo = new RepositorioDeporte();
-	private static RepositorioUsuario repoUsuario = new RepositorioUsuario();
 	private Gson gson = new Gson();
 
 	/**

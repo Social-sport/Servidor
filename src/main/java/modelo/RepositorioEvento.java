@@ -31,13 +31,13 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
-			evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+			evento = new Evento(rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 					rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"));
 			stmt.close();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error en buscar Evento");
+			System.out.println("Error en buscar Evento "+nombre);
 		}
 		return evento;
 	}
@@ -116,10 +116,10 @@ public class RepositorioEvento {
 	 */
 	public boolean insertarEvento(Evento evento) {
 		String sql = "INSERT INTO Evento (nombre,descripcion,fecha,hora,deporte,creador) VALUES "
-				+ "('"+evento.getNombre()+"','"+evento.getDescripcion()+"','"+evento.getFecha()+"','"+evento.getHora()+"','"+evento.getDeporte()+"','"+evento.getCreador()+"')";
+				+ "(\""+evento.getNombre()+"\",\""+evento.getDescripcion()+"\",\""+evento.getFecha()+"\",\""+evento.getHora()+"\",\""+evento.getDeporte()+"\",\""+evento.getCreador()+"\")";
 		try {
 			Statement stmt = conexion.createStatement();
-			stmt.executeUpdate(sql);
+			stmt.execute(sql);
 			stmt.close();
 			return true;
 		}

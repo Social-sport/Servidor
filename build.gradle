@@ -25,6 +25,7 @@ dependencies {
 }
 test {
 	exclude 'tests/GUITest.class'
+	exclude 'tests'
 	testLogging {
         	events "PASSED", "STARTED", "FAILED", "SKIPPED"
     	}

@@ -39,10 +39,10 @@ public class BDTest {
 		//repoMensaje = new RepositorioMensaje();
 		repoAmigo = new RepositorioAmigo();
 	}
-	/*
+	
 	@Test
 	public void testFindDeporte() {
-		assertEquals(repoDeporte.findDeporte("Fútbol").getNombre(), "Fútbol");
+		assertEquals(repoDeporte.findDeporte("Futbol").getNombre(), "Futbol");
 	}
 
 	@Test
@@ -53,28 +53,28 @@ public class BDTest {
 	
 	@Test
 	public void testListarDeportesUsuario() {
-		List<Deporte> deportes = repoDeporte.listarDeportesUsuario("test");
+		List<Deporte> deportes = repoDeporte.listarDeportesUsuario("prueba");
 		assertTrue(deportes.size()>0);
 	}
 	
 	@Test
 	public void testASuscribirseDeporte() {
-		assertTrue(repoDeporte.suscribirseDeporte("Fútbol","test"));
+		assertTrue(repoDeporte.suscribirseDeporte("Futbol","prueba"));
 	}
 	
 	@Test
 	public void testZDarseDeBajaDeporte() {
-		assertTrue(repoDeporte.darseDeBajaDeporte("Fútbol","test"));
+		assertTrue(repoDeporte.darseDeBajaDeporte("Futbol","prueba"));
 	}
 
 	@Test
 	public void testFindUsuario() {
-		assertEquals(repoDeporte.findDeporte("Fútbol").getNombre(), "Fútbol");
+		assertEquals(repoDeporte.findDeporte("Futbol").getNombre(), "Futbol");
 	}
 
 	@Test
 	public void testAInsertarUsuario() {
-		Usuario usuario = new Usuario("prueba","prueba3","prueba",
+		Usuario usuario = new Usuario("prueba","prueba","prueba",
 				"prueba", "1994-11-11", "prueba", "prueba");
 		assertTrue(repoUsuario.insertarUsuario(usuario));
 	}
@@ -93,49 +93,48 @@ public class BDTest {
 
 	@Test
 	public void testFindComentario() {
-		assertEquals(repoDeporte.findDeporte("Fútbol").getNombre(), "Fútbol");
+		assertEquals(repoDeporte.findDeporte("Futbol").getNombre(), "Futbol");
 	}
 
 	@Test
 	public void testAInsertarEvento() {
-		Evento evento = new Evento("prueba","try","00", "00", "Fútbol", "prueba");
+		Evento evento = new Evento("prueba","try","00", "00", "Futbol", "prueba");
 		assertTrue(repoEvento.insertarEvento(evento));
 	}
 	
 	@Test
 	public void testFindEvento() {
-		assertEquals(repoEvento.findEvento("prueba").getDeporte(), "Fútbol");
+		assertEquals(repoEvento.findEvento("prueba").getDeporte(), "Futbol");
 	}
 	
 	@Test
 	public void testListarEventosDeporte() {
-		assertFalse(repoEvento.listarEventosDeporte("Fútbol").isEmpty());
+		assertFalse(repoEvento.listarEventosDeporte("Futbol").isEmpty());
 	}
 	
 	@Test
 	public void testZBorrarEvento() {
-		int id = repoEvento.findEvento("prueba").getId();
-		assertTrue(repoEvento.borrarEvento(id));
+		assertTrue(repoEvento.borrarEvento("prueba"));
 	}
 	
 	@Test
 	public void testAInsertarAmigo() {
-		Amigo amigo = new Amigo("test","prueba3","1994-11-11");
+		Amigo amigo = new Amigo("prueba","usuario@socialsport.com","1994-11-11");
 		assertTrue(repoAmigo.insertarAmigo(amigo));
 	}
 	
 	@Test
-	public void testListarAmigos() {
-		assertFalse(repoAmigo.listarAmigos("test").isEmpty());
+	public void testListarSeguidos() {
+		assertFalse(repoAmigo.listarSeguidos("prueba").isEmpty());
 	}
 	
 	@Test
 	public void testZBorrarAmigo() {
-		assertTrue(repoAmigo.borrarAmigo("test", "prueba3"));
+		assertTrue(repoAmigo.borrarAmigo("prueba", "prueba3"));
 	}
 
 	@Test
 	public void testFindMensaje() {
-		assertEquals(repoDeporte.findDeporte("Fútbol").getNombre(), "Fútbol");
-	}*/
+		assertEquals(repoDeporte.findDeporte("Futbol").getNombre(), "Futbol");
+	}
 }

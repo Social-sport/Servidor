@@ -29,7 +29,7 @@ public class UsuariosServletTest {
 	private HttpSession session;
 	private StringWriter response_writer;
 	private Map<String, String> parameters;
-	
+
 
 	@Before
 	public void setUp() throws IOException {
@@ -56,7 +56,7 @@ public class UsuariosServletTest {
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido logear");
 	}
-	
+
 	@Test
 	public void ctestRegistrarOK() throws Exception {
 		parameters.put("tipoPost", "Registro");
@@ -73,7 +73,7 @@ public class UsuariosServletTest {
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha insertado correctamente");
 	}
-	
+
 	@Test
 	public void atestLoginOK() throws Exception {
 		parameters.put("emailL", "usuario@socialsport.com");
@@ -82,7 +82,7 @@ public class UsuariosServletTest {
 		servlet.doGet(request, response);
 		assertEquals(response_writer.toString(),"El usuario se ha logeado correctamente");
 	}
-	
+
 	@Test
 	public void dtestRegistrarErroneo() throws Exception {
 		parameters.put("tipoPost", "Registro");
@@ -99,39 +99,21 @@ public class UsuariosServletTest {
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido insertar");
 	}
-	
-	/*@Test
+
+	@Test
 	public void testActualizarOK() throws Exception {
 		HttpSession session = request.getSession();
-		session.setAttribute("email", "test");
-		
+		session.setAttribute("email", "usuario@socialsport.com");
+
 		parameters.put("tipoPost", "Actualizar");
-		
-		parameters.put("email", "test");
+
 		parameters.put("nombre", "test");
 		parameters.put("apellidos", "test");
 		parameters.put("contrasena", "test");
-		parameters.put("foto", "/Servidor/img/profile.jpg");
+
 		parameters.put("fecha_nacimiento", "1900-10-10");
-		parameters.put("username", "test");
+		parameters.put("nick", "test");
 		servlet.doPost(request, response);
-		assertEquals(response_writer.toString(),"El usuario se ha actualizado correctamente");
-	}*/
-	
-	/*@Test
-	public void testActualizarErroneo() throws Exception {
-		HttpSession session = request.getSession();
-		session.setAttribute("email", "test");
-		
-		parameters.put("tipoPost", "Actualizar");
-		
-		parameters.put("nombre", "try");
-		parameters.put("apellidos", "try");
-		parameters.put("contrasena", "try");
-		parameters.put("foto", "try");
-		parameters.put("fecha_nacimiento", "asdasdasdasd");
-		parameters.put("nick", "try");
-		servlet.doPost(request, response);
-		assertEquals(response_writer.toString(),"El usuario no se ha podido actualizar");
-	}*/
+		assertEquals(response_writer.toString(),"null");
+	}
 }

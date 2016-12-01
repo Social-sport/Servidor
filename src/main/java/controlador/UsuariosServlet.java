@@ -38,7 +38,7 @@ public class UsuariosServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-				 
+
 		String response = null;
 		String email = null;
 		String nick = null;
@@ -49,13 +49,13 @@ public class UsuariosServlet extends HttpServlet {
 		String confNewContrasena = null;
 		String foto = null;
 		String fecha_nacimiento = null;
-		
+
 		String tipoPost = req.getParameter("tipoPost");
 		System.out.println("tipoPost=: "+tipoPost);
-		
+
 		if (tipoPost.equals("Actualizar")) {
-			
-			email = req.getSession().getAttribute("email").toString();
+
+			email = (String) req.getSession().getAttribute("email");
 			nick = req.getParameter("nick");
 			nombre = req.getParameter("nombre");
 			apellidos = req.getParameter("apellidos");
@@ -63,18 +63,20 @@ public class UsuariosServlet extends HttpServlet {
 			newContrasena = req.getParameter("newContrasena");
 			confNewContrasena = req.getParameter("confirmNewContrasena");
 			Part partFoto = req.getPart("foto");
-			foto = getFilename(partFoto);
+			if (partFoto!=null && !partFoto.equals("")) {
+				foto = getFilename(partFoto);
+			}
 			fecha_nacimiento = req.getParameter("fecha_nacimiento");
 			Usuario buscado = repo.findUsuario(email);
-			
-			if (!(newContrasena.equals(""))) {
+
+			if (newContrasena!=null && !(newContrasena.equals(""))) {
 				if (newContrasena.equals(confNewContrasena)) {
 					if (contrasena.equals(buscado.getContrasena())) {
 						contrasena = newContrasena;
 					}
 				}
 			}
-			
+
 			if (buscado!=null) {
 				String rutaFoto = getServletContext().getRealPath("/") + "img/uploads/" + buscado.getNick() + ".jpg";
 				if (nick.equals("")) {
@@ -123,7 +125,7 @@ public class UsuariosServlet extends HttpServlet {
 				}
 			}
 		}
-		
+
 		if (tipoPost.equals("Registro")) {
 			email = req.getParameter("emailR");
 			nick = req.getParameter("username");
@@ -160,7 +162,7 @@ public class UsuariosServlet extends HttpServlet {
 
 		setResponse(response, resp);
 	}
-	
+
 	/**
 	 * Metodo para devolver informacion de un usuario.
 	 */
@@ -178,7 +180,7 @@ public class UsuariosServlet extends HttpServlet {
 
 			System.out.println("email: " + email + " | pass: " + contrasena);
 			Usuario usuario = repo.findUsuario(email);
-			
+
 			if (usuario != null && contrasena.equals(usuario.getContrasena())) {
 				// El usuario existe y tiene esa contrasena, logeado
 				HttpSession session = req.getSession();
@@ -192,7 +194,7 @@ public class UsuariosServlet extends HttpServlet {
 				System.out.println(response);
 				resp.sendRedirect("signup.html");
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				
+
 			}
 			setResponse(response, resp);
 
@@ -200,7 +202,7 @@ public class UsuariosServlet extends HttpServlet {
 			if (SessionisActive(req, resp)) {
 
 				String email = (String) req.getSession().getAttribute("email");
-				
+
 				if (tipo.equals("infosesion")) {
 					Usuario u = repo.findUsuario(email);
 					response = gson.toJson(u);
@@ -243,7 +245,7 @@ public class UsuariosServlet extends HttpServlet {
 	}
 
 	private boolean SessionisActive(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		
+
 		if (req.getSession(false) != null) {
 			System.out.println("si existe sesion");
 			return true;
@@ -255,7 +257,7 @@ public class UsuariosServlet extends HttpServlet {
 			setResponse(response, resp);
 			return false;
 		}	
-		
+
 	}
 
 	/**
@@ -276,7 +278,7 @@ public class UsuariosServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void createSession(HttpSession session, Usuario usuario){
 		//session.setAttribute("usuario",usuario);
 		session.setAttribute("email", usuario.getEmail());
@@ -286,16 +288,16 @@ public class UsuariosServlet extends HttpServlet {
 		session.setAttribute("fecha", usuario.getFecha_nacimiento());
 		session.setAttribute("foto", usuario.getFoto());
 	}
-	
+
 	private static String getFilename(Part part) {
-        for (String cd : part.getHeader("content-disposition").split(";")) {
-            if (cd.trim().startsWith("filename")) {
-                String filename = cd.substring(cd.indexOf('=') + 1).trim()
-                        .replace("\"", "");
-                return filename.substring(filename.lastIndexOf('/') + 1)
-                        .substring(filename.lastIndexOf('\\') + 1);
-            }
-        }
-        return null;
-    }
+		for (String cd : part.getHeader("content-disposition").split(";")) {
+			if (cd.trim().startsWith("filename")) {
+				String filename = cd.substring(cd.indexOf('=') + 1).trim()
+						.replace("\"", "");
+				return filename.substring(filename.lastIndexOf('/') + 1)
+						.substring(filename.lastIndexOf('\\') + 1);
+			}
+		}
+		return null;
+	}
 }

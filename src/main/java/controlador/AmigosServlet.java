@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 
 import modelo.Amigo;
 import modelo.RepositorioAmigo;
-import modelo.RepositorioUsuario;
 import modelo.Usuario;
 
 /**
@@ -29,7 +28,6 @@ public class AmigosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioAmigo repoAmigo = new RepositorioAmigo();
-	private static RepositorioUsuario repoUsuario = new RepositorioUsuario();
 	private Gson gson = new Gson();
 
 	/**
@@ -41,14 +39,19 @@ public class AmigosServlet extends HttpServlet {
 		
 		HttpSession session = (HttpSession) req.getSession(); 
 		String response = null;		
-		String usuario = (String)session.getAttribute("email");
-		System.out.println("usuario: "+usuario);
+		String usuario = null;		
 		String amigoSeguido = req.getParameter("emailAmigo");
 		System.out.println("amigoSeguido: "+amigoSeguido);
 		Date fech = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String fecha = format.format(fech);
-		
+        
+        if (req.getParameter("email")!=null) {
+			usuario = req.getParameter("email");
+		}else{
+			usuario = (String)session.getAttribute("email");
+		}
+        System.out.println("usuario: "+usuario);
 		Amigo amigo = new Amigo(usuario,amigoSeguido,fecha);
 		boolean realizado = repoAmigo.insertarAmigo(amigo);
 		//inserta un amigo en la BD
@@ -72,27 +75,48 @@ public class AmigosServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String response = null;		
 		List<Usuario> listSeguidores = new LinkedList<>();
-		List<Usuario> listSeguidos = new LinkedList<>();
-		String email = req.getSession().getAttribute("email").toString();
+		List<Usuario> listSeguidos = new LinkedList<>();		
 		String tipo = req.getParameter("tipoRelacion");
 
-		System.out.println("usuario a buscar seguidor/es: " + email);
-		
-		if (tipo.equals("listSeguidos")) {
+		if (tipo.equals("test")) {
+
+			tipo = req.getParameter("list");
+			String emailt = req.getParameter("usuario");
 			
-			listSeguidos = repoAmigo.listarSeguidos(email);			
-			response = gson.toJson(listSeguidos);
-			System.out.println("json lleno con Seguidos: " + response);			
-			resp.setStatus(HttpServletResponse.SC_OK);
-		}
-		if (tipo.equals("listSeguidores")) {
+			if (tipo.equals("listSeguidos")) {
+				
+				listSeguidos = repoAmigo.listarSeguidos(emailt);
+				response = gson.toJson(listSeguidos);
+				System.out.println("json lleno con Seguidos: " + response);
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
+			if (tipo.equals("listSeguidores")) {
 
-			listSeguidores = repoAmigo.listarSeguidores(email);			
-			response = gson.toJson(listSeguidores);
-			System.out.println("json lleno con Seguidores: " + response);			
-			resp.setStatus(HttpServletResponse.SC_OK);
-		}
+				listSeguidores = repoAmigo.listarSeguidores(emailt);
+				response = gson.toJson(listSeguidores);
+				System.out.println("json lleno con Seguidores: " + response);
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
+		} else {
+			
+			String email = req.getSession().getAttribute("email").toString();
+			System.out.println("usuario a buscar seguidor/es: " + email);
+			if (tipo.equals("listSeguidos")) {
 
+				listSeguidos = repoAmigo.listarSeguidos(email);
+				response = gson.toJson(listSeguidos);
+				System.out.println("json lleno con Seguidos: " + response);
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
+			if (tipo.equals("listSeguidores")) {
+
+				listSeguidores = repoAmigo.listarSeguidores(email);
+				response = gson.toJson(listSeguidores);
+				System.out.println("json lleno con Seguidores: " + response);
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
+
+		}
 		setResponse(response, resp);
 
 	}

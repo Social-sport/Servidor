@@ -132,31 +132,32 @@ public class UsuariosServlet extends HttpServlet {
 			contrasena = req.getParameter("contrasenaR");
 			foto = req.getParameter("foto");
 			if (foto == null) {
-				//Por defecto sin foto
+				// Por defecto sin foto
 				foto = "/Servidor/img/profile.jpg";
 			}
 			fecha_nacimiento = req.getParameter("fecha_nacimiento");
-			
-			if (email != "" && nick != "" && nombre != "" && apellidos != "" && contrasena != "" && fecha_nacimiento != "") {
-				Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);
+
+			if (email != "" && nick != "" && nombre != "" && apellidos != "" && contrasena != ""
+					&& fecha_nacimiento != "") {
+				Usuario usuario = new Usuario(email, nombre, apellidos, contrasena, fecha_nacimiento, foto, nick);
 				boolean realizado = repo.insertarUsuario(usuario);
-				
+
 				if (realizado) {
-					//Inserta el usuario en la BD
+					// Inserta el usuario en la BD
 					response = "El usuario se ha insertado correctamente";
-					HttpSession session = req.getSession(); 
+					HttpSession session = req.getSession();
 					createSession(session, usuario);
 					resp.sendRedirect("muro.html");
 					resp.setStatus(HttpServletResponse.SC_OK);
 				}
-				else {
-					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-					response = "El usuario no se ha podido insertar";
-					resp.sendRedirect("signup.html");
-				}
+
+			} else {
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response = "El usuario no se ha podido insertar";
+				resp.sendRedirect("signup.html");
 			}
 		}
-		
+
 		setResponse(response, resp);
 	}
 	

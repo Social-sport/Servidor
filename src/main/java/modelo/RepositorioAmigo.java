@@ -36,7 +36,7 @@ public class RepositorioAmigo {
 			return true;
 		}
 		catch (SQLException e) {
-			System.out.println("Error al insertar amigo");
+			System.out.println("Error al insertar amigo por: " + e);
 			return false;
 		}
 	}

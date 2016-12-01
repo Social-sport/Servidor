@@ -49,7 +49,7 @@ public class UsuariosServletTest {
 	}
 
 	@Test
-	public void testLoginErroneo() throws Exception {
+	public void btestLoginErroneo() throws Exception {
 		parameters.put("emailL", "asd");
 		parameters.put("contrasenaL", "asdafgh");
 		parameters.put("tipo", "initSesion");
@@ -58,8 +58,25 @@ public class UsuariosServletTest {
 	}
 	
 	@Test
-	public void testLoginOK() throws Exception {
-		parameters.put("emailL", "test@test.com");
+	public void ctestRegistrarOK() throws Exception {
+		parameters.put("tipoPost", "Registro");
+		parameters.put("emailR", "usuario@socialsport.com");
+		parameters.put("nombre", "Social");
+		parameters.put("apellidos", "Sport");
+		parameters.put("contrasenaR", "test");
+		parameters.put("foto", "/Servidor/img/profile.jpg");
+		parameters.put("fecha_nacimiento", "2016-09-19");
+		parameters.put("username", "SocialSport");
+		RepositorioUsuario repoUsuario = new RepositorioUsuario();
+		//borramos porque el usuario ya existe de test anteriores
+		repoUsuario.borrarUsuario("usuario@socialsport.com");
+		servlet.doPost(request, response);
+		assertEquals(response_writer.toString(),"El usuario se ha insertado correctamente");
+	}
+	
+	@Test
+	public void atestLoginOK() throws Exception {
+		parameters.put("emailL", "usuario@socialsport.com");
 		parameters.put("contrasenaL", "test");
 		parameters.put("tipo", "initSesion");
 		servlet.doGet(request, response);
@@ -67,35 +84,18 @@ public class UsuariosServletTest {
 	}
 	
 	@Test
-	public void testRegistrarOK() throws Exception {
+	public void dtestRegistrarErroneo() throws Exception {
 		parameters.put("tipoPost", "Registro");
-		parameters.put("emailR", "trys@trys3");
-		parameters.put("nombre", "trys2");
-		parameters.put("apellidos", "try");
-		parameters.put("contrasenaR", "try");
+		parameters.put("emailR", "usuario@socialsport.com");
+		parameters.put("nombre", "");
+		parameters.put("apellidos", "");
+		parameters.put("contrasenaR", "test");
 		parameters.put("foto", "/Servidor/img/profile.jpg");
-		parameters.put("fecha_nacimiento", "1900-10-10");
-		parameters.put("username", "trys3");
+		parameters.put("fecha_nacimiento", "2016-09-19");
+		parameters.put("username", "");
 		RepositorioUsuario repoUsuario = new RepositorioUsuario();
 		//borramos porque el usuario ya existe de test anteriores
-		repoUsuario.borrarUsuario("trys@trys3");
-		servlet.doPost(request, response);
-		assertEquals(response_writer.toString(),"El usuario se ha insertado correctamente");
-	}
-	
-	@Test
-	public void testRegistrarErroneo() throws Exception {
-		parameters.put("tipoPost", "Registro");
-		parameters.put("email", "try");
-		parameters.put("nombre", "try");
-		parameters.put("apellidos", "try");
-		parameters.put("contrasena", "try");
-		parameters.put("foto", "/Servidor/img/profile.jpg");
-		parameters.put("fecha_nacimiento", "10/12/2012");
-		parameters.put("username", "try");
-		RepositorioUsuario repoUsuario = new RepositorioUsuario();
-		//borramos porque el usuario ya existe de test anteriores
-		repoUsuario.borrarUsuario("try");
+		repoUsuario.borrarUsuario("usuario@socialsport.com");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido insertar");
 	}

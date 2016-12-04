@@ -78,7 +78,12 @@ public class UsuariosServlet extends HttpServlet {
 			}
 
 			if (buscado!=null) {
-				String rutaFoto = getServletContext().getRealPath("/") + "img/uploads/" + buscado.getNick() + ".jpg";
+				String uploads = getServletContext().getRealPath("/") + "img/uploads/";
+				String rutaFoto = uploads + buscado.getNick() + ".jpg";
+				File folder = new File(uploads);
+				if (!folder.exists()) {
+					folder.mkdirs();
+				}
 				if (nick.equals("")) {
 					nick = buscado.getNick();
 				}

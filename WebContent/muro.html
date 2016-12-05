@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
-<script type="text/javascript" src="js/sports.js"></script>
-<script type="text/javascript" src="js/Buscar.js"></script>
-<script type="text/javascript" src="js/allUsers.js"></script>
-<script type="text/javascript" src="js/load.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+	<script type="text/javascript" src="js/sports.js"></script>
+	<script type="text/javascript" src="js/Buscar.js"></script>
+	<script type="text/javascript" src="js/allUsers.js"></script>
+	<script type="text/javascript" src="js/muro.js"></script>
 
 <title>Muro SocialSport</title>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
-<link rel="stylesheet" href="css/muro.css">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans"	rel="stylesheet">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		crossorigin="anonymous">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+		crossorigin="anonymous">
+	   
+	<link rel="stylesheet" href="css/muro.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans"
+	rel="stylesheet">
 </head>
 <body>
 	<div id="topBar"></div>
@@ -46,98 +46,118 @@
 			</h3>
 		</div>
 
-		
+
 	</div>
-	
+
 	<div id="sticky" class="container">
-		
-		 <!-- Nav tabs -->
-        <ul class="nav nav-tabs nav-menu" role="tablist">
-          <li>
-            <a href="#events" role="tab" data-toggle="tab">
-              <i class="fa fa-tasks"></i> Eventos
-            </a>
-          </li>
-          <li>
-            <a href="#addSports" id="mySportsButton" role="tab" data-toggle="tab">
-              <i class="fa fa-futbol-o"></i> Añade Deportes
-            </a>
-          </li>
-          
-          <li>
-            <a href="#Followed" id="FollowedButton" role="tab" data-toggle="tab">
-              <i class="fa fa-group"></i> Seguidos
-            </a>
-          </li>
-          
-          <li>
-            <a href="#addFriends" id="myFriendsButton" role="tab" data-toggle="tab">
-              <i class="fa fa-group"></i> Añade Amigos
-            </a>
-          </li>
-          
-          
-          
-        </ul><!--nav-tabs close-->
-	
-	
+
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs nav-menu" role="tablist">
+			<li class="active"><a href="#events" role="tab"
+				data-toggle="tab"> <i class="fa fa-tasks"></i> Eventos
+			</a></li>
+			<li><a href="#addSports" id="mySportsButton" role="tab"
+				data-toggle="tab"> <i class="fa fa-futbol-o"></i> Añade Deportes
+			</a></li>
+
+			<li><a href="#Followed" id="FollowedButton" role="tab"
+				data-toggle="tab"> <i class="fa fa-group"></i> Seguidos
+			</a></li>
+
+			<li><a href="#addFriends" id="myFriendsButton" role="tab"
+				data-toggle="tab"> <i class="fa fa-group"></i> Añade Amigos
+			</a></li>
+
+
+
+		</ul>
+		<!--nav-tabs close-->
+
+
 		<!-- Tab panes -->
-        <div class="tab-content">
-          
-          <div class="tab-pane fade " id="events">
-            <div class="container fom-main">
-              <div class="row">
-                <div class="col-sm-12">
-                	<div id  = "seccionEvents">
-                    	<h2 class="register">Todos los eventos de mis deportes</h2>
-                    </div><!-- div seccion close-->
-                </div><!--col-sm-12 close-->
-              </div><!--row close-->
-            </div><!--container close -->          
-          </div><!--tab-pane close-->
-          
-           <div class="tab-pane fade " id="Followed">
-            <div class="container fom-main">
-              <div class="row">
-                <div class="col-sm-12">
-                	<div id  = "seccionFollowed">
-                    	<h2 class="register">Usuarios Seguidos </h2>
-                    </div><!-- div seccion close-->
-                </div><!--col-sm-12 close-->
-              </div><!--row close-->
-            </div><!--container close -->          
-          </div><!--tab-pane close-->
-          
-          <div class="tab-pane fade " id="addSports">
-            <div class="container fom-main">
-              <div class="row">
-                <div class="col-sm-12">
-                	<div id  = "seccionSports">
-                    	<h2 class="register">Cargando Deportes Disponibles</h2>
-                    </div><!-- div seccion close-->
-                </div><!--col-sm-12 close-->
-              </div><!--row close-->
-            </div><!--container close -->          
-          </div><!--tab-pane close-->
-          
-          <div class="tab-pane fade " id="addFriends">
-            <div class="container fom-main">
-              <div class="row">
-                <div class="col-sm-12">
-                	<div id  = "seccionFriends">
-                    	<h2 class="register">Cargando Usuarios Registrados </h2>
-                    </div><!-- div seccion close-->
-                </div><!--col-sm-12 close-->
-              </div><!--row close-->
-            </div><!--container close -->          
-          </div><!--tab-pane close-->
-          
-         
-          
-         </div><!--tab-content close-->	
-	
-	</div><!--container close-->
-	
-	
+		<div class="tab-content">
+
+			<div class="tab-pane fade active in" id="events">
+				<div class="container fom-main">
+					<div class="row">
+						<div class="col-sm-12">
+							<div id="seccionEvents">
+								<h2 class="register">Todos los eventos de mis deportes</h2>
+								<div id="seccion1">
+									<div class="thumbnail ">
+										<img src="img/Sports.png" alt="Sports Bootstrap Theme">
+									</div>
+								</div>
+							</div>
+							<!-- div seccion close-->
+						</div>
+						<!--col-sm-12 close-->
+					</div>
+					<!--row close-->
+				</div>
+				<!--container close -->
+			</div>
+			<!--tab-pane close-->
+
+			<div class="tab-pane fade " id="Followed">
+				<div class="container fom-main">
+					<div class="row">
+						<div class="col-sm-12">
+							<div id="seccionFollowed">
+								<h2 class="register">Usuarios Seguidos</h2>
+							</div>
+							<!-- div seccion close-->
+						</div>
+						<!--col-sm-12 close-->
+					</div>
+					<!--row close-->
+				</div>
+				<!--container close -->
+			</div>
+			<!--tab-pane close-->
+
+			<div class="tab-pane fade " id="addSports">
+				<div class="container fom-main">
+					<div class="row">
+						<div class="col-sm-12">
+							<div id="seccionSports">
+								<h2 class="register">Cargando Deportes Disponibles</h2>
+							</div>
+							<!-- div seccion close-->
+						</div>
+						<!--col-sm-12 close-->
+					</div>
+					<!--row close-->
+				</div>
+				<!--container close -->
+			</div>
+			<!--tab-pane close-->
+
+			<div class="tab-pane fade " id="addFriends">
+				<div class="container fom-main">
+					<div class="row">
+						<div class="col-sm-12">
+							<div id="seccionFriends">
+								<h2 class="register">Cargando Usuarios Registrados</h2>
+							</div>
+							<!-- div seccion close-->
+						</div>
+						<!--col-sm-12 close-->
+					</div>
+					<!--row close-->
+				</div>
+				<!--container close -->
+			</div>
+			<!--tab-pane close-->
+
+
+
+		</div>
+		<!--tab-content close-->
+
+	</div>
+	<!--container close-->
+
+
 </body>
 </html>

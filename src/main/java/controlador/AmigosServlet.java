@@ -101,6 +101,7 @@ public class AmigosServlet extends HttpServlet {
 			
 			String email = req.getSession().getAttribute("email").toString();
 			System.out.println("usuario a buscar seguidor/es: " + email);
+			
 			if (tipo.equals("listSeguidos")) {
 
 				listSeguidos = repoAmigo.listarSeguidos(email);

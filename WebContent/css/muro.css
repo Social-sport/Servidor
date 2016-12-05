@@ -18,12 +18,22 @@ body {
   border-radius: 10px;
 }
 
+
+#seccion1{
+	width: 750px;
+	margin: 0 auto;
+}
 #idcenter{
   
   margin: 0 auto;
 }
 
 #seccionSports{
+	width: 650px;
+	margin: 0 auto;
+}
+
+#seccionFollowed{
 	width: 650px;
 	margin: 0 auto;
 }

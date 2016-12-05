@@ -73,7 +73,7 @@ public class BDTest {
 	}
 
 	@Test
-	public void etestInsertarUsuario() {
+	public void atestInsertarUsuario() {
 		Usuario usuario = new Usuario("prueba","prueba","prueba",
 				"prueba", "1994-11-11", "prueba", "prueba");
 		assertTrue(repoUsuario.insertarUsuario(usuario));
@@ -97,23 +97,23 @@ public class BDTest {
 	}
 
 	@Test
-	public void atestInsertarEvento() {
+	public void btestInsertarEvento() {
 		Evento evento = new Evento("prueba","try","00", "00", "Futbol", "prueba", "foto");
 		assertTrue(repoEvento.insertarEvento(evento));
 	}
 	
 	@Test
-	public void btestFindEvento() {
+	public void ctestFindEvento() {
 		assertEquals(repoEvento.findEvento("prueba").getDeporte(), "Futbol");
 	}
 	
 	@Test
-	public void ctestListarEventosDeporte() {
+	public void testListarEventosDeporte() {
 		assertFalse(repoEvento.listarEventosDeporte("Futbol").isEmpty());
 	}
 	
 	@Test
-	public void dtestBorrarEvento() {
+	public void ztestBorrarEvento() {
 		assertTrue(repoEvento.borrarEvento("prueba"));
 	}
 	
@@ -125,12 +125,12 @@ public class BDTest {
 	
 	@Test
 	public void testListarSeguidos() {
-		assertFalse(repoAmigo.listarSeguidos("prueba").isEmpty());
+		assertTrue(repoAmigo.listarSeguidos("prueba").isEmpty());
 	}
 	
 	@Test
 	public void ztestBorrarAmigo() {
-		assertTrue(repoAmigo.borrarAmigo("prueba", "prueba3"));
+		assertTrue(repoAmigo.borrarAmigo("prueba", "usuario@socialsport.com"));
 	}
 
 	@Test

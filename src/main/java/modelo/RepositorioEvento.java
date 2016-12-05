@@ -32,7 +32,7 @@ public class RepositorioEvento {
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
 			evento = new Evento(rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
-					rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"));
+					rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"));
 			stmt.close();
 		}
 		catch (SQLException e) {
@@ -54,7 +54,7 @@ public class RepositorioEvento {
 			while (rs.next()) {
 				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"), rs.getString("descripcion"), rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador")));
+						rs.getString("creador"), rs.getString("foto")));
 			}
 			stmt.close();
 		}
@@ -77,7 +77,7 @@ public class RepositorioEvento {
 			while (rs.next()) {
 				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador")));
+						rs.getString("creador"), rs.getString("foto")));
 			}
 			stmt.close();
 		}
@@ -100,7 +100,7 @@ public class RepositorioEvento {
 			while (rs.next()) {
 				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador")));
+						rs.getString("creador"), rs.getString("foto")));
 			}
 			stmt.close();
 		}
@@ -115,8 +115,8 @@ public class RepositorioEvento {
 	 * Inserta el evento <evento> en la BD
 	 */
 	public boolean insertarEvento(Evento evento) {
-		String sql = "INSERT INTO Evento (nombre,descripcion,fecha,hora,deporte,creador) VALUES "
-				+ "(\""+evento.getNombre()+"\",\""+evento.getDescripcion()+"\",\""+evento.getFecha()+"\",\""+evento.getHora()+"\",\""+evento.getDeporte()+"\",\""+evento.getCreador()+"\")";
+		String sql = "INSERT INTO Evento (nombre,descripcion,fecha,hora,deporte,creador,foto) VALUES "
+				+ "(\""+evento.getNombre()+"\",\""+evento.getDescripcion()+"\",\""+evento.getFecha()+"\",\""+evento.getHora()+"\",\""+evento.getDeporte()+"\",\""+evento.getCreador()+"\",\""+evento.getFoto()+"\")";
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.execute(sql);

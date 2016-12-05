@@ -35,7 +35,8 @@ public class EventosServlet extends HttpServlet {
 		String hora = req.getParameter("hora");
 		String deporte = req.getParameter("deporte");
 		String creador = req.getParameter("creador");
-		Evento evento = new Evento(nombre,descripcion,fecha,hora,deporte,creador);
+		String foto = req.getParameter("foto");
+		Evento evento = new Evento(nombre,descripcion,fecha,hora,deporte,creador,foto);
 		boolean realizado = repo.insertarEvento(evento);
 		if (realizado) {
 			//Inserta el evento del deporte en la BD

@@ -63,7 +63,7 @@ public class BDTest {
 	}
 	
 	@Test
-	public void testZDarseDeBajaDeporte() {
+	public void ztestDarseDeBajaDeporte() {
 		assertTrue(repoDeporte.darseDeBajaDeporte("Futbol","prueba"));
 	}
 
@@ -73,7 +73,7 @@ public class BDTest {
 	}
 
 	@Test
-	public void testAInsertarUsuario() {
+	public void etestInsertarUsuario() {
 		Usuario usuario = new Usuario("prueba","prueba","prueba",
 				"prueba", "1994-11-11", "prueba", "prueba");
 		assertTrue(repoUsuario.insertarUsuario(usuario));
@@ -87,7 +87,7 @@ public class BDTest {
 	}
 
 	@Test
-	public void testZEliminarUsuario() {
+	public void ztestEliminarUsuario() {
 		assertTrue(repoUsuario.borrarUsuario("prueba"));
 	}
 
@@ -97,28 +97,28 @@ public class BDTest {
 	}
 
 	@Test
-	public void testAInsertarEvento() {
-		Evento evento = new Evento("prueba","try","00", "00", "Futbol", "prueba");
+	public void atestInsertarEvento() {
+		Evento evento = new Evento("prueba","try","00", "00", "Futbol", "prueba", "foto");
 		assertTrue(repoEvento.insertarEvento(evento));
 	}
 	
 	@Test
-	public void testFindEvento() {
+	public void btestFindEvento() {
 		assertEquals(repoEvento.findEvento("prueba").getDeporte(), "Futbol");
 	}
 	
 	@Test
-	public void testListarEventosDeporte() {
+	public void ctestListarEventosDeporte() {
 		assertFalse(repoEvento.listarEventosDeporte("Futbol").isEmpty());
 	}
 	
 	@Test
-	public void testZBorrarEvento() {
+	public void dtestBorrarEvento() {
 		assertTrue(repoEvento.borrarEvento("prueba"));
 	}
 	
 	@Test
-	public void testAInsertarAmigo() {
+	public void ftestInsertarAmigo() {
 		Amigo amigo = new Amigo("prueba","usuario@socialsport.com","1994-11-11");
 		assertTrue(repoAmigo.insertarAmigo(amigo));
 	}
@@ -129,7 +129,7 @@ public class BDTest {
 	}
 	
 	@Test
-	public void testZBorrarAmigo() {
+	public void ztestBorrarAmigo() {
 		assertTrue(repoAmigo.borrarAmigo("prueba", "prueba3"));
 	}
 

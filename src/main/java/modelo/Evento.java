@@ -9,8 +9,9 @@ public class Evento {
 	private String hora;
 	private String deporte;
 	private String creador;
+	private String foto;
 
-	public Evento(int id, String nombre, String descripcion, String fecha, String hora, String deporte, String creador) {
+	public Evento(int id, String nombre, String descripcion, String fecha, String hora, String deporte, String creador, String foto) {
 		this.id=id;
 		this.nombre=nombre;
 		this.descripcion=descripcion;
@@ -18,15 +19,17 @@ public class Evento {
 		this.hora=hora;
 		this.deporte=deporte;
 		this.creador=creador;
+		this.foto=foto;
 	}
 
-	public Evento(String nombre, String descripcion, String fecha, String hora, String deporte, String creador) {
+	public Evento(String nombre, String descripcion, String fecha, String hora, String deporte, String creador, String foto) {
 		this.nombre=nombre;
 		this.descripcion=descripcion;
 		this.fecha=fecha;
 		this.hora=hora;
 		this.deporte=deporte;
 		this.creador=creador;
+		this.foto=foto;
 	}
 
 	public int getId() {
@@ -83,5 +86,13 @@ public class Evento {
 
 	public void setCreador(String creador) {
 		this.creador = creador;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 }

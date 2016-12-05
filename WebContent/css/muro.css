@@ -18,6 +18,51 @@ body {
   border-radius: 10px;
 }
 
+#idcenter{
+  
+  margin: 0 auto;
+}
+
+#seccionSports{
+	width: 650px;
+	margin: 0 auto;
+}
+
+#seccionFriends{
+	width: 650px;
+	margin: 0 auto;
+}
+
+.tab-pane {
+	background: #ffffff;
+	box-shadow: 0 0 4px rgba(0,0,0,.4);
+	border-radius: 6px;
+	text-align: center;
+	padding: 10px;
+}
+
+.stick{
+	position: fixed !important;
+	top: 0;
+	z-index: 999 !important;
+	width: 100%;
+	background: #ffffff !important;
+	height: auto; 
+	transition: all ease 0.8s;
+	-webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+}
+
+.stick a { 
+	line-height: 20px !important;
+}
+
+.stick img { 
+	margin:0 !important;
+}
+
+
 .jumbotron {
   /* Aqui poner la ruta de la imagen del jumbotron (donde pone "Bienvenido a Social Sport") */
   background-image: url('../img/header.png');
@@ -140,4 +185,28 @@ form.list-group-item.active small {
 	#list-group-item-text{
 		font-size: 70%;
 	}
+	
+	.search-btn {
+		width: 100%;
+	}
+	#busAmi{
+		width: 315px;
+	}
+	#bSuscribete{
+		margin: 10px 0;
+		font-size: 11px;
+	}
+	
+	#seccionFriends{
+		width: 250px;
+		margin: 0 auto;
+	}
+	#seccionSports{
+		width: 250px;
+		margin: 0 auto;
+	}
+	h2 {
+		margin: 0 auto;
+	}
+	
 }

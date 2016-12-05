@@ -1,26 +1,22 @@
 $(document).ready(
     function() {
 
-        $("#listSport").click(
+        $("#mySportsButton").click(
             function(event) {
 
                 event.preventDefault();
-                $.ajax({
-                    type : "GET",
-                    url : "/Servidor/deportes",
-                    data : $("#tipoDeport").serialize(),
-                    dataType: "JSON",                    
-                    success : function(listSport) {
+
+                $.get('deportes', {tipoDeport:'AvailableSports'}, function (listSport){ 
                     	
                     	if (listSport.length == 0) {
-                    		$("#seccion1").html("<div><h3 id='seccion'>Ya estas Suscrito a todos los Deportes</h3></div>");
+                    		$("#seccionSports").html("<div><h3 id='seccion'>Ya estas Suscrito a todos los Deportes</h3></div>");
                   		}else{
 
-                        $("#seccion1").html("<div><h3 id='seccion'>Deportes Disponibles</h3></div>");
+                        $("#seccionSports").html("<div><h3 id='seccion'>Deportes Disponibles</h3></div>");
                         
                     	$.each(listSport, function(i,item){                      
 
-                            $("#seccion1").append("<form action='/Servidor/deportes' method='POST'  class='list-group-item active'  id='listSearchs'>"+
+                            $("#seccionSports").append("<form action='/Servidor/deportes' method='POST'  class='list-group-item active'  id='listSearchs'>"+
                                     
                                     "<div class='media col-md-3'>"+
                                         "<figure class='pull-left'>"+
@@ -42,10 +38,7 @@ $(document).ready(
                         });
 
                   		};
-                    },
-                    error : function() {                    	
-                    	$("#seccion1").html("<div class='alert alert-danger lead'>Error: No encuentra deportes en base de datos</div>");
-                    }
+                   
                 });
         });
 });

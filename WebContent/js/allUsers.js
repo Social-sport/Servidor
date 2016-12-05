@@ -1,20 +1,18 @@
 $(document).ready(
     function() {
 
-    	$("#listFriends").click(
+    	$("#myFriendsButton").click(
             function(event) {
+            	
                 event.preventDefault();
-                $.ajax({
-                	type : "GET",
-                    url : "/Servidor/usuarios",
-                    data : $("#tipoAmigo").serialize(),
-                    dataType: "JSON",
-                    success : function(search) {                    	
-                    	$("#seccion2").html("<div><h3 id='seccion'>Usuarios Registrados</h3></div>");
+                
+                $.get('usuarios', {tipo:'ListEveryUsers'}, function (search){ 
+                	
+                    	$("#seccionFriends").html("<div><h3 id='seccion'>Usuarios Registrados</h3></div>");
                     	
                     	$.each(search, function(i,item){                    
 
-                            $("#seccion2").append("<form action='/Servidor/amigos' method='POST' class='list-group-item active'  id='listSearchs'>"+
+                            $("#seccionFriends").append("<form action='/Servidor/amigos' method='POST' class='list-group-item active'  id='listSearchs'>"+
                                     "<div class='media col-md-3'>"+
                                     "<figure class='pull-left'>"+
                                         "<img class='media-object img-rounded img-responsive'  src='"+ search[i].foto+"' alt='placehold.it/350x250' >"+
@@ -32,11 +30,8 @@ $(document).ready(
                                 "</div>"+ 
                             "</form>");
                         });
-                    },
-                    error : function() {                    	
-                    	
-                    	$("#seccion2").html("<div class='alert alert-danger lead'>Error: No encuentra Usuarios en base de datos</div>");
-                    }
+                   
+                    
                 });
         });
 });

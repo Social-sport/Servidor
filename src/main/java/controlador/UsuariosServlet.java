@@ -22,7 +22,7 @@ import modelo.RepositorioUsuario;
 import com.google.gson.Gson;
 
 /**
- * Servlet de obtencion de usuaiors
+ * Servlet de obtencion de usuarios
  */
 @MultipartConfig
 @WebServlet(value = "/usuarios", name = "UsuariosServlet")

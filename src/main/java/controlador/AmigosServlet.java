@@ -21,7 +21,7 @@ import modelo.RepositorioAmigo;
 import modelo.Usuario;
 
 /**
- * Servlet de obtencion de usuaiors
+ * Servlet de obtencion de amigos
  */
 @WebServlet(value = "/amigos", name = "AmigosServlet")
 public class AmigosServlet extends HttpServlet {

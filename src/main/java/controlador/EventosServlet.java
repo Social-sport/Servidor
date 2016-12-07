@@ -14,7 +14,7 @@ import modelo.Evento;
 import modelo.RepositorioEvento;
 
 /**
- * Servlet de obtencion de usuaiors
+ * Servlet de obtencion de eventos
  */
 @WebServlet(value = "/eventos", name = "EventosServlet")
 public class EventosServlet extends HttpServlet {

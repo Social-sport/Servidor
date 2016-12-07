@@ -6,10 +6,12 @@ import org.junit.runners.MethodSorters;
 import modelo.Amigo;
 import modelo.Deporte;
 import modelo.Evento;
+import modelo.Notificacion;
 import modelo.RepositorioAmigo;
 //import modelo.RepositorioComentario;
 import modelo.RepositorioDeporte;
 import modelo.RepositorioEvento;
+import modelo.RepositorioNotificacion;
 //import modelo.RepositorioMensaje;
 import modelo.RepositorioUsuario;
 import modelo.Usuario;
@@ -28,6 +30,7 @@ public class BDTest {
 	//private static RepositorioComentario repoComentario;
 	private static RepositorioEvento repoEvento;
 	private static RepositorioAmigo repoAmigo;
+	private static RepositorioNotificacion repoNotificacion;
 	//private static RepositorioMensaje repoMensaje;
 
 	@BeforeClass
@@ -38,6 +41,7 @@ public class BDTest {
 		repoEvento = new RepositorioEvento();
 		//repoMensaje = new RepositorioMensaje();
 		repoAmigo = new RepositorioAmigo();
+		repoNotificacion = new RepositorioNotificacion();
 	}
 	
 	@Test
@@ -137,4 +141,19 @@ public class BDTest {
 	public void testFindMensaje() {
 		assertEquals(repoDeporte.findDeporte("Futbol").getNombre(), "Futbol");
 	}
+	
+	/*@Test
+	public void testAInsertarNotificacion() {
+		assertTrue(repoNotificacion.insertarNotificacion(new Notificacion("prueba", "prueba descripcion", "12-06-1175", "18:03", "Evento")));
+	}
+	
+	@Test
+	public void testListarNotificacion() {
+		assertFalse(repoNotificacion.listarNotificaciones("prueba").isEmpty());
+	}
+	
+	@Test
+	public void testZBorrarNotificacion() {
+		assertTrue(repoNotificacion.borrarNotificacion("1"));
+	}*/
 }

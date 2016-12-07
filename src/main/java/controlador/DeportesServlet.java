@@ -16,7 +16,7 @@ import modelo.RepositorioDeporte;
 import com.google.gson.Gson;
 
 /**
- * Servlet de obtencion de usuaiors
+ * Servlet de obtencion de deportes
  */
 @WebServlet(value = "/deportes", name = "DeportesServlet")
 public class DeportesServlet extends HttpServlet {

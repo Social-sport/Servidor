@@ -142,9 +142,14 @@ public class BDTest {
 		assertEquals(repoDeporte.findDeporte("Futbol").getNombre(), "Futbol");
 	}
 	
-	/*@Test
+	@Test
 	public void testAInsertarNotificacion() {
 		assertTrue(repoNotificacion.insertarNotificacion(new Notificacion("prueba", "prueba descripcion", "12-06-1175", "18:03", "Evento")));
+	}
+
+	@Test
+	public void testNotificar() {
+		assertTrue(repoNotificacion.notificar("prueba", "evento"));
 	}
 	
 	@Test
@@ -155,5 +160,5 @@ public class BDTest {
 	@Test
 	public void testZBorrarNotificacion() {
 		assertTrue(repoNotificacion.borrarNotificacion("1"));
-	}*/
+	}
 }

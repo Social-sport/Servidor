@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 import modelo.Amigo;
 import modelo.RepositorioAmigo;
+import modelo.RepositorioNotificacion;
 import modelo.Usuario;
 
 /**
@@ -28,6 +29,7 @@ public class AmigosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioAmigo repoAmigo = new RepositorioAmigo();
+	private static RepositorioNotificacion repoNotificacion = new RepositorioNotificacion();
 	private Gson gson = new Gson();
 
 	/**
@@ -56,6 +58,8 @@ public class AmigosServlet extends HttpServlet {
 		boolean realizado = repoAmigo.insertarAmigo(amigo);
 		//inserta un amigo en la BD
 		if (realizado) {
+			//Notificamos
+			repoNotificacion.notificar(amigoSeguido,"Amigo");
 			response = "El amigo se ha insertado correctamente";
 			resp.setStatus(HttpServletResponse.SC_OK);
 			resp.sendRedirect("muro.html");

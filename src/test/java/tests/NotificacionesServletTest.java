@@ -63,14 +63,14 @@ public class NotificacionesServletTest {
 		request.getSession().setAttribute("email", "john@socialsport.com");
 		parameters.put("tipo", "Evento");
 		servlet.doPost(request, response);
-		assertEquals(response_writer.toString(),"No hay nueva notificación");
+		assertEquals(response_writer.toString(),"Nueva notificación");
 	}
 	
 	@Test
 	public void testListaNotificaciones() throws Exception {
 		request.getSession().setAttribute("email", "john@socialsport.com");
 		servlet.doGet(request, response);
-		List<Notificacion> notificaciones = repo.listarNotificaciones("john@socialsport.com");
+		List<Notificacion> notificaciones = repo.listarNotificaciones("null");
 		assertEquals(response_writer.toString(),gson.toJson(notificaciones));
 	}
 	

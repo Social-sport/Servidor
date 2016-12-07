@@ -73,7 +73,13 @@ public class RepositorioNotificacion {
 	}
 	
 	public boolean notificar(String usuario, String tipo) {
-		String descripcion = "Tiene una notificación nueva de un "+tipo;
+		String descripcion = "";
+		if (tipo.equals("Evento")) {
+			descripcion = "Tiene una notificación nueva de un evento";
+		}
+		if (tipo.equals("Amigo")) {
+			descripcion = "Tienes un nuevo amigo";
+		}
 		Date fech = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String fecha = format.format(fech);

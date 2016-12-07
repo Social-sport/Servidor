@@ -58,13 +58,13 @@ public class AmigosServletTest {
 		when(request.getSession()).thenReturn(session);
 	}
 
-	@Test
+	/*@Test
 	public void atestAInsertarAmigos() throws Exception {
 		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("emailAmigo", "usuario1@socialsport.com");		
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El amigo se ha insertado correctamente");
-	}
+	}*/
 	
 	@Test
 	public void btestListarSeguidores() throws Exception {
@@ -92,8 +92,5 @@ public class AmigosServletTest {
 		parameters.put("amigo", "usuario1@socialsport.com");
 		servlet.doDelete(request, response);
 		assertEquals(response_writer.toString(),"El amigo se ha borrado correctamente");
-	}
-	
-	
-	
+	}	
 }

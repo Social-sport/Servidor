@@ -119,18 +119,18 @@ public class BDTest {
 	
 	@Test
 	public void ftestInsertarAmigo() {
-		Amigo amigo = new Amigo("prueba","usuario@socialsport.com","1994-11-11");
+		Amigo amigo = new Amigo("prueba","john@socialsport.com","1994-11-11");
 		assertTrue(repoAmigo.insertarAmigo(amigo));
 	}
 	
 	@Test
 	public void testListarSeguidos() {
-		assertTrue(repoAmigo.listarSeguidos("prueba").isEmpty());
+		assertFalse(repoAmigo.listarSeguidos("prueba").isEmpty());
 	}
 	
 	@Test
 	public void ztestBorrarAmigo() {
-		assertTrue(repoAmigo.borrarAmigo("prueba", "usuario@socialsport.com"));
+		assertTrue(repoAmigo.borrarAmigo("prueba", "john@socialsport.com"));
 	}
 
 	@Test

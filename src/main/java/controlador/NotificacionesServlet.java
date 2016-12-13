@@ -26,25 +26,26 @@ public class NotificacionesServlet extends HttpServlet {
 	private Gson gson = new Gson();
 
 	/**
-	 * Metodo para insertar una notificación a un usuario.
+	 * Metodo para insertar una notificaciï¿½n a un usuario.
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		String email = (String)req.getSession().getAttribute("email");
+		String emailEnvia = (String)req.getSession().getAttribute("email");
+		String emailRecibe = req.getParameter("emailRecibe");
 		String tipo = req.getParameter("tipo");
 
-		boolean realizado = repo.notificar(email,tipo);
+		boolean realizado = repo.notificar(emailEnvia,emailRecibe,"nombreNotificacion","foto",tipo,"nombreUsuarioEnvia");
 		if (realizado) {
 			resp.setStatus(HttpServletResponse.SC_OK);
 			//resp.sendRedirect("muro.html");
-			response = "Nueva notificación";
+			response = "Nueva notificaciï¿½n";
 		}
 		else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			//resp.sendRedirect("muro.html");
-			response = "No hay nueva notificación";
+			response = "No hay nueva notificaciï¿½n";
 		}
 		setResponse(response, resp);
 	}
@@ -64,7 +65,7 @@ public class NotificacionesServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Metodo para borrar una notificación del usuario.
+	 * Metodo para borrar una notificaciï¿½n del usuario.
 	 */
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
@@ -74,11 +75,11 @@ public class NotificacionesServlet extends HttpServlet {
 		boolean realizado = repo.borrarNotificacion(id);
 		if (realizado) {
 			resp.setStatus(HttpServletResponse.SC_OK);
-			response = "La notificación se ha borrado correctamente";
+			response = "La notificaciï¿½n se ha borrado correctamente";
 		}
 		else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response = "La notificación no se ha podido borrar";
+			response = "La notificaciï¿½n no se ha podido borrar";
 		}
 		setResponse(response, resp);
 	}

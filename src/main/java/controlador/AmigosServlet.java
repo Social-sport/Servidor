@@ -59,7 +59,8 @@ public class AmigosServlet extends HttpServlet {
 		//inserta un amigo en la BD
 		if (realizado) {
 			//Notificamos
-			repoNotificacion.notificar(amigoSeguido,"Amigo");
+			
+			repoNotificacion.notificar(usuario,amigoSeguido,"nombreSeguidor","foto","Seguidor","nombreSeguidor");
 			response = "El amigo se ha insertado correctamente";
 			resp.setStatus(HttpServletResponse.SC_OK);
 			resp.sendRedirect("muro.html");

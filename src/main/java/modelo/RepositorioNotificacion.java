@@ -81,7 +81,7 @@ public class RepositorioNotificacion {
 		return notificaciones;
 	}
 	
-	public boolean notificar(String usuarioEnvia,String usuarioRecibe, String nombre, String foto, String tipo, String nombreUsuarioEnvia) {
+	public boolean notificar(String emailUsuarioEnvia,String emailUsuarioRecibe, String nombreNotificacion, String fotoNotificacion, String tipo, String nombreUsuarioEnvia) {
 		
 		Date fech = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -98,7 +98,7 @@ public class RepositorioNotificacion {
 			descripcion = "Ha comenzado a seguirte";
 		}
 		
-		Notificacion notificacion = new Notificacion(usuarioEnvia, usuarioRecibe, nombre, foto, descripcion, fecha, hora, tipo);
+		Notificacion notificacion = new Notificacion(emailUsuarioEnvia, emailUsuarioRecibe, nombreNotificacion, fotoNotificacion, descripcion, fecha, hora, tipo);
 		
 		return insertarNotificacion(notificacion);
 	}

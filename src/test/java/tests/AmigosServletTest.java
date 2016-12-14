@@ -46,9 +46,9 @@ public class AmigosServletTest {
 		request = mock(HttpServletRequest.class);
 		response = mock(HttpServletResponse.class);
 		session = mock(HttpSession.class);
-		repo = new RepositorioAmigo();
-		gson = new Gson();
 		response_writer = new StringWriter();
+		gson = new Gson();
+		repo = new RepositorioAmigo();
 		when(request.getParameter(anyString())).thenAnswer(new Answer<String>() {
 			public String answer(InvocationOnMock invocation) {
 				return parameters.get((String) invocation.getArguments()[0]);
@@ -68,9 +68,9 @@ public class AmigosServletTest {
 	
 	@Test
 	public void btestListarSeguidores() throws Exception {
-		parameters.put("list", "listSeguidores");
-		parameters.put("tipoRelacion", "test");
-		parameters.put("usuario", "usuario@socialsport.com");
+		HttpSession session = request.getSession();
+		session.setAttribute("email", "usuario@socialsport.com");//Todavia no funciona bien test con la sesion
+		parameters.put("tipoRelacion", "listSeguidores");
 		servlet.doGet(request, response);
 		List<Usuario> seguidores = repo.listarSeguidores("usuario@socialsport.com");
 		assertEquals(response_writer.toString(),gson.toJson(seguidores));
@@ -78,11 +78,10 @@ public class AmigosServletTest {
 	
 	@Test
 	public void ctestListarSeguidos() throws Exception {
-		parameters.put("list", "listSeguidos");
-		parameters.put("tipoRelacion", "test");
-		parameters.put("usuario", "usuario@socialsport.com");
+		request.getSession().setAttribute("email", "usuario@socialsport.com");//Todavia no funciona bien test con la sesion
+		parameters.put("tipoRelacion", "listSeguidos");
 		servlet.doGet(request, response);
-		List<Usuario> seguidos = repo.listarSeguidos("usuario@socialsport.com");
+		List<Usuario> seguidos = repo.listarSeguidos("usuari@socialsport.com");
 		assertEquals(response_writer.toString(),gson.toJson(seguidos));
 	}
 	

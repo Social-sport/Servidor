@@ -58,8 +58,9 @@ public class NotificacionesServlet extends HttpServlet {
 		String response = null;
 		List<Notificacion> notificaciones = null;
 		String email = (String) req.getSession().getAttribute("email");
+		System.out.println("email notificaciones: "+email);
 		notificaciones = repo.listarNotificaciones(email);
-		response = gson.toJson(notificaciones);			
+		response = gson.toJson(notificaciones);
 		resp.setStatus(HttpServletResponse.SC_OK);
 		setResponse(response, resp);
 	}

@@ -57,7 +57,7 @@ $(document).ready(
 
                       			$("#seccionNotification").html("<div><h3 id='seccion'>Notificaciones</h3></div>");
                             
-                      			$.each(listNotification, function(i,item){  
+                      			$.each(listNotification, function(i,item){
                         		
                       				if (listNotification[i].tipo === "Seguidor") {
                       					
@@ -75,6 +75,7 @@ $(document).ready(
                                                 "</div>"+
                                                 "<div class='col-md-3 text-center'>"+
                                                     "<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSeguir' value='Seguir'>"+
+                                                    "<h5> "+listNotification[i].hora +" <small> Hora </small></h5>"+
                                                 "</div>"+ 
                                                 
                                             "</form>");
@@ -82,7 +83,7 @@ $(document).ready(
 									}
                       				if (listNotification[i].tipo === "Evento") {
                       					
-                      					$("#seccionNotification").append("<form action='/Servidor/deportes' method='POST'  class='list-group-item active'  id='listSearchs'>"+
+                      					$("#seccionNotification").append("<form action='/Servidor/eventos' method='POST'  class='list-group-item active'  id='listSearchs'>"+
                                                 
                                                 "<div class='media col-md-3'>"+
                                                     "<figure class='pull-left'>"+

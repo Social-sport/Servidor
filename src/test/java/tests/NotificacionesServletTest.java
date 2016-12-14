@@ -60,17 +60,17 @@ public class NotificacionesServletTest {
 
 	@Test
 	public void testNotificar() throws Exception {
-		request.getSession().setAttribute("email", "john@socialsport.com");
+		request.getSession().setAttribute("email", "john@socialsport.com");//Todavia no funciona bien test con la sesion
 		parameters.put("tipo", "Evento");
 		servlet.doPost(request, response);
-		assertEquals(response_writer.toString(),"Nueva notificación");
+		assertEquals(response_writer.toString(),"Nueva notificaciï¿½n");
 	}
 	
 	@Test
 	public void testListaNotificaciones() throws Exception {
 		request.getSession().setAttribute("email", "john@socialsport.com");
 		servlet.doGet(request, response);
-		List<Notificacion> notificaciones = repo.listarNotificaciones("null");
+		List<Notificacion> notificaciones = repo.listarNotificaciones("null");//Todavia no funciona bien test con la sesion
 		assertEquals(response_writer.toString(),gson.toJson(notificaciones));
 	}
 	
@@ -78,6 +78,6 @@ public class NotificacionesServletTest {
 	public void testBorrarNotificacion() throws Exception {
 		parameters.put("id", "1");
 		servlet.doDelete(request, response);
-		assertEquals(response_writer.toString(),"La notificación se ha borrado correctamente");
+		assertEquals(response_writer.toString(),"La notificaciï¿½n se ha borrado correctamente");
 	}
 }

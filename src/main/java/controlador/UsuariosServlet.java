@@ -214,14 +214,14 @@ public class UsuariosServlet extends HttpServlet {
 					System.out.println("json con sesion: " + response);
 					resp.setStatus(HttpServletResponse.SC_OK);
 				}
-				if (tipo.equals("ListEveryUsers")) {
-					List<Usuario> usuarios = repo.ListEveryUsers(email);
+				if (tipo.equals("ListAvailableUsers")) {
+					List<Usuario> usuarios = repo.ListAvailableUsers(email);
 					if (usuarios.isEmpty()) {
 						response = "No se encuentran usuarios";
 						resp.setStatus(HttpServletResponse.SC_OK);
 					} else {
 						response = gson.toJson(usuarios);
-						System.out.println("json con todos los usuarios");
+						System.out.println("json con los usuarios sin seguir aún");
 						System.out.println(response);
 						resp.setStatus(HttpServletResponse.SC_OK);
 					}

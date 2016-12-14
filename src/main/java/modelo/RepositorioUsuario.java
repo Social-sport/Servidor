@@ -21,6 +21,33 @@ public class RepositorioUsuario {
 		this.conexion = ConexionBD.getConexion();
 	}
 	
+	/**
+	 * Lista los usuarios disponibles para seguir
+	 */
+	public List<Usuario> ListAvailableUsers(String email) {
+		List<Usuario> Usuarios = new LinkedList<Usuario>();
+		String sql = "SELECT * FROM Usuario WHERE Usuario.email NOT IN (SELECT Amigos.amigo"
+				+ " FROM Amigos WHERE Amigos.usuario ='"+email+"')";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
+						rs.getString("apellidos"),
+						rs.getString("fecha_nacimiento"),rs.getString("foto"),
+						rs.getString("nick")));			
+			}
+			System.out.println("listados los Usuarios Disponibles");
+			stmt.close();
+		}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en listar Usuarios" + e);
+		}
+		return Usuarios;
+	}
+	
 	public List<Usuario> ListEveryUsers(String email) {
 		List<Usuario> Usuarios = new LinkedList<Usuario>();		
 		String sql = "SELECT * FROM Usuario WHERE email !='"+email+"'";

@@ -20,6 +20,18 @@ public class Usuario {
 		this.foto=foto;
 		this.fecha_nacimiento=fecha_nacimiento;
 	}
+	
+	public Usuario(String email, String nombre, String apellidos, String fecha_nacimiento, String foto, String nick) {
+		
+		this.email = email;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.fecha_nacimiento = fecha_nacimiento;
+		this.foto = foto;
+		this.nick = nick;
+	}
+
+
 
 	public String getNick() {
 		return nick;

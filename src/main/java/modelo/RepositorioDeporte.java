@@ -43,6 +43,30 @@ public class RepositorioDeporte {
 	}
 
 	/**
+	 * Lista los deportes del usuario con email <email>
+	 */
+	public List<Deporte> listarDeportesUsuario(String email) {
+		List<Deporte> deportes = new LinkedList<Deporte>();
+		String sql = "SELECT Deporte.Nombre, Deporte.Descripcion, Deporte.Foto FROM Deporte,DeporteSuscrito WHERE Deporte.Nombre=DeporteSuscrito.deporte AND DeporteSuscrito.usuario='"+email+"'";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Deporte d = new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
+						rs.getString("Foto"));
+						d = addNumSuscritos(d);
+				deportes.add(d);
+			}
+			stmt.close();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en buscar Deportes del usuario "+email);
+		}
+		return deportes;
+	}
+	
+	/**
 	 * Lista los deportes disponibles para un usuario
 	 */
 	public List<Deporte> listarDeportesDisponibles(String email) {
@@ -53,8 +77,13 @@ public class RepositorioDeporte {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				deportes.add(new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
-										rs.getString("Foto")));				
+				
+				Deporte d = new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
+						rs.getString("Foto"));
+						d = addNumSuscritos(d);
+				deportes.add(d);
+				
+				
 			}
 			System.out.println("listados los Deportes Disponibles");
 			stmt.close();
@@ -65,8 +94,6 @@ public class RepositorioDeporte {
 			System.out.println("Error en listar Deportes" + e);
 		}
 		
-		deportes = addNumSuscritos(deportes);
-		
 		return deportes;
 	}
 	
@@ -74,29 +101,25 @@ public class RepositorioDeporte {
 	/**
 	 * añade la cantidad de suscritos a los deportes listados
 	 */
-	public List<Deporte> addNumSuscritos(List<Deporte> deportes) {
-		
-		for (Deporte deporte : deportes) {
-			
-			String sql = "SELECT COUNT(DeporteSuscrito.deporte) AS num FROM DeporteSuscrito WHERE DeporteSuscrito.deporte = '" + deporte.getNombre() + "')";
-			try {
-				Statement stmt = conexion.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
-				while (rs.next()) {
-					deporte.setNumSuscritos(rs.getString("num"));
-				}
-				System.out.println("adheridos la cant de suscritos a los deportes listados");
-				stmt.close();
+	public Deporte addNumSuscritos(Deporte deporte) {
+
+		String sql = "SELECT COUNT(DeporteSuscrito.deporte) AS num FROM DeporteSuscrito WHERE DeporteSuscrito.deporte = '" + deporte.getNombre() + "'";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				deporte.setNumSuscritos(rs.getString("num"));
 			}
-			
-			catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("Error en añadir cant suscritos a Deportes" + e);
-			}
-			
+			System.out.println("adheridos la cant de suscritos a los deportes listados");
+			stmt.close();
 		}
-		
-		return deportes;
+
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en añadir cant suscritos a Deportes" + e);
+		}
+
+		return deporte;
 	}
 	
 	
@@ -110,8 +133,10 @@ public class RepositorioDeporte {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				deportes.add(new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
-										rs.getString("Foto")));				
+				Deporte d = new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
+						rs.getString("Foto"));
+						d = addNumSuscritos(d);
+				deportes.add(d);			
 			}
 			stmt.close();
 		}
@@ -163,25 +188,4 @@ public class RepositorioDeporte {
 		}
 	}
 	
-	/**
-	 * Lista los deportes del usuario con email <email>
-	 */
-	public List<Deporte> listarDeportesUsuario(String email) {
-		List<Deporte> deportes = new LinkedList<Deporte>();
-		String sql = "SELECT Deporte.Nombre, Deporte.Descripcion, Deporte.Foto FROM Deporte,DeporteSuscrito WHERE Deporte.Nombre=DeporteSuscrito.deporte AND DeporteSuscrito.usuario='"+email+"'";
-		try {
-			Statement stmt = conexion.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				deportes.add(new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
-						rs.getString("Foto")));	
-			}
-			stmt.close();
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error en buscar Deportes del usuario "+email);
-		}
-		return deportes;
 	}
-}

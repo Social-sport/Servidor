@@ -66,10 +66,13 @@ public class RepositorioAmigo {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
-							rs.getString("apellidos"),rs.getString("contrasena"),
-							rs.getString("fecha_nacimiento"),rs.getString("foto"),
-							rs.getString("nick")));		
+				Usuario u = new Usuario(rs.getString("email"),rs.getString("nombre"),
+						rs.getString("apellidos"),
+						rs.getString("fecha_nacimiento"),rs.getString("foto"),
+						rs.getString("nick"));				
+						u = addNumSeguidores(u);
+						
+				usuarios.add(u);
 			}
 			stmt.close();
 		}
@@ -88,10 +91,13 @@ public class RepositorioAmigo {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
-							rs.getString("apellidos"),rs.getString("contrasena"),
-							rs.getString("fecha_nacimiento"),rs.getString("foto"),
-							rs.getString("nick")));	
+				Usuario u = new Usuario(rs.getString("email"),rs.getString("nombre"),
+						rs.getString("apellidos"),
+						rs.getString("fecha_nacimiento"),rs.getString("foto"),
+						rs.getString("nick"));				
+						u = addNumSeguidores(u);
+						
+				usuarios.add(u);
 			}
 			stmt.close();
 		}
@@ -102,6 +108,30 @@ public class RepositorioAmigo {
 		return usuarios;
 	}
 	
-	
+	/**
+	 * añade la cantidad de Seguidores a los usuarios listados
+	 */
+	public Usuario addNumSeguidores(Usuario Usuario) {
+		
+		String sql = "SELECT COUNT(Amigos.usuario) AS num FROM Amigos WHERE Amigos.amigo = '" + Usuario.getEmail() + "'";
+			
+			try {
+				Statement stmt = conexion.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					Usuario.setNumSeguidores(rs.getString("num"));
+				}
+				System.out.println("adheridos la cant de Seguidores a los Usuarios listados");
+				stmt.close();
+			}
+			
+			catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error en añadir cant Seguidores a Usuarios" + e);
+			}	
+		
+		
+		return Usuario;
+	}
 	
 }

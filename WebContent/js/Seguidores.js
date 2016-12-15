@@ -23,7 +23,7 @@ $(document).ready(
 					"</div>"+
 					"<div class='col-md-3 text-center'>"+
 					"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Eliminar'>"+
-					"<h5> "+listUsers[i].numSeguidores +" <small> seguidores </small></h5>"+
+					"<h5> "+listUsers[i].numSeguidores +" <small> Seguidores </small></h5>"+
 					"</div>"+ 
 
 					"</form>");

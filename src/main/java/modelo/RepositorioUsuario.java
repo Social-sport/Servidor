@@ -58,7 +58,7 @@ public class RepositorioUsuario {
 	 */
 	public Usuario addNumSeguidores(Usuario Usuario) {
 		
-		String sql = "SELECT COUNT(Amigos.usuario) AS num FROM Amigos WHERE Amigos.amigo = '" + Usuario.getEmail() + "')";
+		String sql = "SELECT COUNT(Amigos.usuario) AS num FROM Amigos WHERE Amigos.amigo = '" + Usuario.getEmail() + "'";
 			
 			try {
 				Statement stmt = conexion.createStatement();

@@ -64,8 +64,41 @@ public class RepositorioDeporte {
 			e.printStackTrace();
 			System.out.println("Error en listar Deportes" + e);
 		}
+		
+		deportes = addNumSuscritos(deportes);
+		
 		return deportes;
 	}
+	
+	
+	/**
+	 * añade la cantidad de suscritos a los deportes listados
+	 */
+	public List<Deporte> addNumSuscritos(List<Deporte> deportes) {
+		
+		for (Deporte deporte : deportes) {
+			
+			String sql = "SELECT COUNT(DeporteSuscrito.deporte) AS num FROM DeporteSuscrito WHERE DeporteSuscrito.deporte = '" + deporte.getNombre() + "')";
+			try {
+				Statement stmt = conexion.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					deporte.setNumSuscritos(rs.getString("num"));
+				}
+				System.out.println("adheridos la cant de suscritos a los deportes listados");
+				stmt.close();
+			}
+			
+			catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error en añadir cant suscritos a Deportes" + e);
+			}
+			
+		}
+		
+		return deportes;
+	}
+	
 	
 	/**
 	 * Lista los deportes almacenados en la BD

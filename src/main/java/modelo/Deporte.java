@@ -5,8 +5,7 @@ public class Deporte {
 	private String nombre;
 	private String Descripcion;
 	private String Foto;
-
-	
+	private String NumSuscritos;	
 
 	public Deporte(String nombre, String descripcion, String foto) {
 		this.nombre = nombre;
@@ -37,6 +36,14 @@ public class Deporte {
 
 	public void setFoto(String foto) {
 		Foto = foto;
+	}
+
+	public String getNumSuscritos() {
+		return NumSuscritos;
+	}
+
+	public void setNumSuscritos(String numSuscritos) {
+		NumSuscritos = numSuscritos;
 	}
 	
 	

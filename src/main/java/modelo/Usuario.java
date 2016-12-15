@@ -9,6 +9,7 @@ public class Usuario {
 	private String fecha_nacimiento;
 	private String foto;
 	private String nick;
+	private String numSeguidores;
 
 	public Usuario(String email, String nombre, String apellidos,
 			String contrasena, String fecha_nacimiento, String foto, String nick) {
@@ -31,7 +32,15 @@ public class Usuario {
 		this.nick = nick;
 	}
 
+	
 
+	public String getNumSeguidores() {
+		return numSeguidores;
+	}
+
+	public void setNumSeguidores(String numSeguidores) {
+		this.numSeguidores = numSeguidores;
+	}
 
 	public String getNick() {
 		return nick;

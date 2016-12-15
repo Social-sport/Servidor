@@ -25,7 +25,7 @@ $(document).ready(
 						"</div>"+
 						"<div class='col-md-3 text-center'>"+
 						"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Desuscribir'>"+
-						"<h5> 14240 <small> personas </small></h5>"+
+						"<h5> "+listSport[i].NumSuscritos+" <small> Suscritos </small></h5>"+
 						"</div>"+ 
 
 						"</form>");

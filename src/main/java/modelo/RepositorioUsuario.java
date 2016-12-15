@@ -32,10 +32,14 @@ public class RepositorioUsuario {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				Usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
+				
+				Usuario u = new Usuario(rs.getString("email"),rs.getString("nombre"),
 						rs.getString("apellidos"),
 						rs.getString("fecha_nacimiento"),rs.getString("foto"),
-						rs.getString("nick")));			
+						rs.getString("nick"));				
+						u = addNumSeguidores(u);
+						
+				Usuarios.add(u);			
 			}
 			System.out.println("listados los Usuarios Disponibles");
 			stmt.close();
@@ -45,9 +49,40 @@ public class RepositorioUsuario {
 			e.printStackTrace();
 			System.out.println("Error en listar Usuarios" + e);
 		}
+						
 		return Usuarios;
 	}
 	
+	/**
+	 * añade la cantidad de Seguidores a los usuarios listados
+	 */
+	public Usuario addNumSeguidores(Usuario Usuario) {
+		
+		String sql = "SELECT COUNT(Amigos.usuario) AS num FROM Amigos WHERE Amigos.amigo = '" + Usuario.getEmail() + "')";
+			
+			try {
+				Statement stmt = conexion.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					Usuario.setNumSeguidores(rs.getString("num"));
+				}
+				System.out.println("adheridos la cant de Seguidores a los Usuarios listados");
+				stmt.close();
+			}
+			
+			catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Error en añadir cant Seguidores a Usuarios" + e);
+			}
+			
+		
+		
+		return Usuario;
+	}
+	
+	/**
+	 * Lista todos los usuarios de la BD
+	 */
 	public List<Usuario> ListEveryUsers(String email) {
 		List<Usuario> Usuarios = new LinkedList<Usuario>();		
 		String sql = "SELECT * FROM Usuario WHERE email !='"+email+"'";
@@ -55,10 +90,13 @@ public class RepositorioUsuario {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				Usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
-							rs.getString("apellidos"),rs.getString("contrasena"),
-							rs.getString("fecha_nacimiento"),rs.getString("foto"),
-							rs.getString("nick")));			
+				Usuario u = new Usuario(rs.getString("email"),rs.getString("nombre"),
+						rs.getString("apellidos"),
+						rs.getString("fecha_nacimiento"),rs.getString("foto"),
+						rs.getString("nick"));				
+						u = addNumSeguidores(u);
+						
+				Usuarios.add(u);		
 			}
 			stmt.close();
 		}
@@ -82,10 +120,13 @@ public class RepositorioUsuario {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				Usuarios.add(new Usuario(rs.getString("email"),rs.getString("nombre"),
-							rs.getString("apellidos"),rs.getString("contrasena"),
-							rs.getString("fecha_nacimiento"),rs.getString("foto"),
-							rs.getString("nick")));			
+				Usuario u = new Usuario(rs.getString("email"),rs.getString("nombre"),
+						rs.getString("apellidos"),
+						rs.getString("fecha_nacimiento"),rs.getString("foto"),
+						rs.getString("nick"));				
+						u = addNumSeguidores(u);
+						
+				Usuarios.add(u);		
 			}
 			stmt.close();
 		}
@@ -99,7 +140,7 @@ public class RepositorioUsuario {
 		if (u!=null) {
 			Usuarios.add(u);
 		}	
-
+				
 		return Usuarios;
 	}
 
@@ -115,6 +156,8 @@ public class RepositorioUsuario {
 			rs.first();
 			usuario = new Usuario(rs.getString("email"),rs.getString("nombre"),
 					rs.getString("apellidos"),rs.getString("contrasena"),rs.getString("fecha_nacimiento"),rs.getString("foto"),rs.getString("nick"));
+			usuario = addNumSeguidores(usuario);
+						
 			stmt.close();
 		}
 		catch (SQLException e) {

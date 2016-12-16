@@ -41,7 +41,7 @@ public class RepositorioUsuario {
 						
 				Usuarios.add(u);			
 			}
-			System.out.println("listados los Usuarios Disponibles");
+
 			stmt.close();
 		}
 		
@@ -66,7 +66,7 @@ public class RepositorioUsuario {
 				while (rs.next()) {
 					Usuario.setNumSeguidores(rs.getString("num"));
 				}
-				System.out.println("adheridos la cant de Seguidores a los Usuarios listados");
+
 				stmt.close();
 			}
 			

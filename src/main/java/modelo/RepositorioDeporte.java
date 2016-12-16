@@ -85,7 +85,7 @@ public class RepositorioDeporte {
 				
 				
 			}
-			System.out.println("listados los Deportes Disponibles");
+
 			stmt.close();
 		}
 		
@@ -110,7 +110,7 @@ public class RepositorioDeporte {
 			while (rs.next()) {
 				deporte.setNumSuscritos(rs.getString("num"));
 			}
-			System.out.println("adheridos la cant de suscritos a los deportes listados");
+
 			stmt.close();
 		}
 

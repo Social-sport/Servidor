@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import modelo.Evento;
 import modelo.Notificacion;
+import modelo.RepositorioEvento;
 import modelo.RepositorioNotificacion;
+import modelo.RepositorioUsuario;
+import modelo.Usuario;
 
 import com.google.gson.Gson;
 
@@ -23,10 +27,12 @@ public class NotificacionesServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioNotificacion repo = new RepositorioNotificacion();
+	private static RepositorioUsuario repoUsuario = new RepositorioUsuario();
+	private static RepositorioEvento repoEvento = new RepositorioEvento();
 	private Gson gson = new Gson();
 
 	/**
-	 * Metodo para insertar una notificaci�n a un usuario.
+	 * Metodo para insertar una notificaci�n 
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -35,16 +41,38 @@ public class NotificacionesServlet extends HttpServlet {
 		String emailEnvia = (String)req.getSession().getAttribute("email");
 		String emailRecibe = req.getParameter("emailRecibe");
 		String tipo = req.getParameter("tipo");
-
-		boolean realizado = repo.notificar(emailEnvia,emailRecibe,"nombreNotificacion","foto",tipo,"nombreUsuarioEnvia");
+		
+		boolean realizado = false;
+		Usuario seguidor = repoUsuario.findUsuario(emailEnvia);
+		
+		if (tipo.equals("Evento")) {
+			
+			String idEvento = req.getParameter("idEvento");
+			Evento evento = repoEvento.findEvento(idEvento);
+			
+			if (evento!=null) {
+				realizado = repo.notificar(emailEnvia,emailRecibe,evento.getNombre(),
+						evento.getFoto(),tipo,seguidor.getNick());
+			}else{
+				realizado = repo.notificar(emailEnvia,emailRecibe,"nombreEvento",
+						"fotoEvento",tipo,"Nick");
+			}
+			
+			
+		}
+		if (tipo.equals("Seguidor")) {
+			
+			realizado = repo.notificar(emailEnvia,emailRecibe,seguidor.getNick(),
+										seguidor.getFoto(),tipo,seguidor.getNick());
+			
+		}
+	
 		if (realizado) {
 			resp.setStatus(HttpServletResponse.SC_OK);
-			//resp.sendRedirect("muro.html");
 			response = "Nueva notificaci�n";
 		}
 		else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			//resp.sendRedirect("muro.html");
 			response = "No hay nueva notificaci�n";
 		}
 		setResponse(response, resp);
@@ -54,7 +82,8 @@ public class NotificacionesServlet extends HttpServlet {
 	 * Metodo para devolver las notificaciones del usuario.
 	 */
 	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) 
+								throws ServletException, IOException {
 		String response = null;
 		List<Notificacion> notificaciones = null;
 		String email = (String) req.getSession().getAttribute("email");

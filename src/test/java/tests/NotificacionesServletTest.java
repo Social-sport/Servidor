@@ -61,6 +61,7 @@ public class NotificacionesServletTest {
 	@Test
 	public void testNotificar() throws Exception {
 		request.getSession().setAttribute("email", "john@socialsport.com");//Todavia no funciona bien test con la sesion
+		parameters.put("idEvento", "idEvento");
 		parameters.put("tipo", "Evento");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"Nueva notificaci�n");

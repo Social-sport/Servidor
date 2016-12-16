@@ -635,6 +635,10 @@ h4.pro-title {
 		width: 600px;
 		margin: 0 auto;
 	}
+	#seccionFollowed{
+		width: 600px;
+		margin: 0 auto;
+	}
 	#seccionSports{
 		width: 600px;
 		margin: 0 auto;
@@ -661,6 +665,10 @@ h4.pro-title {
 		width: 550px;
 		margin: 0 auto;
 	}
+	#seccionFollowed{
+		width: 550px;
+		margin: 0 auto;
+	}
 	#seccionSports{
 		width: 550px;
 		margin: 0 auto;
@@ -677,6 +685,10 @@ h4.pro-title {
 		width: 500px;
 		margin: 0 auto;
 	}
+	#seccionFollowed{
+		width: 500px;
+		margin: 0 auto;
+	}
 	#seccionSports{
 		width: 500px;
 		margin: 0 auto;
@@ -690,6 +702,10 @@ h4.pro-title {
 		width: 500px;
 	}
 	#seccionSeguidores{
+		width: 450px;
+		margin: 0 auto;
+	}
+	#seccionFollowed{
 		width: 450px;
 		margin: 0 auto;
 	}
@@ -746,6 +762,10 @@ h4.pro-title {
 		width: 350px;
 		margin: 0 auto;
 	}
+	#seccionFollowed{
+		width: 350px;
+		margin: 0 auto;
+	}
 	#seccionSports{
 		width: 350px;
 		margin: 0 auto;
@@ -781,6 +801,10 @@ h4.pro-title {
 		width: 310px;
 		margin: 0 auto;
 	}
+	#seccionFollowed{
+		width: 310px;
+		margin: 0 auto;
+	}
 	#seccionSports{
 		width: 310px;
 		margin: 0 auto;
@@ -799,6 +823,10 @@ h4.pro-title {
 	}
 	
 	#seccionSeguidores{
+		width: 250px;
+		margin: 0 auto;
+	}
+	#seccionFollowed{
 		width: 250px;
 		margin: 0 auto;
 	}

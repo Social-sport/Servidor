@@ -215,6 +215,10 @@ form.list-group-item.active small {
 		width: 250px;
 		margin: 0 auto;
 	}
+	#seccionNotification{
+		width: 250px;
+		margin: 0 auto;
+	}
 	h2 {
 		margin: 0 auto;
 	}

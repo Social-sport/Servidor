@@ -87,6 +87,29 @@ public class RepositorioEvento {
 		}
 		return eventos;
 	}
+	
+	/**
+	 * Lista los eventos buscados por un usuario con email <email>
+	 */
+	public List<Evento> listarEventosBuscados(String buscar) {
+		List<Evento> eventos = new LinkedList<Evento>();
+		String sql = "SELECT * FROM Evento WHERE nombre = '"+buscar+"'";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+						rs.getString("hora"), rs.getString("deporte"),
+						rs.getString("creador"), rs.getString("foto")));
+			}
+			stmt.close();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en listar Eventos Buscados porar "+ buscar + e);
+		}
+		return eventos;
+	}
 
 	/**
 	 * Lista los eventos creados por el usuario con email <email>

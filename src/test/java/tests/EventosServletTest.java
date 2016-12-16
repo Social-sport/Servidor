@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -19,7 +21,11 @@ import org.junit.runners.MethodSorters;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import com.google.gson.Gson;
+
 import controlador.EventosServlet;
+import modelo.RepositorioEvento;
+import modelo.Evento;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EventosServletTest {
@@ -27,8 +33,11 @@ public class EventosServletTest {
 	private EventosServlet servlet;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
+	private HttpSession session;
 	private StringWriter response_writer;
 	private Map<String, String> parameters;
+	private RepositorioEvento repo;
+	private Gson gson;
 
 	@Before
 	public void setUp() throws IOException {
@@ -36,7 +45,10 @@ public class EventosServletTest {
 		servlet = new EventosServlet();
 		request = mock(HttpServletRequest.class);
 		response = mock(HttpServletResponse.class);
+		session = mock(HttpSession.class);
 		response_writer = new StringWriter();
+		gson = new Gson();
+		repo = new RepositorioEvento();
 		
 		when(request.getParameter(anyString())).thenAnswer(new Answer<String>() {
 			public String answer(InvocationOnMock invocation) {
@@ -44,6 +56,7 @@ public class EventosServletTest {
 			}
 		});
 		when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
+		when(request.getSession()).thenReturn(session);
 	}
 
 	@Test
@@ -67,17 +80,31 @@ public class EventosServletTest {
 	
 	@Test
 	public void testListarEventosDeporte() throws Exception {
+		request.getSession().setAttribute("email", "usuario@socialsport.com");
 		parameters.put("deporte", "Futbol");
+		parameters.put("tipo", "listSportEvents");
 		servlet.doGet(request, response);
-		assertEquals(response_writer.toString(),"Eventos deporte");
+		List<Evento> eventos = repo.listarEventosDeporte("Futbol");
+		assertEquals(response_writer.toString(),gson.toJson(eventos));
+	}
+	
+	@Test
+	public void testListarEventosBuscados() throws Exception {
+		parameters.put("search", "encuentro de futbol");
+		parameters.put("tipo", "Buscar");
+		servlet.doGet(request, response);
+		List<Evento> eventos = repo.listarEventosBuscados("encuentro de futbol");
+		assertEquals(response_writer.toString(),gson.toJson(eventos));
 	}
 	
 	@Test
 	public void testListarEventosUsuario() throws Exception {
-		parameters.put("usuario", "john@socialsport.com");
+		request.getSession().setAttribute("email", "usuario@socialsport.com");
 		parameters.put("deporte", "Futbol");
+		parameters.put("tipo", "listUserEvents");
 		servlet.doGet(request, response);
-		assertEquals(response_writer.toString(),"El usuario no tiene eventos");
+		List<Evento> eventos = repo.listarEventosUsuario("usuario@socialsport.com");
+		assertEquals(response_writer.toString(),gson.toJson(eventos));
 	}
 	
 }

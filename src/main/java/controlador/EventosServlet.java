@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import modelo.Evento;
 import modelo.RepositorioEvento;
 
@@ -21,6 +23,7 @@ public class EventosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioEvento repo = new RepositorioEvento();
+	private Gson gson = new Gson();
 
 	/**
 	 * Metodo para insertar un evento a un deporte.
@@ -80,35 +83,43 @@ public class EventosServlet extends HttpServlet {
 		String response = null;
 		List<Evento> eventos = null;
 		String deporte = req.getParameter("deporte");
-		String usuario = req.getParameter("usuario");
-		if (deporte == null) {
-			//probablemente nueva funcionalidad
+		String emailusuario = (String)req.getSession().getAttribute("email");
+		String tipo = req.getParameter("tipo");
+
+		if (tipo.equals("Buscar")) {
+			String name = req.getParameter("search");
+			eventos = repo.listarEventosBuscados(name);
+			if (eventos.isEmpty()) {
+				System.out.println("No se encontraron eventos en la busqueda de "+name);
+			}			
+				response = gson.toJson(eventos);
+				System.out.println("json con eventos buscados de " +name);
+				System.out.println(response);
 		}
-		else {
-			if (usuario == null) {
-				//Lista los eventos del deporte
-				eventos = repo.listarEventosDeporte(deporte);
-				resp.setStatus(HttpServletResponse.SC_OK);
-				if (eventos.isEmpty()) {
-					response = "El deporte no tiene eventos";
-				}
-				else {
-					response = "Eventos deporte";
-				}
-			}
-			else {
-				//Lista los eventos del usuario
-				eventos = repo.listarEventosUsuario(usuario);
-				if (eventos.isEmpty()) {
-					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-					response = "El usuario no tiene eventos";
-				}
-				else {
-					resp.setStatus(HttpServletResponse.SC_OK);
-					response = "Eventos usuario";
-				}
-			}
+
+		if (tipo.equals("listSportEvents")) {
+			//Lista los eventos del deporte
+			eventos = repo.listarEventosDeporte(deporte);
+			resp.setStatus(HttpServletResponse.SC_OK);
+			if (eventos.isEmpty()) {
+				System.out.println("No se encontraron eventos en la busqueda");
+			}			
+				response = gson.toJson(eventos);
+				System.out.println("json con eventos buscados para el deport " + deporte);
+				System.out.println(response);
+			
 		}
+		if (tipo.equals("listUserEvents")) {
+			//Lista los eventos del usuario
+			eventos = repo.listarEventosUsuario(emailusuario);
+			if (eventos.isEmpty()) {
+				System.out.println("No se encontraron eventos para el usuario" + emailusuario);
+			}			
+				response = gson.toJson(eventos);
+				System.out.println("json con eventos del usuario "+ emailusuario);
+				System.out.println(response);
+		}
+
 		setResponse(response, resp);
 	}
 

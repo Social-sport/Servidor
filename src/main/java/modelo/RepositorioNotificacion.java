@@ -22,16 +22,16 @@ public class RepositorioNotificacion {
 		ConexionBD.iniciarConexion();
 		this.conexion = ConexionBD.getConexion();
 	}
-	
+
 	public boolean insertarNotificacion(Notificacion notificacion) {
 		String sql = "INSERT INTO Notificacion (usuarioEnvia,usuarioRecibe,"
-					+ "nombre,foto,descripcion,fecha,hora,tipo) VALUES "
-					+ "('"+notificacion.getUsuarioEnvia()+"','"
-					+ notificacion.getUsuarioRecibe()+"','"
-					+ notificacion.getNombre()+"', '"+  notificacion.getFoto()
-					+ "', '"+notificacion.getDescripcion()
-					+ "','"+notificacion.getFecha()+"','"+notificacion.getHora()
-					+ "','"+notificacion.getTipo()+"')";
+				+ "nombre,foto,descripcion,fecha,hora,tipo) VALUES "
+				+ "('"+notificacion.getUsuarioEnvia()+"','"
+				+ notificacion.getUsuarioRecibe()+"','"
+				+ notificacion.getNombre()+"', '"+  notificacion.getFoto()
+				+ "', '"+notificacion.getDescripcion()
+				+ "','"+notificacion.getFecha()+"','"+notificacion.getHora()
+				+ "','"+notificacion.getTipo()+"')";
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.executeUpdate(sql);
@@ -43,7 +43,7 @@ public class RepositorioNotificacion {
 			return false;
 		}
 	}
-	
+
 	public boolean borrarNotificacion(String id) {
 		String sql = "DELETE FROM Notificacion WHERE id=\""+id+"\"";
 		try {
@@ -57,7 +57,7 @@ public class RepositorioNotificacion {
 			return false;
 		}
 	}
-	
+
 	public List<Notificacion> listarNotificaciones(String usuario) {
 		List<Notificacion> notificaciones = new LinkedList<Notificacion>();
 		String sql = "SELECT * FROM Notificacion WHERE usuarioRecibe = '"+usuario+"'";
@@ -73,33 +73,50 @@ public class RepositorioNotificacion {
 			}
 			stmt.close();
 		}
-		
+
 		catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar Notificaciones" + e);
 		}
 		return notificaciones;
 	}
-	
+
 	public boolean notificar(String emailUsuarioEnvia,String emailUsuarioRecibe, String nombreNotificacion, String fotoNotificacion, String tipo, String nombreUsuarioEnvia) {
-		
+
 		Date fech = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        String fecha = format.format(fech);
+		String fecha = format.format(fech);
 		format = new SimpleDateFormat("HH:mm");
-        String hora = format.format(fech);
-		
+		String hora = format.format(fech);
+
 		String descripcion = "";
 		if (tipo.equals("Evento")) {
-			
+
 			descripcion = nombreUsuarioEnvia + "te ha invitado a este evento";
 		}
 		if (tipo.equals("Seguidor")) {
 			descripcion = "Ha comenzado a seguirte";
 		}
-		
+
 		Notificacion notificacion = new Notificacion(emailUsuarioEnvia, emailUsuarioRecibe, nombreNotificacion, fotoNotificacion, descripcion, fecha, hora, tipo);
-		
+
 		return insertarNotificacion(notificacion);
+	}
+
+	public int contarNotificaciones(String email) {
+		int cuenta = 0;
+		String sql = "SELECT COUNT(*) AS count FROM Notificacion WHERE usuarioRecibe = '"+email+"'";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				cuenta = rs.getInt("count");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en contar Notificaciones" + e);
+		}
+		return cuenta;
 	}
 }

@@ -27,6 +27,11 @@ body {
 	margin: 0 auto;
 }
 
+#seccionEvents{
+	width: 650px;
+	margin: 0 auto;
+}
+
 /*nav css*/
 .form-inline {
 	padding-top: 10px;
@@ -581,6 +586,10 @@ h4.pro-title {
 		width: 600px;
 		margin: 0 auto;
 	}
+	#seccionEvents{
+		width: 600px;
+		margin: 0 auto;
+	}
 }
 
 @media all and (max-width:700px){
@@ -611,6 +620,10 @@ h4.pro-title {
 		width: 550px;
 		margin: 0 auto;
 	}
+	#seccionEvents{
+		width: 550px;
+		margin: 0 auto;
+	}
 }
 @media all and (max-width:568px){
 	.search-btn {
@@ -631,6 +644,10 @@ h4.pro-title {
 		width: 500px;
 		margin: 0 auto;
 	}
+	#seccionEvents{
+		width: 500px;
+		margin: 0 auto;
+	}
 }
 @media all and (max-width:520px){
 	.search-btn {
@@ -648,6 +665,10 @@ h4.pro-title {
 		margin: 0 auto;
 	}
 	#seccionSports{
+		width: 450px;
+		margin: 0 auto;
+	}
+	#seccionEvents{
 		width: 450px;
 		margin: 0 auto;
 	}
@@ -704,6 +725,10 @@ h4.pro-title {
 		width: 350px;
 		margin: 0 auto;
 	}
+	#seccionEvents{
+		width: 350px;
+		margin: 0 auto;
+	}
 }
 
 @media all and (max-width:400px){
@@ -735,6 +760,10 @@ h4.pro-title {
 		width: 310px;
 		margin: 0 auto;
 	}
+	#seccionEvents{
+		width: 310px;
+		margin: 0 auto;
+	}
 }
 @media all and (max-width:320px){
 	.pager li a {
@@ -761,6 +790,10 @@ h4.pro-title {
 		margin: 0 auto;
 	}
 	#seccionSports{
+		width: 250px;
+		margin: 0 auto;
+	}
+	#seccionEvents{
 		width: 250px;
 		margin: 0 auto;
 	}

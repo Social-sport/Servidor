@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,9 @@ import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
+import modelo.Deporte;
 import modelo.Evento;
+import modelo.RepositorioDeporte;
 import modelo.RepositorioEvento;
 
 /**
@@ -29,6 +32,7 @@ public class EventosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static RepositorioEvento repo = new RepositorioEvento();
+	private static RepositorioDeporte repoDepor = new RepositorioDeporte();
 	private Gson gson = new Gson();
 
 	/**
@@ -104,6 +108,10 @@ public class EventosServlet extends HttpServlet {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		}
+		
+		if (tipo.equals("Suscribirse")) {
+			
+		}
 		setResponse(response, resp);
 	}
 
@@ -135,7 +143,7 @@ public class EventosServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		List<Evento> eventos = null;
+		List<Evento> eventos = new LinkedList<Evento>();
 		String deporte = req.getParameter("deporte");
 		String emailusuario = (String)req.getSession().getAttribute("email");
 		String tipo = req.getParameter("tipo");
@@ -145,33 +153,39 @@ public class EventosServlet extends HttpServlet {
 			eventos = repo.listarEventosBuscados(name);
 			if (eventos.isEmpty()) {
 				System.out.println("No se encontraron eventos en la busqueda de "+name);
-			}			
+			} else {		
 				response = gson.toJson(eventos);
 				System.out.println("json con eventos buscados de " +name);
 				System.out.println(response);
+			}
 		}
 
 		if (tipo.equals("listSportEvents")) {
 			//Lista los eventos del deporte
-			eventos = repo.listarEventosDeporte(deporte);
+			List<Deporte> deportes = repoDepor.listarDeportesUsuario(emailusuario);
+			for (Deporte deporte2 : deportes) {
+				eventos.addAll(repo.listarEventosDeporte(deporte2.getNombre()));
+			}
 			resp.setStatus(HttpServletResponse.SC_OK);
 			if (eventos.isEmpty()) {
-				System.out.println("No se encontraron eventos en la busqueda");
-			}			
 				response = gson.toJson(eventos);
-				System.out.println("json con eventos buscados para el deport " + deporte);
+				System.out.println("No se encontraron eventos en la busqueda");
+			} else {		
+				response = gson.toJson(eventos);
+				System.out.println("json con eventos buscados para el deporte " + deporte);
 				System.out.println(response);
-			
+			}
 		}
 		if (tipo.equals("listUserEvents")) {
 			//Lista los eventos del usuario
 			eventos = repo.listarEventosUsuario(emailusuario);
 			if (eventos.isEmpty()) {
 				System.out.println("No se encontraron eventos para el usuario" + emailusuario);
-			}			
+			} else {		
 				response = gson.toJson(eventos);
 				System.out.println("json con eventos del usuario "+ emailusuario);
 				System.out.println(response);
+			}
 		}
 
 		setResponse(response, resp);

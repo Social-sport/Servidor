@@ -1,6 +1,10 @@
 $(document).ready(
 		function() {
+			listarEventosDeportes(event);
+			
 			$("#topBar").load("topBar.html");
+			
+			$("#EventsButton").click(listarEventosDeportes(event));
 
 			$("#SportsButton").click(
 					function(event) {
@@ -10,7 +14,12 @@ $(document).ready(
 						$.get('deportes', {tipoDeport:'AvailableSports'}, function (listSport){ 
 
 							if (listSport.length == 0) {
-								$("#seccionSports").html("<div><h3 id='seccion'>Ya estas Suscrito a todos los Deportes</h3></div>");
+								$("#seccionSports").html("<div><h3 id='seccion'>Ya estas Suscrito a todos los Deportes</h3></div>"+
+										"<div>"+
+		        						"	<div class='thumbnail'>"+
+		        						"		<img src='img/Sports.png' alt='Sports Bootstrap Theme'>"+
+		        						"	</div>"+
+		        						"</div>");
 							}else{
 
 								$("#seccionSports").html("<div><h3 id='seccion'>Deportes Disponibles</h3></div>");
@@ -159,3 +168,46 @@ $(document).ready(
 			}
 			var ejecutar = setInterval(contar, 5000);
 		});
+
+function listarEventosDeportes() {
+
+	$.get('eventos', {tipo:'listSportEvents'}, function (listEvent){ 
+
+		if (listEvent.length == 0) {
+			$("#seccionEvents").html("<div><h3 id='seccion'>No hay eventos disponibles</h3></div>"+
+					"<div>"+
+					"	<div class='thumbnail'>"+
+					"		<img src='img/Sports.png' alt='Sports Bootstrap Theme'>"+
+					"	</div>"+
+					"</div>");
+		}else{
+
+			$("#seccionEvents").html("<div><h3 id='seccion'>Todos los eventos de mis deportes</h3></div>");
+
+			$.each(listEvent, function(i,item){             
+
+				$("#seccionEvents").append("<form action='/Servidor/eventos' method='POST'  class='list-group-item active'  id='listSearchs'>"+
+
+						"<div class='media col-md-3'>"+
+						"<figure class='pull-left'>"+
+						"<img class='media-object img-rounded img-responsive'  src='"+listEvent[i].foto+"' alt='placehold.it/350x250' >"+
+						"</figure>"+
+						"</div>"+
+						"<div class='col-md-6'>"+
+						"<input type='hidden' name='idEvent' value='"+listEvent[i].id+"'>"+
+						"<h4 class='list-group-item-heading'>"+listEvent[i].nombre+"</h4>"+
+						"<p class='list-group-item-text' id='list-group-item-text'> "+listEvent[i].descripcion+" </p>"+
+						"</div>"+
+						"<div class='col-md-3 text-center'>"+
+						"<input type='hidden' name='tipoPostEvent' value='Suscribirse' id='tipoPostEvent'/>"+
+						"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Suscribete'>"+
+						"<h5> "+listEvent[i].numSuscritos+" <small> Suscritos </small></h5>"+
+						"</div>"+ 
+
+				"</form>");
+			});
+
+		};
+
+	});
+}

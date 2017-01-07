@@ -7,7 +7,7 @@ $(document).ready(function(e) {
 	$("#creaEvent").click(
             function(event) {
             	
-            	$("#cEvent").load("Event.html");
+            	$("#cEvent").load("event.html");
             	$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){
 	    				if (listSport.length == 0) {
 	                		$("#deporte").html("<option value=''>Suscribete a Deportes</option>");

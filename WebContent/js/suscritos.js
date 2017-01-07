@@ -4,7 +4,13 @@ $(document).ready(
 		$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){
 
 				if (listSport.length == 0) {
-            		$("#seccionSports").html("<h2 class='register'>No tienes Deportes suscritos</h2>");
+            		$("#seccionSports").html("<h2 class='register'>No tienes Deportes suscritos</h2>"+
+
+    						"<div>"+
+    						"	<div class='thumbnail'>"+
+    						"		<img src='img/Sports.png' alt='Sports Bootstrap Theme'>"+
+    						"	</div>"+
+    						"</div>");
             		
           		}else{
           			$("#seccionSports").html("<h2 class='register'>Deportes suscritos</h2>");

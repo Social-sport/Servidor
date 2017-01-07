@@ -51,7 +51,12 @@ $(document).ready(
 						$.get('notificaciones', function (listNotification){
 
 							if (listNotification.length == 0) {
-								$("#seccionNotification").html("<div><h3 id='seccion'>No tienes notificaciones</h3></div>");
+								$("#seccionNotification").html("<div><h3 id='seccion'>No tienes notificaciones</h3></div>"+
+										"<div>"+
+		        						"	<div class='thumbnail'>"+
+		        						"		<img src='img/notification.png' alt='Sports Bootstrap Theme'>"+
+		        						"	</div>"+
+		        						"</div>");
 							}else{
 
 								$("#seccionNotification").html("<div><h3 id='seccion'>Notificaciones</h3></div>");

@@ -8,6 +8,19 @@ $(document).ready(function(e) {
             function(event) {
             	
             	$("#cEvent").load("Event.html");
+            	$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){
+	    				if (listSport.length == 0) {
+	                		$("#deporte").html("<option value=''>Suscribete a Deportes</option>");
+	                		
+	              		}else{
+	              			$("#deporte").html("<option value=''>Selecciona un Deporte</option>");
+	    					$.each(listSport, function(i,item){
+	
+	    						$("#deporte").append("<option value='"+listSport[i].nombre+"'>"+listSport[i].nombre+"</option>");
+	
+	    					 });
+	              		};    	
+	            });
             	
     });
 	
@@ -26,7 +39,12 @@ $(document).ready(function(e) {
                 $.get('amigos', {tipoRelacion:'listSeguidos'}, function (listUsers){   
 
         			if (listUsers.length == 0) {
-                		$("#seccionFollowed").html("<h2 class='register'>No tienes Seguidos</h2>");
+                		$("#seccionFollowed").html("<h2 class='register'>No tienes Seguidos</h2>"+
+                				"<div>"+
+        						"	<div class='thumbnail'>"+
+        						"		<img src='img/people.jpg' alt='Sports Bootstrap Theme'>"+
+        						"	</div>"+
+        						"</div>");
               		}else{
               			$("#seccionFollowed").html("<h2 class='register'>Seguidos</h2>");
         				$.each(listUsers, function(i,item) {

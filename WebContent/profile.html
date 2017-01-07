@@ -14,9 +14,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/profile.js"></script>
-    <script type="text/javascript" src="js/Buscar.js"></script>
-    <script type="text/javascript" src="js/Suscritos.js"></script>
-    <script type="text/javascript" src="js/Seguidores.js"></script>
+    <script type="text/javascript" src="js/buscar.js"></script>
+    <script type="text/javascript" src="js/suscritos.js"></script>
+    <script type="text/javascript" src="js/seguidores.js"></script>
 
     <title>Perfil de Usuario</title>
   </head>
@@ -105,21 +105,23 @@
                 <div class="col-sm-12">
                 	
                     <h2 class="register">Mis Eventos</h2>
+                    <ul class="pager" role="tablist">
+						<li class="active"><a href="#" id="eventCreate" role="tab"
+							data-toggle="tab"> <i class="fa fa-tasks"></i> Creados
+						</a></li>
+						
+						<li><a href="#" id="eventSuscritos" role="tab"
+							data-toggle="tab"> <i class="fa fa-tasks"></i> Suscritos
+						</a></li>
+					</ul>
+						
+					<div id="seccionEvents">
+						<div class="thumbnail ">
+							<img src="img/Sports.png" alt="Sports Bootstrap Theme">
+						</div>
+					</div>
                 </div><!--col-sm-12 close-->
               </div><!--row close-->
-
-              <!-- <div class="col-xs-6 tab-paneEvent">
-                <h2 class="Subtittle">Creados</h2>
-                  <p>No has creado a ningun evento</p>
-                  <a href="#createEvent" id="creadosCrearEventoButton" class="btn btn-primary" data-toggle="tab">Crear Evento</a>
-              </div>
-     
-              <div class="col-xs-6 tab-paneEvent">
-                <h2 class="Subtittle">Suscritos</h2>
-                  <p>No te has suscrito a ningun evento</p>
-                  <a href="muro.html" id="verEventosButton" class="btn btn-primary">Ver Eventos</a>
-              </div> -->
-
             </div><!--container close --> 
          </div><!--tab-pane close-->
 
@@ -127,8 +129,8 @@
             <div class="container fom-main">
               <div class="row">
                 <div class="col-sm-12">
-                    <div id="seccionFollowed">
-								<h2 class="register">Usuarios Seguidos</h2>
+                	<div id="seccionFollowed">
+						<h2 class="register">Usuarios Seguidos</h2>
 					</div>
                 </div><!--col-sm-12 close-->
              </div><!--row close-->

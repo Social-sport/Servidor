@@ -94,7 +94,7 @@ public class DeportesServlet extends HttpServlet {
 
 			if (repo.darseDeBajaDeporte(deporte, email)) {
 				resp.setStatus(HttpServletResponse.SC_OK);
-				resp.sendRedirect("muro.html");
+				resp.sendRedirect("profile.html");
 			} else {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response = "El usuario no existe";

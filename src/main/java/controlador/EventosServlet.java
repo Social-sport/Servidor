@@ -1,14 +1,19 @@
 package controlador;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
@@ -18,6 +23,7 @@ import modelo.RepositorioEvento;
 /**
  * Servlet de obtencion de eventos
  */
+@MultipartConfig
 @WebServlet(value = "/eventos", name = "EventosServlet")
 public class EventosServlet extends HttpServlet {
 
@@ -32,23 +38,71 @@ public class EventosServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		String nombre = req.getParameter("nombre");
-		String descripcion = req.getParameter("descripcion");
-		String fecha = req.getParameter("fecha");
-		String hora = req.getParameter("hora");
-		String deporte = req.getParameter("deporte");
-		String creador = req.getParameter("creador");
-		String foto = req.getParameter("foto");
-		Evento evento = new Evento(nombre,descripcion,fecha,hora,deporte,creador,foto);
-		boolean realizado = repo.insertarEvento(evento);
-		if (realizado) {
-			//Inserta el evento del deporte en la BD
-			resp.setStatus(HttpServletResponse.SC_OK);
-			response = "El evento se ha insertado correctamente al deporte";			
-		}
-		else {
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response = "El evento no se ha podido insertar";
+		String nombre = null;
+		String descripcion = null;
+		String fecha = null;
+		String hora = null;
+		String deporte = null;
+		String foto = null;
+		Part partFoto = null;
+		
+		String email = (String)req.getSession().getAttribute("email");
+		String tipo = req.getParameter("tipoPostEvent");
+		System.out.println("tipoPost=: "+tipo);
+		System.out.println("email=: "+email);
+		
+		if (tipo.equals("Crear")) {
+			nombre = req.getParameter("nombre");
+			descripcion = req.getParameter("descripcion");
+			fecha = req.getParameter("fecha");
+			hora = req.getParameter("hora");
+			deporte = req.getParameter("deporte");
+			partFoto = req.getPart("foto");
+			
+			if (partFoto!=null && !partFoto.equals("")) {
+				foto = getFilename(partFoto);
+				if (foto.equals("")) {
+					foto = "/Servidor/img/event.jpg";
+				}
+				else {
+					String uploads = getServletContext().getRealPath("/") + "img/uploads/event/";
+					String rutaFoto = uploads + nombre + "-" + fecha + ".jpg";
+					File folder = new File(uploads);
+					if (!folder.exists()) {
+						folder.mkdirs();
+					}
+					
+					InputStream is = partFoto.getInputStream();
+					File fileFoto = new File(rutaFoto);
+					FileOutputStream ous = new FileOutputStream(fileFoto);
+					int dato = is.read();
+					while (dato != -1) {
+						ous.write(dato);
+						dato = is.read();
+					}
+					is.close();
+					ous.close();
+					foto = "/Servidor/img/uploads/event/" + nombre + "-" + fecha + ".jpg";
+				}
+			}
+			
+			if (!nombre.equals("") && !descripcion.equals("") && !fecha.equals("") && 
+					!deporte.equals("Selecciona un Deporte") && email!=null) {
+				
+				Evento evento = new Evento(nombre,descripcion,fecha,hora,deporte,email,foto);
+				
+				boolean realizado = repo.insertarEvento(evento);
+				if (realizado) {
+					//Inserta el evento del deporte en la BD
+					resp.sendRedirect("profile.html");
+					response = "El evento se ha insertado correctamente al deporte";
+					resp.setStatus(HttpServletResponse.SC_OK);		
+				}
+			}
+			else {
+				response = "El evento no se ha podido insertar";
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
 		}
 		setResponse(response, resp);
 	}
@@ -140,5 +194,17 @@ public class EventosServlet extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static String getFilename(Part part) {
+		for (String cd : part.getHeader("content-disposition").split(";")) {
+			if (cd.trim().startsWith("filename")) {
+				String filename = cd.substring(cd.indexOf('=') + 1).trim()
+						.replace("\"", "");
+				return filename.substring(filename.lastIndexOf('/') + 1)
+						.substring(filename.lastIndexOf('\\') + 1);
+			}
+		}
+		return null;
 	}
 }

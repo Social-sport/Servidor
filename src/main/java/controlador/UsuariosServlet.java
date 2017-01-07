@@ -78,7 +78,7 @@ public class UsuariosServlet extends HttpServlet {
 			}
 
 			if (buscado!=null) {
-				String uploads = getServletContext().getRealPath("/") + "img/uploads/";
+				String uploads = getServletContext().getRealPath("/") + "img/uploads/profile/";
 				String rutaFoto = uploads + buscado.getNick() + ".jpg";
 				File folder = new File(uploads);
 				if (!folder.exists()) {
@@ -113,7 +113,7 @@ public class UsuariosServlet extends HttpServlet {
 					}
 					is.close();
 					ous.close();
-					foto = "/Servidor/img/uploads/" + buscado.getNick() + ".jpg";
+					foto = "/Servidor/img/uploads/profile/" + buscado.getNick() + ".jpg";
 				}
 
 				Usuario usuario = new Usuario(email,nombre,apellidos,contrasena,fecha_nacimiento,foto,nick);

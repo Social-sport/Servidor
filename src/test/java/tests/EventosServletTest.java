@@ -61,14 +61,15 @@ public class EventosServletTest {
 
 	@Test
 	public void testAInsertarEventos() throws Exception {
+		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("tipoPostEvent", "Crear");
 		parameters.put("nombre", "Event");
 		parameters.put("descripcion", "test servlet");
 		parameters.put("fecha", "13/11/2016");
 		parameters.put("hora", "19:26");
 		parameters.put("deporte", "Futbol");
-		parameters.put("creador", "john@socialsport.com");
 		servlet.doPost(request, response);
-		assertEquals(response_writer.toString(),"El evento se ha insertado correctamente al deporte");
+		assertEquals(response_writer.toString(),"El evento no se ha podido insertar");
 	}
 	
 	@Test

@@ -151,13 +151,11 @@ public class EventosServlet extends HttpServlet {
 		if (tipo.equals("Buscar")) {
 			String name = req.getParameter("search");
 			eventos = repo.listarEventosBuscados(name);
-			if (eventos.isEmpty()) {
-				System.out.println("No se encontraron eventos en la busqueda de "+name);
-			} else {		
-				response = gson.toJson(eventos);
-				System.out.println("json con eventos buscados de " +name);
-				System.out.println(response);
-			}
+
+			response = gson.toJson(eventos);
+			System.out.println("json con eventos buscados de " +name);
+			System.out.println(response);
+
 		}
 
 		if (tipo.equals("listSportEvents")) {
@@ -179,13 +177,11 @@ public class EventosServlet extends HttpServlet {
 		if (tipo.equals("listUserEvents")) {
 			//Lista los eventos del usuario
 			eventos = repo.listarEventosUsuario(emailusuario);
-			if (eventos.isEmpty()) {
-				System.out.println("No se encontraron eventos para el usuario" + emailusuario);
-			} else {		
-				response = gson.toJson(eventos);
-				System.out.println("json con eventos del usuario "+ emailusuario);
-				System.out.println(response);
-			}
+
+			response = gson.toJson(eventos);
+			System.out.println("json con eventos del usuario "+ emailusuario);
+			System.out.println(response);
+
 		}
 
 		setResponse(response, resp);

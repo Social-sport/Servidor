@@ -94,7 +94,7 @@ public class EventosServletTest {
 		parameters.put("search", "encuentro de futbol");
 		parameters.put("tipo", "Buscar");
 		servlet.doGet(request, response);
-		List<Evento> eventos = repo.listarEventosBuscados("encuentro de futbol");
+		List<Evento> eventos = repo.listarEventosCreados("encuentro de futbol");
 		assertEquals(response_writer.toString(),gson.toJson(eventos));
 	}
 	
@@ -104,7 +104,7 @@ public class EventosServletTest {
 		parameters.put("deporte", "Futbol");
 		parameters.put("tipo", "listUserEvents");
 		servlet.doGet(request, response);
-		List<Evento> eventos = repo.listarEventosUsuario("usuario@socialsport.com");
+		List<Evento> eventos = repo.listarEventosSuscritos("usuario@socialsport.com");
 		assertEquals(response_writer.toString(),gson.toJson(eventos));
 	}
 	

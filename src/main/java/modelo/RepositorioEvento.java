@@ -68,7 +68,7 @@ public class RepositorioEvento {
 	/**
 	 * Lista los eventos del usuario con email <email>
 	 */
-	public List<Evento> listarEventosUsuario(String email) {
+	public List<Evento> listarEventosSuscritos(String email) {
 		List<Evento> eventos = new LinkedList<Evento>();
 		String sql = "SELECT * FROM Evento,EventoSuscrito WHERE idEvento = id AND Usuario ='"+email+"'";
 		try {
@@ -91,7 +91,7 @@ public class RepositorioEvento {
 	/**
 	 * Lista los eventos buscados por un usuario con email <email>
 	 */
-	public List<Evento> listarEventosBuscados(String buscar) {
+	public List<Evento> listarEventosCreados(String buscar) {
 		List<Evento> eventos = new LinkedList<Evento>();
 		String sql = "SELECT * FROM Evento WHERE nombre = '"+buscar+"'";
 		try {

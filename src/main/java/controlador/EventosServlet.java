@@ -150,7 +150,7 @@ public class EventosServlet extends HttpServlet {
 
 		if (tipo.equals("Buscar")) {
 			String name = req.getParameter("search");
-			eventos = repo.listarEventosBuscados(name);
+			eventos = repo.listarEventosCreados(name);
 
 			response = gson.toJson(eventos);
 			System.out.println("json con eventos buscados de " +name);
@@ -176,11 +176,32 @@ public class EventosServlet extends HttpServlet {
 		}
 		if (tipo.equals("listUserEvents")) {
 			//Lista los eventos del usuario
-			eventos = repo.listarEventosUsuario(emailusuario);
+			eventos = repo.listarEventosSuscritos(emailusuario);
+			response = gson.toJson(eventos);			
+			
+			if (eventos.isEmpty()) {
+				System.out.println("No se encontraron eventos suscritos de " + emailusuario);
+			}else{
+				System.out.println("json con eventos del usuario "+ emailusuario);
+				System.out.println(response);
+			}
 
-			response = gson.toJson(eventos);
-			System.out.println("json con eventos del usuario "+ emailusuario);
-			System.out.println(response);
+		}
+		if (tipo.equals("listEventsCreated")) {
+			//Lista los eventos creador por el usuario
+			eventos = repo.listarMisEventos(emailusuario);
+			response = gson.toJson(eventos);			
+			
+			if (eventos.isEmpty()) {
+				System.out.println("No se encontraron eventos suscritos de " + emailusuario);
+			}else{
+				System.out.println("json con eventos del usuario "+ emailusuario);
+				System.out.println(response);
+			}
+
+		}
+		if (tipo.equals("viewEvent")) {
+			//Abre la pagina del evento			
 
 		}
 

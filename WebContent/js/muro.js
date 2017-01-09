@@ -5,7 +5,7 @@ $(document).ready(
 			$("#topBar").load("topBar.html");
 			
 			$("#EventsButton").click(listarEventosDeportes(event));
-
+			
 			$("#SportsButton").click(
 					function(event) {
 
@@ -196,11 +196,11 @@ function listarEventosDeportes() {
 						"<div class='col-md-6'>"+
 						"<input type='hidden' name='idEvent' value='"+listEvent[i].id+"'>"+
 						"<h4 class='list-group-item-heading'>"+listEvent[i].nombre+"</h4>"+
-						"<p class='list-group-item-text' id='list-group-item-text'> "+listEvent[i].descripcion+" </p>"+
+						"<p class='list-group-item-text' id='list-group-item-text'> "+listEvent[i].deporte+" </p>"+
 						"</div>"+
 						"<div class='col-md-3 text-center'>"+
 						"<input type='hidden' name='tipoPostEvent' value='Suscribirse' id='tipoPostEvent'/>"+
-						"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Suscribete'>"+
+						"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Ver'>"+
 						"<h5> "+listEvent[i].numSuscritos+" <small> Suscritos </small></h5>"+
 						"</div>"+ 
 

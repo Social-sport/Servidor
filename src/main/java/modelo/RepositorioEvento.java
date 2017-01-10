@@ -69,16 +69,17 @@ public class RepositorioEvento {
 	public boolean findSuscripcion(int id, String email) {
 		boolean evento = false;
 		try {
-			String sql = "SELECT * FROM EventoSuscrito WHERE idEvento = '"+id+"' AND usuario ='"+email+"'";
+			String sql = "SELECT * FROM EventoSuscrito WHERE idEvento = "+id+" AND usuario ='"+email+"'";
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
+			System.out.println("encuentra en la sucripcion "+ rs.getString(1));
 			evento = true;
 			stmt.close();
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error en buscar suscripcion Evento por " + e);
+			//e.printStackTrace();
+			System.out.println("No hay suscripcion a este  Evento");
 		}
 		return evento;
 	}
@@ -232,12 +233,13 @@ public class RepositorioEvento {
 	 * Da de baja al usuario con email <email> del evento con id <id>
 	 */
 	public boolean darseDeBajaEvento(int id, String email) {
-		String sql = "DELETE FROM EventoSuscrito WHERE usuario='"+email+"'";
+		String sql = "DELETE FROM EventoSuscrito WHERE usuario='"+email+"' AND idEvento = "+id ;
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.executeUpdate(sql);
 			stmt.close();
 			return true;
+			
 		}
 		catch (SQLException e) {
 			System.out.println("Error al borrarse de evento");

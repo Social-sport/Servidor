@@ -27,7 +27,7 @@ $(document).ready(
 					
 					if (pro == null) {
 						document.getElementById("deleteEvent").style.display="none";
-						document.getElementById("editEvent").style.display="none";
+						document.getElementById("eventEdit").style.display="none";
 					}else{
 						document.getElementById("SuscribeButton").style.display="none";
 					}					
@@ -52,11 +52,13 @@ $(document).ready(
 		                    dataType: "JSON",
 		                    success : function(us) {
 		                    	
-		                    	$("#SuscribeButton").val("Suscrito");
+		                    	document.getElementById("SuscribeButton").innerHTML = "Suscrito";
+		                    	
 		                    },
 		                    error : function() {
+		                    			                    	
+		                    	document.getElementById("SuscribeButton").innerHTML = "Suscribirse";
 		                    	
-		                    	$("#SuscribeButton").val("Suscribir");
 		                    }
 						
 		                });

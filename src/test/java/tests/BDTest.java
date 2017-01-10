@@ -78,21 +78,21 @@ public class BDTest {
 
 	@Test
 	public void atestInsertarUsuario() {
-		Usuario usuario = new Usuario("prueba","prueba","prueba",
-				"prueba", "1994-11-11", "prueba", "prueba");
+		Usuario usuario = new Usuario("prueba@social","prueba","prueba",
+				"prueba", "1994-11-11", "prueba", "pruebaN");
 		assertTrue(repoUsuario.insertarUsuario(usuario));
 	}
 
 	@Test
 	public void testActualizarUsuario() {
-		Usuario usuario = new Usuario("prueba","prueba","prueba",
-				"prueba", "1994-12-06", "prueba", "prueba");
+		Usuario usuario = new Usuario("prueba@social","prueba","prueba",
+				"prueba", "1994-12-06", "prueba", "pruebaNic");
 		assertTrue(repoUsuario.actualizarUsuario(usuario));
 	}
 
 	@Test
 	public void ztestEliminarUsuario() {
-		assertTrue(repoUsuario.borrarUsuario("prueba"));
+		assertTrue(repoUsuario.borrarUsuario("prueba@social"));
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public class BDTest {
 
 	@Test
 	public void btestInsertarEvento() {
-		Evento evento = new Evento("prueba","try","00", "00", "Futbol", "prueba", "foto");
+		Evento evento = new Evento("prueba1","Evento","00", "00", "Futbol", "prueba", "foto");
 		assertTrue(repoEvento.insertarEvento(evento));
 	}
 	

@@ -118,16 +118,19 @@ public class EventosServlet extends HttpServlet {
 			if (suscrito) {
 				repo.darseDeBajaEvento(id, email);
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				System.out.println( "El usuario se ha dado del baja en el evento");
+				response = "El usuario se ha dado del baja en el evento";
+				System.out.println(response);
 				
 			}else{
 				boolean suscribir = repo.suscribirseEvento(id, email);
 			
 				if (suscribir) {
-					resp.setStatus(HttpServletResponse.SC_OK);			
+					resp.setStatus(HttpServletResponse.SC_OK);
+					response = "El usuario se ha suscrito correctamente al evento";
 					System.out.println("El usuario se ha suscrito correctamente al evento");
 				}else{
 					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					response = "El usuario no se ha podido suscribir al evento";
 					System.out.println( "El usuario no se ha podido suscribir al evento");
 				}
 			}	

@@ -210,6 +210,23 @@ public class RepositorioEvento {
 			return false;
 		}
 	}
+	
+	/**
+	 * Borra el evento con id <id> de la BD
+	 */
+	public boolean borrarEventoByName(String id) {
+		String sql = "DELETE FROM Evento WHERE nombre='"+id+"'";
+		try {
+			Statement stmt = conexion.createStatement();
+			stmt.executeUpdate(sql);
+			stmt.close();
+			return true;
+		}
+		catch (SQLException e) {
+			System.out.println("Error al borrar evento");
+			return false;
+		}
+	}
 
 	/**
 	 * Suscribe al usuario con email <email> al evento con id <id>

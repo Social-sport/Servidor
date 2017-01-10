@@ -80,6 +80,33 @@ public class EventosServletTest {
 	}
 	
 	@Test
+	public void testSuscribirseEventoErroneo() throws Exception {
+		request.getSession().setAttribute("email", "usuariport.com");
+		parameters.put("tipoPostEvent", "Suscribirse");
+		parameters.put("idEvento", "200");
+		servlet.doPost(request, response);
+		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al evento");
+	}
+	
+	@Test
+	public void testaSuscribirseEvento() throws Exception {
+		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("tipoPostEvent", "Suscribirse");
+		parameters.put("idEvento", "20");
+		servlet.doPost(request, response);
+		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al evento");
+	}
+	
+	@Test
+	public void testbSalirEvento() throws Exception {
+		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("tipoPostEvent", "Suscribirse");
+		parameters.put("idEvento", "20");
+		servlet.doPost(request, response);
+		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al evento");
+	}
+	
+	@Test
 	public void testListarEventosDeporte() throws Exception {
 		request.getSession().setAttribute("email", "usuario@socialsport.com");
 		parameters.put("deporte", "Futbol");

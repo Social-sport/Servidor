@@ -118,7 +118,7 @@ public class BDTest {
 	
 	@Test
 	public void ztestBorrarEvento() {
-		assertTrue(repoEvento.borrarEvento("prueba"));
+		assertTrue(repoEvento.borrarEventoByName("prueba1"));
 	}
 	
 	@Test

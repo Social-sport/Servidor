@@ -88,7 +88,7 @@ public class NotificacionesServlet extends HttpServlet {
 		List<Notificacion> notificaciones = null;
 		String email = (String) req.getSession().getAttribute("email");
 		String tipo = req.getParameter("tipo");
-		if (tipo!=null && tipo!="") {
+		if (tipo!=null && tipo!="" && tipo.equals("contar")) {
 			int cuenta = repo.contarNotificaciones(email);
 			response = cuenta+"";
 			setResponse(response, resp);

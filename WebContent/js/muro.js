@@ -1,5 +1,6 @@
 $(document).ready(
 		function() {
+			var count = 0;
 			listarEventosDeportes(event);
 			
 			$("#topBar").load("topBar.html");
@@ -56,6 +57,10 @@ $(document).ready(
 					function(event) {
 
 						event.preventDefault();
+						
+						$.get('notificaciones', {tipo:"contar"}, function (cuenta){
+							count = cuenta;
+						});
 
 						$.get('notificaciones', function (listNotification){
 
@@ -156,12 +161,13 @@ $(document).ready(
 
 						});
 					});
-			var count = 0;
+			
 			function contar() {
-				$.get('notificaciones', {tipo:'contar'}, function (cuenta){
+				$.get('notificaciones', {tipo:"contar"}, function (cuenta){
 					if (cuenta>count) {
 						count = cuenta;
 						//Me falta cambiar de color al botón
+						alert("Tienes una nueva notificación");
 						$("#NotificationButton").toggleClass('red');
 					}
 				});

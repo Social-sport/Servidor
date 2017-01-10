@@ -39,13 +39,27 @@ $(document).ready(
                 }
             });
 			
+			$.ajax({
+            	type : "GET",
+                url : "/Servidor/eventos",
+                data : {idEvento:idEvent,tipo:'Verificar'},
+                dataType: "JSON",
+                success : function(us) {
+                	document.getElementById("SuscribeButton").innerHTML = us;
+                	
+                }
+			
+            });
+			
 			$("#eventEdit").click(function(event) {
+				var nombreDeporte;
 				$.ajax({
 					type : "GET",
 	                url : "/Servidor/eventos",
 	                data : {tipo:'Event'},
 	                dataType: "JSON",
 	                success : function(ms) {
+	                	nombreDeporte = ms.deporte;
 	                	
 	                	$("#idEvento").val(ms.id);
 	                	$("#nombre").val(ms.nombre);
@@ -53,22 +67,21 @@ $(document).ready(
 	                	$("#fecha").val(ms.fecha);
 	                	$("#descripcion").val(ms.descripcion);
 	                	$("#foto").val(ms.foto);
-	                	
-	                	$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){
-		    				if (listSport.length == 0) {
-		                		$("#deporte").html("<option value='"+ms.deporte+"'>"+ms.deporte+"</option>");
-		                		
-		              		}else{
-		              			$("#deporte").html("<option value=''>Selecciona un Deporte</option>");
-		    					$.each(listSport, function(i,item){
-		
-		    						$("#deporte").append("<option value='"+listSport[i].nombre+"'>"+listSport[i].nombre+"</option>");
-		
-		    					 });
-		              		};    	
-		            });
 	                }
 				});
+				$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){
+	    				if (listSport.length == 0) {
+	                		$("#deporte").html("<option value=''>Suscribete a Deportes</option>");
+	                		
+	              		}else{
+	              			$("#deporte").html("<option value='"+nombreDeporte+"'>"+nombreDeporte+"</option>");
+	    					$.each(listSport, function(i,item){
+	
+	    						$("#deporte").append("<option value='"+listSport[i].nombre+"'>"+listSport[i].nombre+"</option>");
+	
+	    					 });
+	              		};    	
+	            });
 			});
 			
 			$("#SuscribeButton").click(

@@ -186,7 +186,9 @@ public class RepositorioEvento {
 	 */
 	public boolean insertarEvento(Evento evento) {
 		String sql = "INSERT INTO Evento (nombre,descripcion,fecha,hora,deporte,creador,foto) VALUES "
-				+ "(\""+evento.getNombre()+"\",\""+evento.getDescripcion()+"\",\""+evento.getFecha()+"\",\""+evento.getHora()+"\",\""+evento.getDeporte()+"\",\""+evento.getCreador()+"\",\""+evento.getFoto()+"\")";
+				+ "('"+evento.getNombre()+"','"+evento.getDescripcion()+"','"+evento.getFecha() 
+				+ "','"+evento.getHora()+"','"+evento.getDeporte()+"','"+evento.getCreador() 
+				+ "','"+evento.getFoto()+"')";
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.execute(sql);

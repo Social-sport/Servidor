@@ -207,10 +207,10 @@ public class RepositorioUsuario {
 	 * Actualiza la informaci�n del usuario <usuario>
 	 */
 	public boolean actualizarUsuario (Usuario usuario) {
-		String sql = "UPDATE Usuario SET nombre=\""+usuario.getNombre()+"\","
-				+ "apellidos=\""+usuario.getApellidos()+"\", contrasena=\""+usuario.getContrasena()+"\", "
-				+ " foto=\""+usuario.getFoto()+"\", fecha_nacimiento=\""+usuario.getFecha_nacimiento()+"\", nick=\""+usuario.getNick()+"\" "
-				+ "WHERE email=\""+usuario.getEmail()+"\"";
+		String sql = "UPDATE Usuario SET nombre='"+usuario.getNombre()+"', "
+				+ "apellidos='"+usuario.getApellidos()+"', contrasena='"+usuario.getContrasena()+"', "
+				+ "foto='"+usuario.getFoto()+"', fecha_nacimiento='"+usuario.getFecha_nacimiento()+"', "
+				+ "nick='"+usuario.getNick()+"' WHERE email='"+usuario.getEmail()+"'";
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.execute(sql);

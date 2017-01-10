@@ -331,6 +331,21 @@ public class EventosServlet extends HttpServlet {
 			}
 			
 		}
+		
+		if (tipo.equals("Verificar")) {
+			
+			int id = Integer.parseInt((String) req.getSession().getAttribute("idEvent"));
+			
+			boolean suscrito = repo.findSuscripcion(id, emailusuario);
+			
+			if (suscrito) {
+				response = gson.toJson("Salir");
+			}else{
+				response = gson.toJson("Suscribirse");
+			}
+			resp.setStatus(HttpServletResponse.SC_OK);
+			
+		}
 
 		setResponse(response, resp);
 	}

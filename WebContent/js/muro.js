@@ -1,6 +1,13 @@
 $(document).ready(
 		function() {
-			var count = 0;
+			var count;
+			window.onload = function() {
+				$.get('notificaciones', {tipo:"contar"}, function (cuentan){
+						count = cuentan;
+					}
+				);
+			}
+			
 			listarEventosDeportes(event);
 			
 			$("#topBar").load("topBar.html");

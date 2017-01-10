@@ -268,4 +268,24 @@ public class RepositorioEvento {
 			return false;
 		}
 	}
+	
+	/**
+	 * Actualiza el evento <evento>
+	 */
+	public boolean actualizarEvento (Evento evento) {
+		String sql = "UPDATE Evento SET nombre=\""+evento.getNombre()+"\","
+				+ "descripcion=\""+evento.getDescripcion()+"\", fecha=\""+evento.getFecha()+"\", "
+				+ " hora=\""+evento.getHora()+"\", deporte=\""+evento.getDeporte()+"\", foto=\""+evento.getFoto()+"\" "
+				+ "WHERE id=\""+evento.getId()+"\"";
+		try {
+			Statement stmt = conexion.createStatement();
+			stmt.execute(sql);
+			stmt.close();
+			return true;
+		}
+		catch (SQLException e) {
+			System.out.println("Error al actualizar evento");
+			return false;
+		}
+	}
 }

@@ -136,6 +136,75 @@ public class EventosServlet extends HttpServlet {
 			}	
 			
 		}
+		
+		if (tipo.equals("Actualizar")) {
+			String id = req.getParameter("idEvento");
+			nombre = req.getParameter("nombre");
+			descripcion = req.getParameter("descripcion");
+			fecha = req.getParameter("fecha");
+			hora = req.getParameter("hora");
+			deporte = req.getParameter("deporte");
+			partFoto = req.getPart("foto");
+			if (partFoto!=null && !partFoto.equals("")) {
+				foto = getFilename(partFoto);
+			}
+			
+			Evento evento = repo.findEventById(id, email);
+			
+			if (evento!=null) {
+				String uploads = getServletContext().getRealPath("/") + "img/uploads/event/";
+				String rutaFoto = uploads + nombre + "-" + fecha + ".jpg";
+				File folder = new File(uploads);
+				if (!folder.exists()) {
+					folder.mkdirs();
+				}
+				if (nombre.equals("")) {
+					nombre = evento.getNombre();
+				}
+				if (descripcion.equals("")) {
+					descripcion = evento.getDescripcion();
+				}
+				if (fecha.equals("")) {
+					fecha = evento.getFecha();
+				}
+				if (hora.equals("")) {
+					hora = evento.getHora();
+				}
+				if (deporte.equals("")) {
+					deporte = evento.getDeporte();
+				}
+				if (foto.equals("")) {
+					foto = evento.getFoto();
+				}
+				else {
+					InputStream is = partFoto.getInputStream();
+					File fileFoto = new File(rutaFoto);
+					FileOutputStream ous = new FileOutputStream(fileFoto);
+					int dato = is.read();
+					while (dato != -1) {
+						ous.write(dato);
+						dato = is.read();
+					}
+					is.close();
+					ous.close();
+					foto = "/Servidor/img/uploads/event/" + nombre + "-" + fecha + ".jpg";
+				}
+				
+				Evento newEvento = new Evento(Integer.parseInt(id), nombre, 
+						descripcion, fecha, hora, deporte, email, rutaFoto);
+				
+				boolean update = repo.actualizarEvento(newEvento);
+				if (update) {
+					resp.sendRedirect("eventPage.html");
+					response = "El evento se ha actualizado correctamente";
+					resp.setStatus(HttpServletResponse.SC_OK);
+				} else {
+					response = "El evento no se ha podido actualizar";
+					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				}
+			}
+		}
+		
 		setResponse(response, resp);
 	}
 

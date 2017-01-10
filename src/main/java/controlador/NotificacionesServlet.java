@@ -48,7 +48,7 @@ public class NotificacionesServlet extends HttpServlet {
 		if (tipo.equals("Evento")) {
 			
 			String idEvento = req.getParameter("idEvent");
-			Evento evento = repoEvento.findEvento(idEvento);
+			Evento evento = repoEvento.findEventById(idEvento, emailEnvia);
 			
 			if (evento!=null) {
 				realizado = repo.notificar(emailEnvia,emailRecibe,evento.getNombre(),

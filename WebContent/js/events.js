@@ -39,6 +39,37 @@ $(document).ready(
                 }
             });
 			
+			$("#eventEdit").click(function(event) {
+				$.ajax({
+					type : "GET",
+	                url : "/Servidor/eventos",
+	                data : {tipo:'Event'},
+	                dataType: "JSON",
+	                success : function(ms) {
+	                	
+	                	$("#idEvento").val(ms.id);
+	                	$("#nombre").val(ms.nombre);
+	                	$("#hora").val(ms.hora);
+	                	$("#fecha").val(ms.fecha);
+	                	$("#descripcion").val(ms.descripcion);
+	                	$("#foto").val(ms.foto);
+	                	
+	                	$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){
+		    				if (listSport.length == 0) {
+		                		$("#deporte").html("<option value='"+ms.deporte+"'>"+ms.deporte+"</option>");
+		                		
+		              		}else{
+		              			$("#deporte").html("<option value=''>Selecciona un Deporte</option>");
+		    					$.each(listSport, function(i,item){
+		
+		    						$("#deporte").append("<option value='"+listSport[i].nombre+"'>"+listSport[i].nombre+"</option>");
+		
+		    					 });
+		              		};    	
+		            });
+	                }
+				});
+			});
 			
 			$("#SuscribeButton").click(
 					function(event) {

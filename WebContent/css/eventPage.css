@@ -9,6 +9,11 @@ body {
     text-align: center;
 }
 
+#seccionEvent{
+	width: 650px;
+	margin: 0 auto;
+}
+
 .profile-head { 
 	display: block;
 	width: 90%;

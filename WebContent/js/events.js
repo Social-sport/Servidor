@@ -3,6 +3,33 @@ $(document).ready(
 
 			$("#topBar").load("topBar.html");
 			
+			var idEvent;
+			
+			$.ajax({
+            	type : "GET",
+                url : "/Servidor/eventos",
+                data : {tipo:'Event'},
+                dataType: "JSON",
+                success : function(ms) {
+                	
+                	idEvent = ms.id;
+                	
+                	document.getElementById("nombreEvento").innerHTML = ms.nombre;
+					document.getElementById("descripcionEvent").innerHTML = ms.descripcion;
+					document.getElementById("fechaEvento").innerHTML = ms.fecha;
+					document.getElementById("horaEvento").innerHTML = ms.hora;
+					document.getElementById("deporteEvento").innerHTML = ms.deporte;
+					document.getElementById("creador").innerHTML = ms.creador;
+					
+					$("#imgEvent").attr("src", ms.foto);
+                },
+                error : function() {
+                	
+                	alert("error al cargar");
+                }
+            });
+			
+			
 			$("#SuscribeButton").click(
 					function(event) {
 
@@ -33,17 +60,17 @@ $(document).ready(
 		                $.get('amigos', {tipoRelacion:'listSeguidos'}, function (listUsers){   
 
 		        			if (listUsers.length == 0) {
-		                		$("#iEvent").html("<h2 class='register'>No tienes Seguidos para invitar</h2>"+
+		                		$("#seccionEvent").html("<h2 class='register'>No tienes Seguidos para invitar</h2>"+
 		                				"<div>"+
 		        						"	<div class='thumbnail'>"+
 		        						"		<img src='img/people.jpg' alt='Sports Bootstrap Theme'>"+
 		        						"	</div>"+
 		        						"</div>");
 		              		}else{
-		              			$("#iEvent").html("<h2 class='register'>Invitar Seguidos</h2>");
+		              			$("#seccionEvent").html("<h2 class='register'>Invitar Seguidos</h2>");
 		        				$.each(listUsers, function(i,item) {
 
-		        					$("#iEvent").append("<form action='/Servidor/notificaciones' method='POST'  class='list-group-item active'  id='listSearchs'>"+
+		        					$("#seccionEvent").append("<form action='/Servidor/notificaciones' method='POST'  class='list-group-item active'  id='listSearchs'>"+
 
 		        					"<div class='media col-md-3'>"+
 		        					"<figure class='pull-left'>"+
@@ -53,7 +80,7 @@ $(document).ready(
 		        					"<div class='col-md-6'>"+
 		        					"<input type='hidden' name='tipo' value='Evento' id='tipoEvent'/>"+
 		        					"<input type='hidden' name='emailRecibe' value='"+listUsers[i].email+"'>"+
-		        					"<input type='hidden' name='idEvento' value='"+$("#id").val()+"'>"+
+		        					"<input type='hidden' name='idEvent' value='"+idEvent+"'>"+
 		        					"<h4 class='list-group-item-heading'>"+listUsers[i].nombre+"</h4>"+
 		        					"<p class='list-group-item-text'> "+listUsers[i].apellidos+" </p>"+
 		        					"</div>"+

@@ -106,10 +106,10 @@ public class BDTest {
 		assertTrue(repoEvento.insertarEvento(evento));
 	}
 	
-	/*@Test
+	@Test
 	public void ctestFindEvento() {
-		assertEquals(repoEvento.findEvento("0").getDeporte(), "Futbol");
-	}*/
+		assertEquals(repoEvento.findEvento("prueba").getDeporte(), "Futbol");
+	}
 	
 	@Test
 	public void testListarEventosDeporte() {

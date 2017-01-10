@@ -24,14 +24,35 @@ public class RepositorioEvento {
 	/**
 	 * Devuelve la informacion del evento con nombre <nombre>
 	 */
-	public Evento findEvento(String id) {
+	public Evento findEvento(String nombre) {
+		Evento evento = null;
+		try {
+			String sql = "SELECT * FROM Evento WHERE nombre ='"+nombre+"'";
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.first();
+			evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+					rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"));
+			stmt.close();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en buscar Evento "+nombre + " por " + e);
+		}
+		return evento;
+	}
+	
+	/**
+	 * Devuelve la informacion del evento con nombre <nombre>
+	 */
+	public Evento findEventById(String id) {
 		Evento evento = null;
 		try {
 			String sql = "SELECT * FROM Evento WHERE id ='"+id+"'";
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
-			evento = new Evento(rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+			evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 					rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"));
 			stmt.close();
 		}

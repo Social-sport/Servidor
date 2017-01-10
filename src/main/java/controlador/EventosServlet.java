@@ -164,8 +164,7 @@ public class EventosServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		List<Evento> eventos = new LinkedList<Evento>();
-		String deporte = req.getParameter("deporte");
+		List<Evento> eventos = new LinkedList<Evento>();		
 		String emailusuario = (String)req.getSession().getAttribute("email");
 		String tipo = req.getParameter("tipo");
 
@@ -180,7 +179,7 @@ public class EventosServlet extends HttpServlet {
 		}
 
 		if (tipo.equals("listSportEvents")) {
-			//Lista los eventos del deporte
+			//Lista los eventos de los deportes suscritos
 			List<Deporte> deportes = repoDepor.listarDeportesUsuario(emailusuario);
 			for (Deporte deporte2 : deportes) {
 				eventos.addAll(repo.listarEventosDeporte(deporte2.getNombre()));
@@ -191,10 +190,27 @@ public class EventosServlet extends HttpServlet {
 				System.out.println("No se encontraron eventos en la busqueda");
 			} else {		
 				response = gson.toJson(eventos);
+				System.out.println("json con eventos buscados para el deportes suscritos ");
+				System.out.println(response);
+			}
+		}
+		
+		if (tipo.equals("listEventsJustOneSport")) {
+			//Lista los eventos de un solo deporte
+			String deporte = req.getParameter("deporte");
+			eventos = repo.listarEventosDeporte(deporte);			
+			resp.setStatus(HttpServletResponse.SC_OK);
+			
+			if (eventos.isEmpty()) {
+				response = gson.toJson(eventos);
+				System.out.println("No se encontraron eventos en la busqueda");
+			} else {		
+				response = gson.toJson(eventos);
 				System.out.println("json con eventos buscados para el deporte " + deporte);
 				System.out.println(response);
 			}
 		}
+		
 		if (tipo.equals("listUserEvents")) {
 			//Lista los eventos del usuario
 			eventos = repo.listarEventosSuscritos(emailusuario);
@@ -222,8 +238,24 @@ public class EventosServlet extends HttpServlet {
 
 		}
 		if (tipo.equals("viewEvent")) {
-			//Abre la pagina del evento			
-
+			//Abre la pagina del evento
+			String id = req.getParameter("idEvent");
+			req.getSession().setAttribute("idEvent", id);
+			resp.sendRedirect("eventPage.html");
+			resp.setStatus(HttpServletResponse.SC_OK);
+		}
+		
+		if (tipo.equals("Event")) {
+			//Carga la informacion en la pagina del evento
+			String id = (String) req.getSession().getAttribute("idEvent");
+			Evento evento = repo.findEventById(id);
+			response = gson.toJson(evento);			
+			if (evento!=null) {
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}else{
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
+			
 		}
 
 		setResponse(response, resp);

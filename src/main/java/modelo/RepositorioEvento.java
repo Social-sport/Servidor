@@ -41,6 +41,26 @@ public class RepositorioEvento {
 		}
 		return evento;
 	}
+	
+	/**
+	 * Devuelve true si el usuario esta suscrito al evento
+	 */
+	public boolean findSuscripcion(int id, String email) {
+		boolean evento = false;
+		try {
+			String sql = "SELECT * FROM EventoSuscrito WHERE idEvento = '"+id+"' AND usuario ='"+email+"'";
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.first();
+			evento = true;
+			stmt.close();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en buscar suscripcion Evento por " + e);
+		}
+		return evento;
+	}
 
 	/**
 	 * Lista los eventos del deporte con nombre <deporte>

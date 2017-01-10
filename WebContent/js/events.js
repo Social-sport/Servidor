@@ -19,9 +19,19 @@ $(document).ready(
 					document.getElementById("fechaEvento").innerHTML = ms.fecha;
 					document.getElementById("horaEvento").innerHTML = ms.hora;
 					document.getElementById("deporteEvento").innerHTML = ms.deporte;
-					document.getElementById("creador").innerHTML = ms.creador;
+					//document.getElementById("creador").innerHTML = ms.creador;
 					
 					$("#imgEvent").attr("src", ms.foto);
+					
+					var pro = ms.propietario;
+					
+					if (pro == null) {
+						document.getElementById("deleteEvent").style.display="none";
+						document.getElementById("editEvent").style.display="none";
+					}else{
+						document.getElementById("SuscribeButton").style.display="none";
+					}					
+					
                 },
                 error : function() {
                 	
@@ -38,15 +48,37 @@ $(document).ready(
 						$.ajax({
 		                	type : "POST",
 		                    url : "/Servidor/eventos",
-		                    data : {idEvent:$("#id").val(),tipoPostEvent:'Suscribirse'},
+		                    data : {idEvento:idEvent,tipoPostEvent:'Suscribirse'},
 		                    dataType: "JSON",
 		                    success : function(us) {
 		                    	
-		                    	$("#SuscribeButton").value("Suscrito");
+		                    	$("#SuscribeButton").val("Suscrito");
 		                    },
 		                    error : function() {
 		                    	
-		                    	$("#SuscribeButton").value("Suscribir");
+		                    	$("#SuscribeButton").val("Suscribir");
+		                    }
+						
+		                });
+			});
+			
+			$("#deleteEvent").click(
+					function(event) {
+
+						event.preventDefault();
+						
+						$.ajax({
+		                	type : "DELETE",
+		                    url : "/Servidor/eventos",
+		                    data : {idEvento:idEvent},
+		                    dataType: "JSON",
+		                    success : function(us) {
+		                    	
+		                    	alert("se ha eliminado el evento");
+		                    },
+		                    error : function() {
+		                    	
+		                    	alert("no se ha eliminado el evento");
 		                    }
 						
 		                });

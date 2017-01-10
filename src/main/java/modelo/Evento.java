@@ -10,6 +10,7 @@ public class Evento {
 	private String deporte;
 	private String creador;
 	private String foto;
+	private String propietario;
 
 	public Evento(int id, String nombre, String descripcion, String fecha, String hora, String deporte, String creador, String foto) {
 		this.id=id;
@@ -30,6 +31,28 @@ public class Evento {
 		this.deporte=deporte;
 		this.creador=creador;
 		this.foto=foto;
+	}
+			
+	public Evento(int id, String nombre, String descripcion, String fecha, String hora, String deporte, String creador,
+			String foto, String propietario) {
+		
+		this.id = id;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.fecha = fecha;
+		this.hora = hora;
+		this.deporte = deporte;
+		this.creador = creador;
+		this.foto = foto;
+		this.propietario = propietario;
+	}
+
+	public String getPropietario() {
+		return propietario;
+	}
+
+	public void setPropietario(String propietario) {
+		this.propietario = propietario;
 	}
 
 	public int getId() {

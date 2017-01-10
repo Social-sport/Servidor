@@ -111,7 +111,7 @@ public class EventosServlet extends HttpServlet {
 		
 		if (tipo.equals("Suscribirse")) {
 			
-			int id = Integer.parseInt(req.getParameter("idEvent"));
+			int id = Integer.parseInt(req.getParameter("idEvento"));
 			
 			boolean suscrito = repo.findSuscripcion(id, email);
 			
@@ -143,11 +143,12 @@ public class EventosServlet extends HttpServlet {
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		String nombre = req.getParameter("nombre");
-		boolean realizado = repo.borrarEvento(nombre);
+		String id = req.getParameter("idEvento");
+		boolean realizado = repo.borrarEvento(id);
 		if (realizado) {
 			//borra el evento del deporte en la BD
 			resp.setStatus(HttpServletResponse.SC_OK);
+			resp.sendRedirect("profile.html");
 			response = "El evento se ha borrado correctamente";
 		}
 		else {
@@ -182,7 +183,7 @@ public class EventosServlet extends HttpServlet {
 			//Lista los eventos de los deportes suscritos
 			List<Deporte> deportes = repoDepor.listarDeportesUsuario(emailusuario);
 			for (Deporte deporte2 : deportes) {
-				eventos.addAll(repo.listarEventosDeporte(deporte2.getNombre()));
+				eventos.addAll(repo.listarEventosDeporte(deporte2.getNombre(),emailusuario));
 			}
 			resp.setStatus(HttpServletResponse.SC_OK);
 			if (eventos.isEmpty()) {
@@ -198,7 +199,7 @@ public class EventosServlet extends HttpServlet {
 		if (tipo.equals("listEventsJustOneSport")) {
 			//Lista los eventos de un solo deporte
 			String deporte = req.getParameter("deporte");
-			eventos = repo.listarEventosDeporte(deporte);			
+			eventos = repo.listarEventosDeporte(deporte,emailusuario);			
 			resp.setStatus(HttpServletResponse.SC_OK);
 			
 			if (eventos.isEmpty()) {

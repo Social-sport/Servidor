@@ -230,7 +230,7 @@ body {
 .hve-pro p {
 	color: #fff;
 	font-size: 15px;
-	text-transform: capitalize;
+	text-transform: uppercase;
 	padding: 5px 20px;
 	font-family: 'Noto Sans', sans-serif;
 }

@@ -45,15 +45,20 @@ public class RepositorioEvento {
 	/**
 	 * Devuelve la informacion del evento con nombre <nombre>
 	 */
-	public Evento findEventById(String id) {
+	public Evento findEventById(String id, String email) {
 		Evento evento = null;
 		try {
 			String sql = "SELECT * FROM Evento WHERE id ='"+id+"'";
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
-			evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
-					rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"));
+			if (rs.getString("creador").equals(email)) {
+				evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+						rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"),"propietario");
+			} else {
+				evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+						rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"));
+			}
 			stmt.close();
 		}
 		catch (SQLException e) {

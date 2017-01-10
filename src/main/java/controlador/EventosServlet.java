@@ -117,17 +117,17 @@ public class EventosServlet extends HttpServlet {
 			
 			if (suscrito) {
 				repo.darseDeBajaEvento(id, email);
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response = "El usuario se ha dado del baja en el evento";
-				System.out.println(response);
+				resp.setStatus(HttpServletResponse.SC_OK);
+				response = gson.toJson("Suscribirse");
+				System.out.println(response +" Se ha dado de bajo del evento");
 				
 			}else{
 				boolean suscribir = repo.suscribirseEvento(id, email);
 			
 				if (suscribir) {
 					resp.setStatus(HttpServletResponse.SC_OK);
-					response = "El usuario se ha suscrito correctamente al evento";
-					System.out.println("El usuario se ha suscrito correctamente al evento");
+					response = gson.toJson("Salir");
+					System.out.println(response + "El usuario se ha suscrito correctamente al evento");
 				}else{
 					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 					response = "El usuario no se ha podido suscribir al evento";
@@ -252,7 +252,8 @@ public class EventosServlet extends HttpServlet {
 		if (tipo.equals("Event")) {
 			//Carga la informacion en la pagina del evento
 			String id = (String) req.getSession().getAttribute("idEvent");
-			Evento evento = repo.findEventById(id);
+			String email = (String) req.getSession().getAttribute("email");
+			Evento evento = repo.findEventById(id, email);
 			response = gson.toJson(evento);			
 			if (evento!=null) {
 				resp.setStatus(HttpServletResponse.SC_OK);

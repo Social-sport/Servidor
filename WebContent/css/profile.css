@@ -575,19 +575,19 @@ h4.pro-title {
 		width: 720px;
 	}
 	#seccionSeguidores{
-		width: 600px;
+		width: 100%;
 		margin: 0 auto;
 	}
 	#seccionFollowed{
-		width: 600px;
+		width: 100%;
 		margin: 0 auto;
 	}
 	#seccionSports{
-		width: 600px;
+		width: 100%;
 		margin: 0 auto;
 	}
 	#seccionEvents{
-		width: 600px;
+		width: 100%;
 		margin: 0 auto;
 	}
 }
@@ -607,23 +607,6 @@ h4.pro-title {
 	#busAmi{
 		width: 600px;
 	}
-	
-	#seccionSeguidores{
-		width: 550px;
-		margin: 0 auto;
-	}
-	#seccionFollowed{
-		width: 550px;
-		margin: 0 auto;
-	}
-	#seccionSports{
-		width: 550px;
-		margin: 0 auto;
-	}
-	#seccionEvents{
-		width: 550px;
-		margin: 0 auto;
-	}
 }
 @media all and (max-width:568px){
 	.search-btn {
@@ -632,22 +615,6 @@ h4.pro-title {
 	#busAmi{
 		width: 560px;
 	}
-	#seccionSeguidores{
-		width: 500px;
-		margin: 0 auto;
-	}
-	#seccionFollowed{
-		width: 500px;
-		margin: 0 auto;
-	}
-	#seccionSports{
-		width: 500px;
-		margin: 0 auto;
-	}
-	#seccionEvents{
-		width: 500px;
-		margin: 0 auto;
-	}
 }
 @media all and (max-width:520px){
 	.search-btn {
@@ -655,22 +622,6 @@ h4.pro-title {
 	}
 	#busAmi{
 		width: 500px;
-	}
-	#seccionSeguidores{
-		width: 450px;
-		margin: 0 auto;
-	}
-	#seccionFollowed{
-		width: 450px;
-		margin: 0 auto;
-	}
-	#seccionSports{
-		width: 450px;
-		margin: 0 auto;
-	}
-	#seccionEvents{
-		width: 450px;
-		margin: 0 auto;
 	}
 }
 
@@ -713,22 +664,6 @@ h4.pro-title {
 	.bio-table>tbody>tr>td {
 		font-size: 13px;
 	}
-	#seccionSeguidores{
-		width: 350px;
-		margin: 0 auto;
-	}
-	#seccionFollowed{
-		width: 350px;
-		margin: 0 auto;
-	}
-	#seccionSports{
-		width: 350px;
-		margin: 0 auto;
-	}
-	#seccionEvents{
-		width: 350px;
-		margin: 0 auto;
-	}
 }
 
 @media all and (max-width:400px){
@@ -747,24 +682,8 @@ h4.pro-title {
 		margin-right: 0;
 		margin-left: 18%;
 	}
-
-	#seccionSeguidores{
-		width: 310px;
-		margin: 0 auto;
-	}
-	#seccionFollowed{
-		width: 310px;
-		margin: 0 auto;
-	}
-	#seccionSports{
-		width: 310px;
-		margin: 0 auto;
-	}
-	#seccionEvents{
-		width: 310px;
-		margin: 0 auto;
-	}
 }
+
 @media all and (max-width:320px){
 	.pager li a {
 		width: 100px;
@@ -781,22 +700,6 @@ h4.pro-title {
 		font-size: 11px;
 	}
 	
-	#seccionSeguidores{
-		width: 250px;
-		margin: 0 auto;
-	}
-	#seccionFollowed{
-		width: 250px;
-		margin: 0 auto;
-	}
-	#seccionSports{
-		width: 250px;
-		margin: 0 auto;
-	}
-	#seccionEvents{
-		width: 250px;
-		margin: 0 auto;
-	}
 	h2 {
 		margin: 0 auto;
 	}

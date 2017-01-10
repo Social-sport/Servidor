@@ -7,6 +7,9 @@ body {
 #listEvent {
 	height:auto;
     min-height:100px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom,#337ab7 0,#2b669a 100%);
 }
 
 form.list-group-item {

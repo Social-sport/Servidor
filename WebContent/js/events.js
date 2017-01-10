@@ -51,13 +51,7 @@ $(document).ready(
 		                    data : {idEvento:idEvent,tipoPostEvent:'Suscribirse'},
 		                    dataType: "JSON",
 		                    success : function(us) {
-		                    	
-		                    	document.getElementById("SuscribeButton").innerHTML = "Suscrito";
-		                    	
-		                    },
-		                    error : function() {
-		                    			                    	
-		                    	document.getElementById("SuscribeButton").innerHTML = "Suscribirse";
+		                    	document.getElementById("SuscribeButton").innerHTML = us;
 		                    	
 		                    }
 						
@@ -104,7 +98,7 @@ $(document).ready(
 		              			$("#seccionEvent").html("<h2 class='register'>Invitar Seguidos</h2>");
 		        				$.each(listUsers, function(i,item) {
 
-		        					$("#seccionEvent").append("<form action='/Servidor/notificaciones' method='POST'  class='list-group-item active'  id='listSearchs'>"+
+		        					$("#seccionEvent").append("<form action='/Servidor/notificaciones' method='POST'  class='list-group-item active'  id='listEvent'>"+
 
 		        					"<div class='media col-md-3'>"+
 		        					"<figure class='pull-left'>"+

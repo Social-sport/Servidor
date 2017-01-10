@@ -5,8 +5,6 @@ $(document).ready(
 			
 			$("#topBar").load("topBar.html");
 			
-			$("#EventsButton").click(listarEventosDeportes(event));
-			
 			$("#SportsButton").click(
 					function(event) {
 

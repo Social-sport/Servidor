@@ -144,6 +144,28 @@ form.list-group-item {
 form.list-group-item.active small {
     color:#fff;
 }
+#bSuscribete {
+  font-size: 100%;
+}
+#bSeguir {
+  font-size: 100%;
+}
+
+@media all and (max-width:730px){
+	#seccionFriends{
+		width: 100%;
+		margin: 0 auto;
+	}
+	#seccionSports{
+		width: 100%;
+		margin: 0 auto;
+	}
+	#seccionNotification{
+		width: 100%;
+		margin: 0 auto;
+	}
+}
+
 @media all and (max-width:1200px) and (min-width:992px){
 	#bSuscribete{
 	text-align: center;
@@ -153,12 +175,6 @@ form.list-group-item.active small {
 	text-align: center;
 	padding: 10px 10px;;
 	}
-}
-#bSuscribete {
-  font-size: 100%;
-}
-#bSeguir {
-  font-size: 100%;
 }
 
 @media all and (max-width:375px){
@@ -211,19 +227,6 @@ form.list-group-item.active small {
 	#bSuscribete{
 		margin: 10px 0;
 		font-size: 11px;
-	}
-	
-	#seccionFriends{
-		width: 250px;
-		margin: 0 auto;
-	}
-	#seccionSports{
-		width: 250px;
-		margin: 0 auto;
-	}
-	#seccionNotification{
-		width: 250px;
-		margin: 0 auto;
 	}
 	h2 {
 		margin: 0 auto;

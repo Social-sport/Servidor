@@ -85,7 +85,7 @@ public class EventosServletTest {
 		parameters.put("deporte", "Futbol");
 		parameters.put("tipo", "listSportEvents");
 		servlet.doGet(request, response);
-		List<Evento> eventos = repo.listarEventosDeporte("Futbol");
+		List<Evento> eventos = repo.listarEventosDeporte("Futbl","usuario@socialsport.com");
 		assertEquals(response_writer.toString(),gson.toJson(eventos));
 	}
 	

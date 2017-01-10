@@ -113,7 +113,7 @@ public class BDTest {
 	
 	@Test
 	public void testListarEventosDeporte() {
-		assertFalse(repoEvento.listarEventosDeporte("Futbol").isEmpty());
+		assertFalse(repoEvento.listarEventosDeporte("Futbol","usuario@socialsport.com").isEmpty());
 	}
 	
 	@Test

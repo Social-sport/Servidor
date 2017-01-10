@@ -64,7 +64,7 @@ public class NotificacionesServletTest {
 		parameters.put("idEvento", "idEvento");
 		parameters.put("tipo", "Evento");
 		servlet.doPost(request, response);
-		assertEquals(response_writer.toString(),"Nueva notificaci�n");
+		assertEquals(response_writer.toString(),"Se ha enviado la notificacion");
 	}
 	
 	@Test

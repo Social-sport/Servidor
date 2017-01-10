@@ -86,9 +86,9 @@ public class RepositorioEvento {
 	/**
 	 * Lista los eventos del deporte con nombre <deporte>
 	 */
-	public List<Evento> listarEventosDeporte(String deporte) {
+	public List<Evento> listarEventosDeporte(String deporte, String email) {
 		List<Evento> eventos = new LinkedList<Evento>();
-		String sql = "SELECT * FROM Evento WHERE deporte ='"+deporte+"'";
+		String sql = "SELECT * FROM Evento WHERE deporte ='"+deporte+"'"+ " AND creador !='"+email+"' "  ;
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -164,7 +164,7 @@ public class RepositorioEvento {
 			while (rs.next()) {
 				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador"), rs.getString("foto")));
+						rs.getString("creador"), rs.getString("foto"),"propietario"));
 			}
 			stmt.close();
 		}
@@ -196,8 +196,8 @@ public class RepositorioEvento {
 	/**
 	 * Borra el evento con id <id> de la BD
 	 */
-	public boolean borrarEvento(String nombre) {
-		String sql = "DELETE FROM Evento WHERE nombre='"+nombre+"'";
+	public boolean borrarEvento(String id) {
+		String sql = "DELETE FROM Evento WHERE id='"+id+"'";
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.executeUpdate(sql);

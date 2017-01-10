@@ -24,10 +24,10 @@ public class RepositorioEvento {
 	/**
 	 * Devuelve la informacion del evento con nombre <nombre>
 	 */
-	public Evento findEvento(String nombre) {
+	public Evento findEvento(String id) {
 		Evento evento = null;
 		try {
-			String sql = "SELECT * FROM Evento WHERE nombre ='"+nombre+"'";
+			String sql = "SELECT * FROM Evento WHERE id ='"+id+"'";
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
@@ -37,7 +37,7 @@ public class RepositorioEvento {
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error en buscar Evento "+nombre + " por " + e);
+			System.out.println("Error en buscar Evento "+id + " por " + e);
 		}
 		return evento;
 	}

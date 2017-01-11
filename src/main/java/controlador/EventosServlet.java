@@ -191,7 +191,7 @@ public class EventosServlet extends HttpServlet {
 				}
 				
 				Evento newEvento = new Evento(Integer.parseInt(id), nombre, 
-						descripcion, fecha, hora, deporte, email, rutaFoto);
+						descripcion, fecha, hora, deporte, email, foto);
 				
 				boolean update = repo.actualizarEvento(newEvento);
 				if (update) {
@@ -329,6 +329,21 @@ public class EventosServlet extends HttpServlet {
 			}else{
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
+			
+		}
+		
+		if (tipo.equals("Verificar")) {
+			
+			int id = Integer.parseInt((String) req.getSession().getAttribute("idEvent"));
+			
+			boolean suscrito = repo.findSuscripcion(id, emailusuario);
+			
+			if (suscrito) {
+				response = gson.toJson("Salir");
+			}else{
+				response = gson.toJson("Suscribirse");
+			}
+			resp.setStatus(HttpServletResponse.SC_OK);
 			
 		}
 

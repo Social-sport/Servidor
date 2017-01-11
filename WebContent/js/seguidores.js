@@ -13,7 +13,7 @@ $(document).ready(
       			$("#seccionSeguidores").html("<h2 class='register'>Seguidores</h2>");
 				$.each(listUsers, function(i,item) {
 
-					$("#seccionSeguidores").append("<form action='/Servidor/amigos' method='DELETE'  class='list-group-item active'  id='listSearchs'>"+
+					$("#seccionSeguidores").append("<form action='/Servidor/amigos' method='GET'  class='list-group-item active'  id='listSearchs'>"+
 
 					"<div class='media col-md-3'>"+
 					"<figure class='pull-left'>"+

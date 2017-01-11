@@ -107,8 +107,10 @@ public class AmigosServlet extends HttpServlet {
 			if (repoAmigo.borrarAmigo(email, amigo)) {
 				resp.setStatus(HttpServletResponse.SC_OK);
 				response = "Amigo borrado correctamente";
+				resp.sendRedirect("profile.html");
 			} else {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				resp.sendRedirect("profile.html");
 				response = "No se pudo borrar el amigo";
 			}
 		}
@@ -128,12 +130,12 @@ public class AmigosServlet extends HttpServlet {
 				
 				response = "El amigo se ha insertado correctamente";
 				resp.setStatus(HttpServletResponse.SC_OK);
-				resp.sendRedirect("muro.html");
+				resp.sendRedirect("profile.html");
 			}
 			else {
 				response = "El amigo no se ha podido insertar";
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				resp.sendRedirect("muro.html");
+				resp.sendRedirect("profile.html");
 			}
 		}
 

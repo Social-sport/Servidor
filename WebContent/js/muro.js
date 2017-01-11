@@ -212,7 +212,7 @@ function listarEventosDeportes() {
 						"</div>"+
 						"<div class='col-md-3 text-center'>"+
 						"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Ver'>"+
-						"<h5> "+listEvent[i].numSuscritos+" <small> Suscritos </small></h5>"+
+						"<h5> "+listEvent[i].NumSuscritos+" <small> Asistentes </small></h5>"+
 						"</div>"+ 
 
 				"</form>");

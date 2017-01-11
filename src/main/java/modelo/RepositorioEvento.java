@@ -306,7 +306,7 @@ public class RepositorioEvento {
 	 */
 	public Evento addNumSuscritos(Evento evento) {
 
-		String sql = "SELECT COUNT(EventoSuscrito.Usuario) AS num FROM EventoSuscrito WHERE EventoSuscrito.idEvent = '" + evento.getId() + "'";
+		String sql = "SELECT COUNT(EventoSuscrito.Usuario) AS num FROM EventoSuscrito WHERE EventoSuscrito.idEvento = '" + evento.getId() + "'";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);

@@ -121,14 +121,14 @@ public class EventosServletTest {
 		HttpServletRequest req;
 		HttpServletResponse resp;
 		
-		req =  mock(HttpServletRequest.class);
+		/*req =  mock(HttpServletRequest.class);
 		resp = mock(HttpServletResponse.class);
 		
 		req.getSession().setAttribute("email", "usuario@socialsport.com");
-		parameters.put("email", "usuario@")
+		parameters.put("email", "usuario@");
 		servletUsuarios.doGet(req, resp);
 		
-		
+		*/
 		System.out.println("AQUIya"+ servletUsuarios.isAuthenticated(request, response));
 		
 		
@@ -146,7 +146,8 @@ public class EventosServletTest {
 		
 		// Esperamos que la el response devuelto sea "El evento no se ha podido insertar" 
 		// puesto que no hay ningún usuario con el email "usuario@socialsport.com"
-		assertEquals(response_writer.toString(),"El evento se ha insertado correctamente al deporte");
+		assertEquals(response_writer.toString(),"El evento no se ha podido insertar porque carece de alguno de los parámetros o no se ha elegido un deporte");
+		//assertEquals(response_writer.toString(),"El evento se ha insertado correctamente al deporte");
 	}
 	
 	
@@ -160,7 +161,7 @@ public class EventosServletTest {
 		parameters.put("fecha", "13/11/2017");
 		parameters.put("hora", "11:15:00");
 		parameters.put("deporte", "Futbol");
-		servlet.doPost(request, response);
+		servletEventos.doPost(request, response);
 		assertEquals("El evento no se ha podido actualizar","El evento no se ha podido actualizar");
 	}
 	
@@ -182,7 +183,7 @@ public class EventosServletTest {
 		request.getSession().setAttribute("email", "usuariport.com");
 		parameters.put("tipoPostEvent", "Suscribirse");
 		parameters.put("idEvento", "200");
-		servlet.doPost(request, response);
+		servletEventos.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al evento");
 	}
 	
@@ -191,7 +192,7 @@ public class EventosServletTest {
 		request.getSession().setAttribute("email", "usuario@socialsport.com");
 		parameters.put("tipoPostEvent", "Suscribirse");
 		parameters.put("idEvento", "20");
-		servlet.doPost(request, response);
+		servletEventos.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al evento");
 	}
 	
@@ -200,7 +201,7 @@ public class EventosServletTest {
 		request.getSession().setAttribute("email", "usuario@socialsport.com");
 		parameters.put("tipoPostEvent", "Suscribirse");
 		parameters.put("idEvento", "20");
-		servlet.doPost(request, response);
+		servletEventos.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al evento");
 	}
 	

@@ -11,6 +11,7 @@ public class Evento {
 	private String creador;
 	private String foto;
 	private String propietario;
+	private String NumSuscritos;
 
 	public Evento(int id, String nombre, String descripcion, String fecha, String hora, String deporte, String creador, String foto) {
 		this.id=id;
@@ -45,6 +46,14 @@ public class Evento {
 		this.creador = creador;
 		this.foto = foto;
 		this.propietario = propietario;
+	}
+	
+	public String getNumSuscritos() {
+		return NumSuscritos;
+	}
+
+	public void setNumSuscritos(String numSuscritos) {
+		NumSuscritos = numSuscritos;
 	}
 
 	public String getPropietario() {

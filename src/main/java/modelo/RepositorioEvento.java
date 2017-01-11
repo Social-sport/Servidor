@@ -54,11 +54,12 @@ public class RepositorioEvento {
 			rs.first();
 			if (rs.getString("creador").equals(email)) {
 				evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
-						rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"),"propietario");
+						rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"),"propietario");				
 			} else {
 				evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"));
 			}
+			evento = addNumSuscritos(evento);
 			stmt.close();
 		}
 		catch (SQLException e) {
@@ -99,9 +100,11 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"), rs.getString("descripcion"), rs.getString("fecha"),
+				Evento e = new Evento(rs.getInt("id"), rs.getString("nombre"), rs.getString("descripcion"), rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador"), rs.getString("foto")));
+						rs.getString("creador"), rs.getString("foto"));
+						e = addNumSuscritos(e);
+				eventos.add(e);
 			}
 			stmt.close();
 		}
@@ -122,9 +125,11 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+				Evento e = new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador"), rs.getString("foto")));
+						rs.getString("creador"), rs.getString("foto"));
+						e = addNumSuscritos(e);
+				eventos.add(e);
 			}
 			stmt.close();
 		}
@@ -145,9 +150,11 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+				Evento e = new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador"), rs.getString("foto")));
+						rs.getString("creador"), rs.getString("foto"));
+						e = addNumSuscritos(e);
+				eventos.add(e);
 			}
 			stmt.close();
 		}
@@ -168,9 +175,12 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+				Evento e = new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador"), rs.getString("foto"),"propietario"));
+						rs.getString("creador"), rs.getString("foto"),"propietario");
+						e = addNumSuscritos(e);
+				eventos.add(e);				
+				
 			}
 			stmt.close();
 		}
@@ -287,5 +297,29 @@ public class RepositorioEvento {
 			System.out.println("Error al actualizar evento");
 			return false;
 		}
+	}
+	
+	/**
+	 * añade la cantidad de suscritos a los eventos listados
+	 */
+	public Evento addNumSuscritos(Evento evento) {
+
+		String sql = "SELECT COUNT(EventoSuscrito.Usuario) AS num FROM EventoSuscrito WHERE EventoSuscrito.idEvent = '" + evento.getId() + "'";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				evento.setNumSuscritos(rs.getString("num"));
+			}
+
+			stmt.close();
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en añadir cant suscritos a Evento" + e);
+		}
+
+		return evento;
 	}
 }

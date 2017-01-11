@@ -1,150 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/buscar.js"></script>
-	<script type="text/javascript" src="js/muro.js"></script>
-
-	<title>Muro SocialSport</title>
-
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-	   
-	<link rel="stylesheet" href="css/muro.css">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans"
-	rel="stylesheet">
-</head>
-<body>
-	<div id="topBar"></div>
-
-	<div class="container">
-		<div class="jumbotron text-center">
-			<h1>
-				<font color=white background-color=black> Bienvenido a Social
-					Sport </font>
-			</h1>
-			<h3>
-				<font color=white> La red social que te acercará al mundo del
-					deporte </font>
-			</h3>
-		</div>
-
-
-	</div>
-
-	<div id="sticky" class="container">
-
-		<!-- Nav tabs -->
-		<ul class="pager" role="tablist">
-			<li class="active"><a href="#events" id="EventsButton" role="tab"
-				data-toggle="tab"> <i class="fa fa-tasks"></i> Eventos
-			</a></li>
-			
-			<li><a href="#addSports" id="SportsButton" role="tab"
-				data-toggle="tab"> <i class="fa fa-futbol-o"></i> Añade Deportes
-			</a></li>
-
-			<li><a href="#Notification" id="NotificationButton" role="tab"
-				data-toggle="tab"> <i class="fa fa-comment"></i> Notificaciones
-			</a></li>
-
-			<li><a href="#addFriends" id="addFriendsButton" role="tab"
-				data-toggle="tab"> <i class="fa fa-group"></i> Añade Amigos
-			</a></li>
-
-
-
-		</ul>
-		<!--nav-tabs close-->
-
-
-		<!-- Tab panes -->
-		<div class="tab-content">
-
-			<div class="tab-pane fade active in" id="events">
-				<div class="container fom-main">
-					<div class="row">
-						<div class="col-sm-12">
-							<div id="seccionEvents">
-							</div>
-							<!-- div seccion close-->
-						</div>
-						<!--col-sm-12 close-->
-					</div>
-					<!--row close-->
-				</div>
-				<!--container close -->
-			</div>
-			<!--tab-pane close-->
-
-			<div class="tab-pane fade " id="Notification">
-				<div class="container fom-main">
-					<div class="row">
-						<div class="col-sm-12">
-							<div id="seccionNotification">
-								<h2 class="register">Notificaciones</h2>
-							</div>
-							<!-- div seccion close-->
-						</div>
-						<!--col-sm-12 close-->
-					</div>
-					<!--row close-->
-				</div>
-				<!--container close -->
-			</div>
-			<!--tab-pane close-->
-
-			<div class="tab-pane fade " id="addSports">
-				<div class="container fom-main">
-					<div class="row">
-						<div class="col-sm-12">
-							<div id="seccionSports">
-								<h2 class="register">Cargando Deportes Disponibles</h2>
-							</div>
-							<!-- div seccion close-->
-						</div>
-						<!--col-sm-12 close-->
-					</div>
-					<!--row close-->
-				</div>
-				<!--container close -->
-			</div>
-			<!--tab-pane close-->
-
-			<div class="tab-pane fade " id="addFriends">
-				<div class="container fom-main">
-					<div class="row">
-						<div class="col-sm-12">
-							<div id="seccionFriends">
-								<h2 class="register">Cargando Usuarios Registrados</h2>
-							</div>
-							<!-- div seccion close-->
-						</div>
-						<!--col-sm-12 close-->
-					</div>
-					<!--row close-->
-				</div>
-				<!--container close -->
-			</div>
-			<!--tab-pane close-->
-
-
-
-		</div>
-		<!--tab-content close-->
-
-	</div>
-	<!--container close-->
-
-
-</body>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <script
+         src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script
+         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="js/buscar.js"></script>
+      <script type="text/javascript" src="js/muro.js"></script>
+      <title>Muro SocialSport</title>
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="css/muro.css">
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans"
+         rel="stylesheet">
+   </head>
+   <body>
+      <div id="topBar"></div>
+      <div class="container">
+         <div class="jumbotron text-center">
+            <h1>
+               <font color=white background-color=black> Bienvenido a Social
+               Sport </font>
+            </h1>
+            <h3>
+               <font color=white> La red social que te acercará al mundo del
+               deporte </font>
+            </h3>
+         </div>
+      </div>
+      <div id="sticky" class="container">
+         <!-- Nav tabs -->
+         <ul class="pager" role="tablist">
+            <li class="active"><a href="#events" id="EventsButton" role="tab"
+               data-toggle="tab"> <i class="fa fa-tasks"></i> Eventos
+               </a>
+            </li>
+            <li><a href="#addSports" id="SportsButton" role="tab"
+               data-toggle="tab"> <i class="fa fa-futbol-o"></i> Añade Deportes
+               </a>
+            </li>
+            <li><a href="#Notification" id="NotificationButton" role="tab"
+               data-toggle="tab"> <i class="fa fa-comment"></i> Notificaciones
+               </a>
+            </li>
+            <li><a href="#addFriends" id="addFriendsButton" role="tab"
+               data-toggle="tab"> <i class="fa fa-group"></i> Añade Amigos
+               </a>
+            </li>
+         </ul>
+         <!--nav-tabs close-->
+         <!-- Tab panes -->
+         <div class="tab-content">
+            <div class="tab-pane fade active in" id="events">
+               <div class="container fom-main">
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div id="seccionEvents">
+                        </div>
+                        <!-- div seccion close-->
+                     </div>
+                     <!--col-sm-12 close-->
+                  </div>
+                  <!--row close-->
+               </div>
+               <!--container close -->
+            </div>
+            <!--tab-pane close-->
+            <div class="tab-pane fade " id="Notification">
+               <div class="container fom-main">
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div id="seccionNotification">
+                           <h2 class="register">Notificaciones</h2>
+                        </div>
+                        <!-- div seccion close-->
+                     </div>
+                     <!--col-sm-12 close-->
+                  </div>
+                  <!--row close-->
+               </div>
+               <!--container close -->
+            </div>
+            <!--tab-pane close-->
+            <div class="tab-pane fade " id="addSports">
+               <div class="container fom-main">
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div id="seccionSports">
+                           <h2 class="register">Cargando Deportes Disponibles</h2>
+                        </div>
+                        <!-- div seccion close-->
+                     </div>
+                     <!--col-sm-12 close-->
+                  </div>
+                  <!--row close-->
+               </div>
+               <!--container close -->
+            </div>
+            <!--tab-pane close-->
+            <div class="tab-pane fade " id="addFriends">
+               <div class="container fom-main">
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div id="seccionFriends">
+                           <h2 class="register">Cargando Usuarios Registrados</h2>
+                        </div>
+                        <!-- div seccion close-->
+                     </div>
+                     <!--col-sm-12 close-->
+                  </div>
+                  <!--row close-->
+               </div>
+               <!--container close -->
+            </div>
+            <!--tab-pane close-->
+         </div>
+         <!--tab-content close-->
+      </div>
+      <!--container close-->
+   </body>
 </html>

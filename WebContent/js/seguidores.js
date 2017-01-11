@@ -21,8 +21,6 @@ $(document).ready(
 					"</figure>"+
 					"</div>"+
 					"<div class='col-md-6'>"+
-					"<input type='hidden' name='tipoDeport' value='DesSuscribe' id='nameDeport'/>"+
-					"<input type='hidden' name='deporte' value='"+listUsers[i].email+"'>"+
 					"<h4 class='list-group-item-heading'>"+listUsers[i].nombre+"</h4>"+
 					"<p class='list-group-item-text'> "+listUsers[i].apellidos+" </p>"+
 					"</div>"+

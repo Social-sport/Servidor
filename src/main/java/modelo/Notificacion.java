@@ -14,7 +14,7 @@ public class Notificacion {
 	private int idEvent;
 
 	 /**
-	  * Crea un nuevo objeto Mensaje que representa un mensaje
+	  * Crea un nuevo objeto Notificacion que representa un mensaje
 	  * @param id Id de la notificación
 	  * @param usuarioEnvia Usuario que envia la notificación
 	  * @param usuarioRecibe Usuario que recibe la notificación

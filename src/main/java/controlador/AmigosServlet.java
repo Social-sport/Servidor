@@ -106,10 +106,34 @@ public class AmigosServlet extends HttpServlet {
 			String amigo = req.getParameter("amigoEliminar");
 			if (repoAmigo.borrarAmigo(email, amigo)) {
 				resp.setStatus(HttpServletResponse.SC_OK);
-				resp.sendRedirect("profile.html");
+				response = "Amigo borrado correctamente";
 			} else {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response = "El usuario no existe";
+				response = "No se pudo borrar el amigo";
+			}
+		}
+		
+		if (tipo.equals("Seguir")) {
+			String amigoNuevo = req.getParameter("amigoSeguir");
+			Date fech = new Date();
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+	        String fecha = format.format(fech);
+			Amigo amigo = new Amigo(email,amigoNuevo,fecha);
+			boolean realizado = repoAmigo.insertarAmigo(amigo);
+			//inserta un amigo en la BD
+			if (realizado) {
+				//Notificamos
+				Usuario seguidor = repoUsuario.findUsuario(email);
+				repoNotificacion.notificar(email,amigoNuevo,seguidor.getNick(),seguidor.getFoto(),"Seguidor",seguidor.getNick(),0);
+				
+				response = "El amigo se ha insertado correctamente";
+				resp.setStatus(HttpServletResponse.SC_OK);
+				resp.sendRedirect("muro.html");
+			}
+			else {
+				response = "El amigo no se ha podido insertar";
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				resp.sendRedirect("muro.html");
 			}
 		}
 

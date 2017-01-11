@@ -11,6 +11,7 @@ public class Notificacion {
 	private String fecha;
 	private String hora;
 	private String tipo;
+	private int idEvent;
 
 	public Notificacion(int id, String usuario, String descripcion, String fecha, String hora, String tipo) {
 		this.id=id;
@@ -32,6 +33,32 @@ public class Notificacion {
 		this.fecha = fecha;
 		this.hora = hora;
 		this.tipo = tipo;
+	}
+	
+	public Notificacion(String usuarioEnvia, String usuarioRecibe, String nombre, String foto,
+			String descripcion, String fecha, String hora, String tipo, int idEvent) {
+	
+		this.usuarioEnvia = usuarioEnvia;
+		this.usuarioRecibe = usuarioRecibe;
+		this.nombre = nombre;
+		this.foto = foto;
+		this.descripcion = descripcion;
+		this.fecha = fecha;
+		this.hora = hora;
+		this.tipo = tipo;
+		this.idEvent = idEvent;
+	}
+
+	public int getIdEvent() {
+		return idEvent;
+	}
+
+	public void setIdEvent(int idEvent) {
+		this.idEvent = idEvent;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public int getId() {

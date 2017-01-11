@@ -98,7 +98,7 @@ $(document).ready(
 												"</div>"+
 												"<div class='col-md-3 text-center'>"+
 												"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSeguir' value='Seguir'>"+
-												"<h5> "+listNotification[i].hora +" <small> Hora </small></h5>"+
+												"<h5> "+listNotification[i].fecha +" "+listNotification[i].hora +"  <small> Fecha </small></h5>"+
 												"</div>"+ 
 
 										"</form>");
@@ -106,7 +106,7 @@ $(document).ready(
 									}
 									if (listNotification[i].tipo === "Evento") {
 
-										$("#seccionNotification").append("<form action='/Servidor/eventos' method='POST'  class='list-group-item active'  id='listSearchs'>"+
+										$("#seccionNotification").append("<form action='/Servidor/eventos' method='GET'  class='list-group-item active'  id='listSearchs'>"+
 
 												"<div class='media col-md-3'>"+
 												"<figure class='pull-left'>"+
@@ -114,12 +114,14 @@ $(document).ready(
 												"</figure>"+
 												"</div>"+
 												"<div class='col-md-6'>"+
-												"<input type='hidden' name='tipo' value='events' id='events'/>"+                                                    
+												"<input type='hidden' name='idEvent' value='events' id='"+listNotification[i].idEvent+"'>"+
+												"<input type='hidden' name='tipo' value='viewEvent'>"+
 												"<h4 class='list-group-item-heading'>"+listNotification[i].nombre+"</h4>"+
 												"<p class='list-group-item-text' id='list-group-item-text'> "+listNotification[i].Descripcion+" </p>"+
 												"</div>"+
 												"<div class='col-md-3 text-center'>"+
-												"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Asistir'>"+
+												"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Ver'>"+
+												"<h5> "+listNotification[i].fecha +" "+listNotification[i].hora +"  <small> Fecha </small></h5>"+
 												"</div>"+ 
 
 										"</form>");

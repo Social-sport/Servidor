@@ -144,12 +144,12 @@ public class BDTest {
 	
 	@Test
 	public void testAInsertarNotificacion() {
-		assertTrue(repoNotificacion.insertarNotificacion(new Notificacion("pruebaEnvia", "pruebaRecibe","nombreNotificacion","foto", "prueba descripcion", "12-06-1175", "18:03", "Evento")));
+		assertTrue(repoNotificacion.insertarNotificacion(new Notificacion("pruebaEnvia", "pruebaRecibe","nombreNotificacion","foto", "prueba descripcion", "12-06-1175", "18:03", "Evento",1)));
 	}
 
 	@Test
 	public void testNotificar() {
-		assertTrue(repoNotificacion.notificar("pruebaEnvia","pruebaRecibe","nombreNotificacion","foto", "evento", "nombreEnvia"));
+		assertTrue(repoNotificacion.notificar("pruebaEnvia","pruebaRecibe","nombreNotificacion","foto", "evento", "nombreEnvia",1));
 	}
 	
 	@Test

@@ -24,6 +24,13 @@ import modelo.RepositorioDeporte;
 import modelo.RepositorioEvento;
 
 /**
+ * Servlet relativo a la funcionalidad de creaciÛn de eventos.
+ * 		POST /eventos. PeticiÛn para crear/actualizar eventos.
+ * 		GET /eventos. PeticiÛn que devuelve una lista con los amigos de un usuario dado su email.
+ * 		DELETE /eventos. PeticiÛn que elimina eventos de la base de datos.
+ */
+
+/**
  * Servlet de obtencion de eventos
  * Crear eventos
  * Unirse evento
@@ -35,18 +42,10 @@ import modelo.RepositorioEvento;
 @WebServlet(value = "/eventos", name = "EventosServlet")
 public class EventosServlet extends HttpServlet {
 
-	// Esto siempre se pone
 	private static final long serialVersionUID = 1L;
 	
-	// repo = Repositorio del evento; contiene m√©todos que act√∫an de intermediarios entre BD y el servidor
-	// repo.darseDeBajaEvento, insertarEvento, borrarEvento, findEvento, findEventoById, findSuscripcion,
-	// listarEventosCreados, listarEventosDeporte, listarEventosSuscritos, listarMisEventos, suscribirseEvento
-	private static RepositorioEvento repoEvento = new RepositorioEvento();
-
-	// repoDepor = Repositorio del deporte; contiene m√©todos que act√∫an de intermediarios entre BD y el servidor
-	// repoDepor.addNumSuscrito, darseDeBajaDeporte, findDeporte, listarDeportes, listarDeportesDisponibles,
-	// listarDeportesUsuario, suscribirseDeporte
-	private static RepositorioDeporte repoDepor = new RepositorioDeporte();
+	private static RepositorioEvento repoEvento = new RepositorioEvento();	//Repositorio de eventos
+	private static RepositorioDeporte repoDepor = new RepositorioDeporte();	//Repositorio de deportes
 	private Gson gson = new Gson();
 
 	/**
@@ -63,22 +62,20 @@ public class EventosServlet extends HttpServlet {
 		String deporte = null;
 		String foto = null;
 		
-		// "Part" class represents a part or form item that was received within a multipart/form-data POST request.
-		// Usamos partFoto para guardar la foto que introduce el usuario. 
+		// Se guarda la foto que introduce el usuarios
 		Part partFoto = null;
 		
-		// se guarda el email del usuario
+		// Se guarda el email del usuario
 		String email = (String)req.getSession().getAttribute("email");
 		
-		// se guarda el tipo de evento
+		// Se guarda el tipo de evento
 		String tipo = req.getParameter("tipoPostEvent");
 		System.out.println("tipoPost=: "+tipo);
 		System.out.println("email=: "+email);
 		
-		// si se trata de crear un evento
+		// Si se trata de crear un evento
 		if (tipo.equals("Crear")) {
-			
-			// nombre = nombre del evento. Lo recibe desde el par√°metro "nombre" del formulario de creaci√≥n de evento, etc.
+			//ObtenciÛn de datos relativos al evento
 			nombre = req.getParameter("nombre");
 			descripcion = req.getParameter("descripcion");
 			fecha = req.getParameter("fecha");
@@ -89,32 +86,31 @@ public class EventosServlet extends HttpServlet {
 			// Si el usuario ha insertado una foto
 			if (partFoto!=null && !partFoto.equals("")) {
 				
-				// foto = nombre de la foto introducida por el usuario
+				// Se obtiene el nombre de la foto introducida por el usuario
 				foto = getFilename(partFoto);
 				
-				// Si el nombre de la foto es vac√≠o
+				// Si el nombre de la foto es vaciÛ
 				if (foto.equals("")) {
 					
-					// Lo ponemos como una foto por defecto, que guardamos internamente en el servidor
+					// Se pone como una foto por defecto, que se guarda internamente en el servidor
 					foto = "/Servidor/img/event.jpg";
 				}
 				
-				// Si el nombre de la foto no es vac√≠o
+				// Si el nombre de la foto no es vacÌo
 				else {
 					
-					// uploads = cogemos el path del servidor y le adjuntamos /img/uploads/event/
+					// Se coge el path del servidor y se le adjunta /img/uploads/event/
 					String uploads = getServletContext().getRealPath("/") + "img/uploads/event/";
 					
 					// rutaFoto = ruta anterior + nombre del evento + la fecha +.jpg 
 					String rutaFoto = uploads + nombre + "-" + fecha + ".jpg";
 					
-					//Esto nos servir√° para guardar las fotos del evento en un folder en el servidor con nombre "event"
+					//Esto servir· para guardar las fotos del evento en un folder en el servidor con nombre "event"
 					File folder = new File(uploads);
 					
 					// Si no existe ese folder
 					if (!folder.exists()) {
-						
-						// creamos ese folder
+						// se crea
 						folder.mkdirs();
 					}
 					
@@ -131,26 +127,26 @@ public class EventosServlet extends HttpServlet {
 					is.close();
 					ous.close();
 					
-					// foto = ruta de la foto con el nombre de abajo.
+					// Ruta de la foto con el nombre de abajo.
 					foto = "/Servidor/img/uploads/event/" + nombre + "-" + fecha + ".jpg";
 				}
 			}
 			
-			// Si tanto el nombre como la descripci√≥n como la fecha, como el email est√°n correctamente insertados 
-			// y adem√°s el usuario ha elegido un deporte
+			// Si tanto el nombre como la descripciÛn como la fecha, como el email est·n correctamente insertados 
+			// y adem·s el usuario ha elegido un deporte
 			if (!nombre.equals("") && !descripcion.equals("") && !fecha.equals("") && 
 					!deporte.equals("Selecciona un Deporte") && email!=null) {
 				
-				// evento = objeto evento con los datos v√°lidos.
+				// Objeto evento con los datos v·lidos
 				Evento evento = new Evento(nombre,descripcion,fecha,hora,deporte,email,foto);
 				
-				// intenta insertar el nuevo evento en la base de datos y devuelve true si lo consigue
+				// Intenta insertar el nuevo evento en la base de datos y devuelve true si lo consigue
 				boolean realizado = repoEvento.insertarEvento(evento);
 				
-				// si ha insertado el evento
+				// Si se ha insertado el evento
 				if (realizado) {
 					
-					// Redirige al usuario a su p√°gina de perfil
+					// Redirige al usuario a su p·gina de perfil
 					resp.sendRedirect("profile.html");
 					response = "El evento se ha insertado correctamente al deporte";
 					
@@ -158,53 +154,51 @@ public class EventosServlet extends HttpServlet {
 					resp.setStatus(HttpServletResponse.SC_OK);		
 				}
 				else {
+					// Devuelve como ESTADO un 400 (BAD_REQUEST)
 					response = "El evento no se ha podido insertar en la BD";
 					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				}
 			}
 			
-			// Si hay alg√∫n campo / par√°metro incorrecto, devuelve como ESTADO un 400, BAD REQUEST y el mensaje "El evento no se ha ..."
+			// Si hay alg˙n campo o par·metro incorrecto, devuelve como ESTADO un 400, BAD REQUEST y el mensaje "El evento no se ha ..."
 			else {
 				response = "El evento no se ha podido insertar porque carece de alguno de los par√°metros o no se ha elegido un deporte";
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		}
 		
-		// si se trata de suscribirse a un evento
+		// Si se trata de suscribirse a un evento
 		if (tipo.equals("Suscribirse")) {
 			
-			// id = id del evento
+			// Id del evento
 			int id = Integer.parseInt(req.getParameter("idEvento"));
 			
-			// suscrito = true si el usuario ya est√° suscrito a ese evento
+			// suscrito = true si el usuario ya est· suscrito a ese evento
 			boolean suscrito = repoEvento.findSuscripcion(id, email);
 			
-			// si el usuario ya est√° suscrito
+			// si el usuario ya est· suscrito
 			if (suscrito) {
-
-				// le damos de baja de ese evento
+				// Se le da de baja de ese evento
 				repoEvento.darseDeBajaEvento(id, email);
 				resp.setStatus(HttpServletResponse.SC_OK);
 				response = gson.toJson("Suscribirse");
 				System.out.println(response +" Se ha dado de bajo del evento");
 				
 			// Si NO estaba suscrito
-			}else{
+			} else {
 				
-				// Intentamos suscribir al usuario en el evento y devolvemos true si se ha conseguido
+				// Se intenta suscribir al usuario en el evento y devolvemos true si se ha conseguido
 				boolean suscribir = repoEvento.suscribirseEvento(id, email);
 			
 				// Si ha podido insertarlo en la base de datos
 				if (suscribir) {
-					
 					// Devolvemos como ESTADO 200, OK.
 					resp.setStatus(HttpServletResponse.SC_OK);	
 					response = gson.toJson("Salir");
 					System.out.println("El usuario se ha suscrito correctamente al evento");
 				
 				// Si no ha podido insertarlo en la BD
-				}else{
-					
+				} else {
 					//Devolvemos como ESTADO 400, BAD REQUEST
 					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 					response = "El usuario no se ha podido suscribir al evento";
@@ -213,7 +207,7 @@ public class EventosServlet extends HttpServlet {
 			}	
 			
 		}
-
+		//Si se pide actualizar el evento
 		if (tipo.equals("Actualizar")) {
 			String id = req.getParameter("idEvento");
 			nombre = req.getParameter("nombre");
@@ -225,10 +219,10 @@ public class EventosServlet extends HttpServlet {
 			if (partFoto!=null && !partFoto.equals("")) {
 				foto = getFilename(partFoto);
 			}
-			
+			//Se busca el evento seg˙n la <id>
 			Evento evento = repoEvento.findEventById(id, email);
-			
-			if (evento!=null) {
+			//Si el evento no es nulo
+			if (evento != null) {
 				String uploads = getServletContext().getRealPath("/") + "img/uploads/event/";
 				String rutaFoto = uploads + nombre + "-" + fecha + ".jpg";
 				File folder = new File(uploads);
@@ -252,8 +246,7 @@ public class EventosServlet extends HttpServlet {
 				}
 				if (foto.equals("")) {
 					foto = evento.getFoto();
-				}
-				else {
+				} else {
 					InputStream is = partFoto.getInputStream();
 					File fileFoto = new File(rutaFoto);
 					FileOutputStream ous = new FileOutputStream(fileFoto);
@@ -266,38 +259,44 @@ public class EventosServlet extends HttpServlet {
 					ous.close();
 					foto = "/Servidor/img/uploads/event/" + nombre + "-" + fecha + ".jpg";
 				}
-				
+				//Se crea el nuevo evento con los datos obtenidos
 				Evento newEvento = new Evento(Integer.parseInt(id), nombre, 
 						descripcion, fecha, hora, deporte, email, foto);
-				
+				//Se actualiza el evento
 				boolean update = repoEvento.actualizarEvento(newEvento);
+				//Si operaciÛn exitosa
 				if (update) {
 					resp.sendRedirect("eventPage.html");
 					response = "El evento se ha actualizado correctamente";
+					//Se devuelve cÛdigo 200 (Èxito)
 					resp.setStatus(HttpServletResponse.SC_OK);
 				} else {
+					//Sino, se devuelve cÛdigo 400 (peticiÛn no exitosa)
 					response = "El evento no se ha podido actualizar";
 					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				}
 			}
 		}
 		
+		//Si se pide eliminar evento
 		if (tipo.equals("Eliminar")) {
 			String id = (String) req.getParameter("idEvento");
+			//Borra el evento del deporte en la BD
 			boolean realizado = repoEvento.borrarEvento(id);
+			//Si operaciÛn exitosa
 			if (realizado) {
-				//borra el evento del deporte en la BD
 				resp.sendRedirect("muro.html");
 				response = gson.toJson("El evento se ha borrado correctamente");
+				//Se devuelve cÛdigo 200 (Èxito)
 				resp.setStatus(HttpServletResponse.SC_OK);
 			}
 			else {
+				//Sino, se devuelve cÛdigo 400 (peticiÛn no exitosa)
 				response = gson.toJson("El evento no se ha podido borrar");
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		}
-		
-		//Ponemos el response con los par√°metros anteriores.
+		//Se pone el response con los par·metros anteriores.
 		setResponse(response, resp);
 	}
 
@@ -348,45 +347,45 @@ public class EventosServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String response = null;
 		
-		// eventos = lista vac√≠a doblemente enlazada
+		// Lista doblemente enlazada
 		List<Evento> eventos = new LinkedList<Evento>();	
 
-		// emailUsuario = coge el email de la sesi√≥n del usuario
+		// Email de la sesiÛn del usuario
 		String emailusuario = (String)req.getSession().getAttribute("email");
-		// tipo de busqueda de deporte
+		
+		// Tipo de b˙squeda de deporte
 		String tipo = req.getParameter("tipo");
 
-		// Si el tipo de b√∫squeda es "Buscar"
+		// Si se pide 'Buscar' se devuelve una lista con los eventos creados
 		if (tipo.equals("Buscar")) {
 			
-			// name = cogemos lo que el usuario ha puesto en la ¬øbarra de b√∫squeda?
+			// Se obtiene el contenido del campo de texto de la barra de b˙squeda
 			String name = req.getParameter("search");
 			
-			// eventos = lista de eventos cuyo nombre coincide con el valor del par√°metro "search" 
-			// (lo que el usuario ha puesto en la barra de b√∫squeda)
+			// Lista de eventos cuyo nombre coincide con el valor del par·metro "search" 
 			eventos = repoEvento.listarEventosCreados(name);
 
-			// response = lista de eventos, convertida a Json
+			// Lista de eventos, convertida a Json
 			response = gson.toJson(eventos);
 			System.out.println("json con eventos buscados de " +name);
 			System.out.println(response);
 
 		}
-
-		// Si el tipo es listSportEvents, entonces listamos los eventos de los deportes a los que el usuario est√° suscrito
+		
+		// Si el tipo es listSportEvents, entonces se listan los eventos de los deportes a los que el usuario est· suscrito
 		if (tipo.equals("listSportEvents")) {
 			
-			//deportes = Lista de los deportes a los que el usuario est√° suscrito
+			//Lista de los deportes a los que el usuario est· suscrito
 			List<Deporte> deportes = repoDepor.listarDeportesUsuario(emailusuario);
 			
-			// para cada deporte, al que el usuario est√° suscrito, a√±ade los eventos de ese deporte a la lista <eventos>
+			//Para cada deorte al que el usuario est· suscrito, aÒade los eventos de ese deporte a la lista <eventos>
 			for (Deporte deporte2 : deportes) {
 				eventos.addAll(repoEvento.listarEventosDeporte(deporte2.getNombre(),emailusuario));
 			}
-			// Pone el estado 200 OK en el response
+			// Devuelve el estado 200 OK en el response
 			resp.setStatus(HttpServletResponse.SC_OK);
 
-			//Ponemos los eventos que ha encontrado en la respuesta
+			//Se ponen los eventos que ha encontrado en la respuesta
 			response = gson.toJson(eventos);
 			
 			// Si no hay eventos, lo indicamos 
@@ -400,15 +399,15 @@ public class EventosServlet extends HttpServlet {
 			}
 		}
 		
-		// Si se recibe el tipo de busqueda "listEventsJustOneSport", lista los eventos de un solo deporte que estar√° en el 
-		// par√°metro deporte del request
+		// Si se recibe el tipo de busqueda "listEventsJustOneSport", lista los eventos de un solo deporte que estar· en el 
+		// par·metro deporte del request
 		if (tipo.equals("listEventsJustOneSport")) {
 			
-			//Lista los eventos de un solo deporte
-			//deporte = el deporte cuyos eventos se quieren mostrar
+			// Lista los eventos de un solo deporte
+			// Deporte cuyos eventos se quieren mostrar
 			String deporte = req.getParameter("deporte");
 			
-			// eventos = lista de los eventos que son del deporte <deporte> y NO han sido creados por el usuario con el email <emailusuario>
+			// Lista de los eventos que son del deporte <deporte> y NO han sido creados por el usuario con el email <emailusuario>
 			eventos = repoEvento.listarEventosDeporte(deporte,emailusuario);			
 			
 			// Ponemos la response con status 200
@@ -426,11 +425,11 @@ public class EventosServlet extends HttpServlet {
 			}
 		}
 
-		// Si se recibe el tipo de busqueda "listUserEvents", lista los eventos a los que est√° suscrito el usuario con email <email> 
+		// Si se recibe el tipo de busqueda "listUserEvents", lista los eventos a los que est· suscrito el usuario con email <email> 
 		if (tipo.equals("listUserEvents")) {
 
-			//Lista los eventos del usuario
-			// eventos = lista de los eventos a los que est√° suscrito el usuario con email <email>
+			// Lista los eventos del usuario
+			// Lista de los eventos a los que est· suscrito el usuario con email <email>
 			eventos = repoEvento.listarEventosSuscritos(emailusuario);
 
 			// Ponemos la response con status 200
@@ -441,11 +440,10 @@ public class EventosServlet extends HttpServlet {
 
 			if (eventos.isEmpty()) {
 				System.out.println("No se encontraron eventos suscritos de " + emailusuario);
-			}else{
+			} else {
 				System.out.println("json con eventos del usuario "+ emailusuario);
 				System.out.println(response);
 			}
-
 		}
 		
 		// Si se recibe el tipo de busqueda "listEventsCreated", lista los eventos que el usuario ha creado
@@ -462,42 +460,39 @@ public class EventosServlet extends HttpServlet {
 			
 			if (eventos.isEmpty()) {
 				System.out.println("No se encontraron eventos creados por " + emailusuario);
-			}else{
+			} else {
 				System.out.println("json con eventos creados por el usuario "+ emailusuario);
 				System.out.println(response);
 			}
 
 		}
 		
-		// Si se recibe el tipo de busqueda "viewEvent", se redirige al usuario a la p√°gina del evento con identificador "idEvent". 
+		// Si se recibe el tipo de busqueda "viewEvent", se redirige al usuario a la p·gina del evento con identificador "idEvent". 
 		if (tipo.equals("viewEvent")) {
 			
-			// id = id del evento que se recibe en el par√°metro "idEvent" del request. 
+			// Id del evento que se recibe en el par·metro "idEvent" del request. 
 			String id = req.getParameter("idEvent");
 			
-			// ponemos como atributo de la sesi√≥n el identificador del evento que queremos mostrar
+			// ponemos como atributo de la sesiÛn el identificador del evento que queremos mostrar
 			req.getSession().setAttribute("idEvent", id);
 			
-			// redirigimos a la p√°gina eventPage.html
+			// redirigimos a la p·gina eventPage.html
 			resp.sendRedirect("eventPage.html");
 			
 			// Ponemos el estado como 200 OK.
 			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 		
-		
-		// Si se recibe el tipo de busqueda "Event", se muestra en pantalla la informaci√≥n del evento que corresponde
+		// Si se recibe el tipo de busqueda "Event", se muestra en pantalla la informaciÛn del evento que corresponde
 		if (tipo.equals("Event")) {
 			
 			//Carga la informacion en la pagina del evento
 			
-			// id = id del evento de la sesi√≥n actual
+			// id = id del evento de la sesiÛn actual
 			String id = (String) req.getSession().getAttribute("idEvent");
-
-				
 			String email = (String) req.getSession().getAttribute("email");
 			
-			// evento = buscamos en la BD el evento con id <id>
+			// Buscamos en la BD el evento con id <id>
 			Evento evento = repoEvento.findEventById(id, email);
 
 			// enviamos como response el json del evento
@@ -511,22 +506,18 @@ public class EventosServlet extends HttpServlet {
 			}
 			
 		}
-
+		// Si se recibe el tipo de busqueda "Verificar", se comprueba si el usuario est· suscrito.
 		if (tipo.equals("Verificar")) {
-			
 			int id = Integer.parseInt((String) req.getSession().getAttribute("idEvent"));
-			
 			boolean suscrito = repoEvento.findSuscripcion(id, emailusuario);
-			
 			if (suscrito) {
 				response = gson.toJson("Salir");
-			}else{
+			} else {
 				response = gson.toJson("Suscribirse");
 			}
+			//Se devuelve cÛdigo 200 (Èxito)
 			resp.setStatus(HttpServletResponse.SC_OK);
-			
 		}
-
 		// enviamos el response
 		setResponse(response, resp);
 	}
@@ -551,9 +542,8 @@ public class EventosServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Se queda con el nombre del fichero
 	 * @param part
-	 * @return
+	 * @return String con el nombre del fichero
 	 */
 	private static String getFilename(Part part) {
 		for (String cd : part.getHeader("content-disposition").split(";")) {

@@ -27,7 +27,7 @@ public class RepositorioUsuario {
 	public List<Usuario> ListAvailableUsers(String email) {
 		List<Usuario> Usuarios = new LinkedList<Usuario>();
 		String sql = "SELECT * FROM Usuario WHERE Usuario.email NOT IN (SELECT Amigos.amigo"
-				+ " FROM Amigos WHERE Amigos.usuario ='"+email+"')";
+				+ " FROM Amigos WHERE Amigos.usuario ='"+email+"') AND Usuario.email != '"+email+"'";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);

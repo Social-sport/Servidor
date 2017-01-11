@@ -86,7 +86,7 @@ public class AmigosServlet extends HttpServlet {
 		List<Usuario> listSeguidos = new LinkedList<>();
 		String email = (String) req.getSession().getAttribute("email");		
 		String tipo = req.getParameter("tipoRelacion");
-
+		
 		if (tipo.equals("listSeguidos")) {
 			System.out.println("usuario a buscar seguidos: " + email);
 			listSeguidos = repoAmigo.listarSeguidos(email);
@@ -101,7 +101,17 @@ public class AmigosServlet extends HttpServlet {
 			System.out.println("json lleno con Seguidores: " + response);
 			resp.setStatus(HttpServletResponse.SC_OK);
 		}
-
+		
+		if (tipo.equals("Eliminar")) {
+			String amigo = req.getParameter("amigoEliminar");
+			if (repoAmigo.borrarAmigo(email, amigo)) {
+				resp.setStatus(HttpServletResponse.SC_OK);
+				resp.sendRedirect("profile.html");
+			} else {
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response = "El usuario no existe";
+			}
+		}
 
 		setResponse(response, resp);
 

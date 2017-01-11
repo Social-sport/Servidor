@@ -77,6 +77,8 @@ $(document).ready(function() {
         					"<p class='list-group-item-text'> "+listUsers[i].apellidos+" </p>"+
         					"</div>"+
         					"<div class='col-md-3 text-center'>"+
+        					"<input type='hidden' name='tipoRelacion' value='Eliminar' id='tipoRelacion'/>"+
+        					"<input type='hidden' name='amigoEliminar' value='"+listUsers[i].email+"' id='amigoEliminar'/>"+
         					"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Eliminar'>"+
         					"<h5> "+listUsers[i].numSeguidores +" <small> Seguidores </small></h5>"+
         					"</div>"+ 

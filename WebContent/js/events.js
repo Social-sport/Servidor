@@ -66,7 +66,6 @@ $(document).ready(
 	                	$("#hora").val(ms.hora);
 	                	$("#fecha").val(ms.fecha);
 	                	$("#descripcion").val(ms.descripcion);
-	                	$("#foto").val(ms.foto);
 	                }
 				});
 				$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){

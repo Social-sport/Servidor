@@ -191,7 +191,7 @@ public class EventosServlet extends HttpServlet {
 				}
 				
 				Evento newEvento = new Evento(Integer.parseInt(id), nombre, 
-						descripcion, fecha, hora, deporte, email, rutaFoto);
+						descripcion, fecha, hora, deporte, email, foto);
 				
 				boolean update = repo.actualizarEvento(newEvento);
 				if (update) {

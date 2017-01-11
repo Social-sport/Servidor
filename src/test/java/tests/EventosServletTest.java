@@ -73,6 +73,20 @@ public class EventosServletTest {
 	}
 	
 	@Test
+	public void testBModificarEventos() throws Exception {
+		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("idEvento", "1");
+		parameters.put("tipoPostEvent", "Actualizar");
+		parameters.put("nombre", "EventActualizar");
+		parameters.put("descripcion", "Test Servlet Evento Actualizar");
+		parameters.put("fecha", "13/11/2017");
+		parameters.put("hora", "11:15:00");
+		parameters.put("deporte", "Futbol");
+		servlet.doPost(request, response);
+		assertEquals("El evento no se ha podido actualizar","El evento no se ha podido actualizar");
+	}
+	
+	@Test
 	public void testZBorrarEventos() throws Exception {
 		parameters.put("nombre", "Event");
 		servlet.doDelete(request, response);

@@ -30,14 +30,6 @@ import modelo.RepositorioEvento;
  * 		DELETE /eventos. Petición que elimina eventos de la base de datos.
  */
 
-/**
- * Servlet de obtencion de eventos
- * Crear eventos
- * Unirse evento
- * Borrar evento
- * Filtrar en perfil eventos
- * Invitar (compartir) eventos (GUI)
- */
 @MultipartConfig
 @WebServlet(value = "/eventos", name = "EventosServlet")
 public class EventosServlet extends HttpServlet {

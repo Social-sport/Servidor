@@ -56,6 +56,7 @@ public class UsuariosServlet extends HttpServlet {
 		if (tipoPost.equals("Actualizar")) {
 
 			email = (String) req.getSession().getAttribute("email");
+			System.out.println("AQUIIIII email : "+ email);
 			nick = req.getParameter("nick");
 			nombre = req.getParameter("nombre");
 			apellidos = req.getParameter("apellidos");
@@ -304,5 +305,16 @@ public class UsuariosServlet extends HttpServlet {
 			}
 		}
 		return null;
+	}
+
+	
+	public boolean isAuthenticated(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			return SessionisActive(request, response);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

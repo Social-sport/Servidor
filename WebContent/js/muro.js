@@ -36,18 +36,18 @@ $(document).ready(
 
 											"<div class='media col-md-3'>"+
 											"<figure class='pull-left'>"+
-											"<img class='media-object img-rounded img-responsive'  src='"+listSport[i].Foto+"' alt='placehold.it/350x250' >"+
+											"<img class='media-object img-rounded img-responsive'  src='"+listSport[i].foto+"' alt='placehold.it/350x250' >"+
 											"</figure>"+
 											"</div>"+
 											"<div class='col-md-6'>"+
 											"<input type='hidden' name='tipoDeporte' value='SuscribeSports' id='nameDeport'/>"+
 											"<input type='hidden' name='deporte' value='"+listSport[i].nombre+"'>"+
 											"<h4 class='list-group-item-heading'>"+listSport[i].nombre+"</h4>"+
-											"<p class='list-group-item-text' id='list-group-item-text'> "+listSport[i].Descripcion+" </p>"+
+											"<p class='list-group-item-text' id='list-group-item-text'> "+listSport[i].descripcion+" </p>"+
 											"</div>"+
 											"<div class='col-md-3 text-center'>"+
 											"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Suscribete'>"+
-											"<h5> "+listSport[i].NumSuscritos+" <small> Suscritos </small></h5>"+
+											"<h5> "+listSport[i].numSuscritos+" <small> Suscritos </small></h5>"+
 											"</div>"+ 
 
 									"</form>");

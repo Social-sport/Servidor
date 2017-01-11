@@ -205,6 +205,21 @@ public class EventosServlet extends HttpServlet {
 			}
 		}
 		
+		if (tipo.equals("Eliminar")) {
+			String id = (String) req.getParameter("idEvento");
+			boolean realizado = repo.borrarEvento(id);
+			if (realizado) {
+				//borra el evento del deporte en la BD
+				resp.sendRedirect("muro.html");
+				response = gson.toJson("El evento se ha borrado correctamente");
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
+			else {
+				response = gson.toJson("El evento no se ha podido borrar");
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
+		}
+		
 		setResponse(response, resp);
 	}
 

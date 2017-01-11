@@ -223,6 +223,7 @@ input.form-control {
 
 textarea.form-control {
 	text-align: left;
+	min-height: 100px;
 }
 
 select.form-control {

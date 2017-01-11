@@ -106,21 +106,10 @@ $(document).ready(
 
 						event.preventDefault();
 						
-						$.ajax({
-		                	type : "DELETE",
-		                    url : "/Servidor/eventos",
-		                    data : {idEvento:idEvent},
-		                    dataType: "JSON",
-		                    success : function(us) {
-		                    	
-		                    	alert("se ha eliminado el evento");
-		                    },
-		                    error : function() {
-		                    	
-		                    	alert("no se ha eliminado el evento");
-		                    }
-						
-		                });
+						$.post('eventos', {idEvento:idEvent,tipoPostEvent:'Eliminar'}, function (){
+							alert("Evento eliminado!");
+							location.href="profile.html";
+						});
 			});
 			
 			$("#eventInvit").click(

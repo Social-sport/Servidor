@@ -57,18 +57,18 @@ public class BDTest {
 	
 	@Test
 	public void testListarDeportesUsuario() {
-		List<Deporte> deportes = repoDeporte.listarDeportesUsuario("prueba");
+		List<Deporte> deportes = repoDeporte.listarDeportesUsuario("prueba@social");
 		assertTrue(deportes.size()>0);
 	}
 	
 	@Test
 	public void testASuscribirseDeporte() {
-		assertTrue(repoDeporte.suscribirseDeporte("Futbol","prueba"));
+		assertTrue(repoDeporte.suscribirseDeporte("Futbol","prueba@social"));
 	}
 	
 	@Test
 	public void ztestDarseDeBajaDeporte() {
-		assertTrue(repoDeporte.darseDeBajaDeporte("Futbol","prueba"));
+		assertTrue(repoDeporte.darseDeBajaDeporte("Futbol","prueba@social"));
 	}
 
 	@Test
@@ -102,13 +102,13 @@ public class BDTest {
 
 	@Test
 	public void btestInsertarEvento() {
-		Evento evento = new Evento("prueba1","Evento","00", "00", "Futbol", "prueba", "foto");
+		Evento evento = new Evento("prueba1","Evento","2017-01-01", "10:00:00", "Futbol", "prueba@social", "foto");
 		assertTrue(repoEvento.insertarEvento(evento));
 	}
 	
 	@Test
 	public void ctestFindEvento() {
-		assertEquals(repoEvento.findEvento("prueba").getDeporte(), "Futbol");
+		assertEquals(repoEvento.findEvento("prueba1").getDeporte(), "Futbol");
 	}
 	
 	@Test
@@ -118,7 +118,7 @@ public class BDTest {
 	
 	@Test
 	public void ztestBorrarEvento() {
-		assertTrue(repoEvento.borrarEvento("prueba"));
+		assertTrue(repoEvento.borrarEventoByName("prueba1"));
 	}
 	
 	@Test
@@ -144,12 +144,12 @@ public class BDTest {
 	
 	@Test
 	public void testAInsertarNotificacion() {
-		assertTrue(repoNotificacion.insertarNotificacion(new Notificacion("pruebaEnvia", "pruebaRecibe","nombreNotificacion","foto", "prueba descripcion", "12-06-1175", "18:03", "Evento")));
+		assertTrue(repoNotificacion.insertarNotificacion(new Notificacion("pruebaEnvia", "pruebaRecibe","nombreNotificacion","foto", "prueba descripcion", "12-06-1175", "18:03", "Evento",1)));
 	}
 
 	@Test
 	public void testNotificar() {
-		assertTrue(repoNotificacion.notificar("pruebaEnvia","pruebaRecibe","nombreNotificacion","foto", "evento", "nombreEnvia"));
+		assertTrue(repoNotificacion.notificar("pruebaEnvia","pruebaRecibe","nombreNotificacion","foto", "evento", "nombreEnvia",1));
 	}
 	
 	@Test

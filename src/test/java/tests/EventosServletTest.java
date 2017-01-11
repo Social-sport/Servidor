@@ -151,6 +151,20 @@ public class EventosServletTest {
 	
 	
 	@Test
+	public void testBModificarEventos() throws Exception {
+		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("idEvento", "1");
+		parameters.put("tipoPostEvent", "Actualizar");
+		parameters.put("nombre", "EventActualizar");
+		parameters.put("descripcion", "Test Servlet Evento Actualizar");
+		parameters.put("fecha", "13/11/2017");
+		parameters.put("hora", "11:15:00");
+		parameters.put("deporte", "Futbol");
+		servlet.doPost(request, response);
+		assertEquals("El evento no se ha podido actualizar","El evento no se ha podido actualizar");
+	}
+	
+	@Test
 	public void testZBorrarEventos() throws Exception {
 		
 		// Pongo como parametro del request el nombre "Event"
@@ -161,6 +175,33 @@ public class EventosServletTest {
 		
 		// Compruebo que el evento se ha borrado correctamente
 		assertEquals(response_writer.toString(),"El evento se ha borrado correctamente");
+	}
+	
+	@Test
+	public void testSuscribirseEventoErroneo() throws Exception {
+		request.getSession().setAttribute("email", "usuariport.com");
+		parameters.put("tipoPostEvent", "Suscribirse");
+		parameters.put("idEvento", "200");
+		servlet.doPost(request, response);
+		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al evento");
+	}
+	
+	@Test
+	public void testaSuscribirseEvento() throws Exception {
+		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("tipoPostEvent", "Suscribirse");
+		parameters.put("idEvento", "20");
+		servlet.doPost(request, response);
+		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al evento");
+	}
+	
+	@Test
+	public void testbSalirEvento() throws Exception {
+		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("tipoPostEvent", "Suscribirse");
+		parameters.put("idEvento", "20");
+		servlet.doPost(request, response);
+		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al evento");
 	}
 	
 	@Test

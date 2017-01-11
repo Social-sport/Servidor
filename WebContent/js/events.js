@@ -39,6 +39,49 @@ $(document).ready(
                 }
             });
 			
+			$.ajax({
+            	type : "GET",
+                url : "/Servidor/eventos",
+                data : {idEvento:idEvent,tipo:'Verificar'},
+                dataType: "JSON",
+                success : function(us) {
+                	document.getElementById("SuscribeButton").innerHTML = us;
+                	
+                }
+			
+            });
+			
+			$("#eventEdit").click(function(event) {
+				var nombreDeporte;
+				$.ajax({
+					type : "GET",
+	                url : "/Servidor/eventos",
+	                data : {tipo:'Event'},
+	                dataType: "JSON",
+	                success : function(ms) {
+	                	nombreDeporte = ms.deporte;
+	                	
+	                	$("#idEvento").val(ms.id);
+	                	$("#nombre").val(ms.nombre);
+	                	$("#hora").val(ms.hora);
+	                	$("#fecha").val(ms.fecha);
+	                	$("#descripcion").val(ms.descripcion);
+	                }
+				});
+				$.get('deportes', {tipoDeport:'ListUserSports'}, function (listSport){
+	    				if (listSport.length == 0) {
+	                		$("#deporte").html("<option value=''>Suscribete a Deportes</option>");
+	                		
+	              		}else{
+	              			$("#deporte").html("<option value='"+nombreDeporte+"'>"+nombreDeporte+"</option>");
+	    					$.each(listSport, function(i,item){
+	
+	    						$("#deporte").append("<option value='"+listSport[i].nombre+"'>"+listSport[i].nombre+"</option>");
+	
+	    					 });
+	              		};    	
+	            });
+			});
 			
 			$("#SuscribeButton").click(
 					function(event) {
@@ -51,13 +94,7 @@ $(document).ready(
 		                    data : {idEvento:idEvent,tipoPostEvent:'Suscribirse'},
 		                    dataType: "JSON",
 		                    success : function(us) {
-		                    	
-		                    	document.getElementById("SuscribeButton").innerHTML = "Suscrito";
-		                    	
-		                    },
-		                    error : function() {
-		                    			                    	
-		                    	document.getElementById("SuscribeButton").innerHTML = "Suscribirse";
+		                    	document.getElementById("SuscribeButton").innerHTML = us;
 		                    	
 		                    }
 						
@@ -69,21 +106,10 @@ $(document).ready(
 
 						event.preventDefault();
 						
-						$.ajax({
-		                	type : "DELETE",
-		                    url : "/Servidor/eventos",
-		                    data : {idEvento:idEvent},
-		                    dataType: "JSON",
-		                    success : function(us) {
-		                    	
-		                    	alert("se ha eliminado el evento");
-		                    },
-		                    error : function() {
-		                    	
-		                    	alert("no se ha eliminado el evento");
-		                    }
-						
-		                });
+						$.post('eventos', {idEvento:idEvent,tipoPostEvent:'Eliminar'}, function (){
+							alert("Evento eliminado!");
+							location.href="profile.html";
+						});
 			});
 			
 			$("#eventInvit").click(
@@ -104,7 +130,7 @@ $(document).ready(
 		              			$("#seccionEvent").html("<h2 class='register'>Invitar Seguidos</h2>");
 		        				$.each(listUsers, function(i,item) {
 
-		        					$("#seccionEvent").append("<form action='/Servidor/notificaciones' method='POST'  class='list-group-item active'  id='listSearchs'>"+
+		        					$("#seccionEvent").append("<form action='/Servidor/notificaciones' method='POST'  class='list-group-item active'  id='listEvent'>"+
 
 		        					"<div class='media col-md-3'>"+
 		        					"<figure class='pull-left'>"+

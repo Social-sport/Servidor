@@ -181,15 +181,14 @@ public class EventosServlet extends HttpServlet {
 			
 			// si el usuario ya está suscrito
 			if (suscrito) {
-				
+
 				// le damos de baja de ese evento
 				repoEvento.darseDeBajaEvento(id, email);
+				resp.setStatus(HttpServletResponse.SC_OK);
+				response = gson.toJson("Suscribirse");
+				System.out.println(response +" Se ha dado de bajo del evento");
 				
-				// Devolvemos como ESTADO 400, BAD REQUEST
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				System.out.println( "El usuario se ha dado del baja en el evento");
-			
-			// Si NO estaba suscrito 
+			// Si NO estaba suscrito
 			}else{
 				
 				// Intentamos suscribir al usuario en el evento y devolvemos true si se ha conseguido
@@ -199,7 +198,8 @@ public class EventosServlet extends HttpServlet {
 				if (suscribir) {
 					
 					// Devolvemos como ESTADO 200, OK.
-					resp.setStatus(HttpServletResponse.SC_OK);			
+					resp.setStatus(HttpServletResponse.SC_OK);	
+					response = gson.toJson("Salir");
 					System.out.println("El usuario se ha suscrito correctamente al evento");
 				
 				// Si no ha podido insertarlo en la BD
@@ -207,13 +207,97 @@ public class EventosServlet extends HttpServlet {
 					
 					//Devolvemos como ESTADO 400, BAD REQUEST
 					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					response = "El usuario no se ha podido suscribir al evento";
 					System.out.println( "El usuario no se ha podido suscribir al evento");
 				}
 			}	
 			
 		}
+
+		if (tipo.equals("Actualizar")) {
+			String id = req.getParameter("idEvento");
+			nombre = req.getParameter("nombre");
+			descripcion = req.getParameter("descripcion");
+			fecha = req.getParameter("fecha");
+			hora = req.getParameter("hora");
+			deporte = req.getParameter("deporte");
+			partFoto = req.getPart("foto");
+			if (partFoto!=null && !partFoto.equals("")) {
+				foto = getFilename(partFoto);
+			}
+			
+			Evento evento = repoEvento.findEventById(id, email);
+			
+			if (evento!=null) {
+				String uploads = getServletContext().getRealPath("/") + "img/uploads/event/";
+				String rutaFoto = uploads + nombre + "-" + fecha + ".jpg";
+				File folder = new File(uploads);
+				if (!folder.exists()) {
+					folder.mkdirs();
+				}
+				if (nombre.equals("")) {
+					nombre = evento.getNombre();
+				}
+				if (descripcion.equals("")) {
+					descripcion = evento.getDescripcion();
+				}
+				if (fecha.equals("")) {
+					fecha = evento.getFecha();
+				}
+				if (hora.equals("")) {
+					hora = evento.getHora();
+				}
+				if (deporte.equals("")) {
+					deporte = evento.getDeporte();
+				}
+				if (foto.equals("")) {
+					foto = evento.getFoto();
+				}
+				else {
+					InputStream is = partFoto.getInputStream();
+					File fileFoto = new File(rutaFoto);
+					FileOutputStream ous = new FileOutputStream(fileFoto);
+					int dato = is.read();
+					while (dato != -1) {
+						ous.write(dato);
+						dato = is.read();
+					}
+					is.close();
+					ous.close();
+					foto = "/Servidor/img/uploads/event/" + nombre + "-" + fecha + ".jpg";
+				}
+				
+				Evento newEvento = new Evento(Integer.parseInt(id), nombre, 
+						descripcion, fecha, hora, deporte, email, foto);
+				
+				boolean update = repoEvento.actualizarEvento(newEvento);
+				if (update) {
+					resp.sendRedirect("eventPage.html");
+					response = "El evento se ha actualizado correctamente";
+					resp.setStatus(HttpServletResponse.SC_OK);
+				} else {
+					response = "El evento no se ha podido actualizar";
+					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				}
+			}
+		}
 		
-		// Devolvemos la response con el estado que hemos procesado anteriormente. 
+		if (tipo.equals("Eliminar")) {
+			String id = (String) req.getParameter("idEvento");
+			boolean realizado = repoEvento.borrarEvento(id);
+			if (realizado) {
+				//borra el evento del deporte en la BD
+				resp.sendRedirect("muro.html");
+				response = gson.toJson("El evento se ha borrado correctamente");
+				resp.setStatus(HttpServletResponse.SC_OK);
+			}
+			else {
+				response = gson.toJson("El evento no se ha podido borrar");
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
+		}
+		
+		//Ponemos el response con los parámetros anteriores.
 		setResponse(response, resp);
 	}
 
@@ -409,22 +493,40 @@ public class EventosServlet extends HttpServlet {
 			
 			// id = id del evento de la sesión actual
 			String id = (String) req.getSession().getAttribute("idEvent");
+
+				
+			String email = (String) req.getSession().getAttribute("email");
 			
 			// evento = buscamos en la BD el evento con id <id>
-			Evento evento = repoEvento.findEventById(id);
-			
+			Evento evento = repoEvento.findEventById(id, email);
+
 			// enviamos como response el json del evento
 			response = gson.toJson(evento);			
 			
 			// Si el evento ha sido encontrado, enviamos 200 
 			if (evento!=null) {
 				resp.setStatus(HttpServletResponse.SC_OK);
-			}else{
+			} else {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 			
 		}
-		
+
+		if (tipo.equals("Verificar")) {
+			
+			int id = Integer.parseInt((String) req.getSession().getAttribute("idEvent"));
+			
+			boolean suscrito = repoEvento.findSuscripcion(id, emailusuario);
+			
+			if (suscrito) {
+				response = gson.toJson("Salir");
+			}else{
+				response = gson.toJson("Suscribirse");
+			}
+			resp.setStatus(HttpServletResponse.SC_OK);
+			
+		}
+
 		// enviamos el response
 		setResponse(response, resp);
 	}

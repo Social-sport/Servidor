@@ -48,14 +48,14 @@ public class NotificacionesServlet extends HttpServlet {
 		if (tipo.equals("Evento")) {
 			
 			String idEvento = req.getParameter("idEvent");
-			Evento evento = repoEvento.findEventById(idEvento);
+			Evento evento = repoEvento.findEventById(idEvento, emailEnvia);
 			
 			if (evento!=null) {
 				realizado = repo.notificar(emailEnvia,emailRecibe,evento.getNombre(),
-						evento.getFoto(),tipo,seguidor.getNick());
+						evento.getFoto(),tipo,seguidor.getNick(),evento.getId());
 			}else{
 				realizado = repo.notificar(emailEnvia,emailRecibe,"nombreEvento",
-						"fotoEvento",tipo,"Nick");
+						"fotoEvento",tipo,"Nick", 1);
 			}
 			
 			
@@ -63,7 +63,7 @@ public class NotificacionesServlet extends HttpServlet {
 		if (tipo.equals("Seguidor")) {
 			
 			realizado = repo.notificar(emailEnvia,emailRecibe,seguidor.getNick(),
-										seguidor.getFoto(),tipo,seguidor.getNick());
+										seguidor.getFoto(),tipo,seguidor.getNick(),0);
 			
 		}
 	

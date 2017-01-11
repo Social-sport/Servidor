@@ -25,13 +25,14 @@ public class RepositorioNotificacion {
 
 	public boolean insertarNotificacion(Notificacion notificacion) {
 		String sql = "INSERT INTO Notificacion (usuarioEnvia,usuarioRecibe,"
-				+ "nombre,foto,descripcion,fecha,hora,tipo) VALUES "
+				+ "nombre,foto,descripcion,fecha,hora,tipo,idEvent) VALUES "
 				+ "('"+notificacion.getUsuarioEnvia()+"','"
 				+ notificacion.getUsuarioRecibe()+"','"
 				+ notificacion.getNombre()+"', '"+  notificacion.getFoto()
 				+ "', '"+notificacion.getDescripcion()
 				+ "','"+notificacion.getFecha()+"','"+notificacion.getHora()
-				+ "','"+notificacion.getTipo()+"')";
+				+ "','"+notificacion.getTipo()
+				+ "','"+notificacion.getIdEvent()+"')";
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.executeUpdate(sql);
@@ -65,11 +66,13 @@ public class RepositorioNotificacion {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				notificaciones.add(new Notificacion(rs.getString("usuarioEnvia"),
+				Notificacion n = new Notificacion(rs.getString("usuarioEnvia"),
 						rs.getString("usuarioRecibe"),rs.getString("nombre"),
 						rs.getString("foto"),
 						rs.getString("descripcion"), rs.getString("fecha"),
-						rs.getString("hora"),rs.getString("tipo")));		
+						rs.getString("hora"),rs.getString("tipo"),rs.getInt("idEvent"));
+								
+				notificaciones.add(n);
 			}
 			stmt.close();
 		}
@@ -81,7 +84,8 @@ public class RepositorioNotificacion {
 		return notificaciones;
 	}
 
-	public boolean notificar(String emailUsuarioEnvia,String emailUsuarioRecibe, String nombreNotificacion, String fotoNotificacion, String tipo, String nombreUsuarioEnvia) {
+	public boolean notificar(String emailUsuarioEnvia,String emailUsuarioRecibe, String nombreNotificacion, 
+						String fotoNotificacion, String tipo, String nombreUsuarioEnvia, int idEvent) {
 
 		Date fech = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -98,7 +102,7 @@ public class RepositorioNotificacion {
 			descripcion = "Ha comenzado a seguirte";
 		}
 
-		Notificacion notificacion = new Notificacion(emailUsuarioEnvia, emailUsuarioRecibe, nombreNotificacion, fotoNotificacion, descripcion, fecha, hora, tipo);
+		Notificacion notificacion = new Notificacion(emailUsuarioEnvia, emailUsuarioRecibe, nombreNotificacion, fotoNotificacion, descripcion, fecha, hora, tipo, idEvent);
 
 		return insertarNotificacion(notificacion);
 	}

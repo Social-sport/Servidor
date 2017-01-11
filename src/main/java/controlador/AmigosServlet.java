@@ -62,7 +62,7 @@ public class AmigosServlet extends HttpServlet {
 		if (realizado) {
 			//Notificamos
 			Usuario seguidor = repoUsuario.findUsuario(emailSeguidor);
-			repoNotificacion.notificar(emailSeguidor,amigoSeguido,seguidor.getNick(),seguidor.getFoto(),"Seguidor",seguidor.getNick());
+			repoNotificacion.notificar(emailSeguidor,amigoSeguido,seguidor.getNick(),seguidor.getFoto(),"Seguidor",seguidor.getNick(),0);
 			
 			response = "El amigo se ha insertado correctamente";
 			resp.setStatus(HttpServletResponse.SC_OK);

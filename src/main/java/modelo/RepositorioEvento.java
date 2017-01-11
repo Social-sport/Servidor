@@ -47,7 +47,7 @@ public class RepositorioEvento {
 	/**
 	 * Devuelve la informacion del evento con nombre <nombre>
 	 */
-	public Evento findEventById(String id) {
+	public Evento findEventById(String id, String email) {
 		Evento evento = null;
 		try {
 			
@@ -56,8 +56,14 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.first();
-			evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
-					rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"));
+			if (rs.getString("creador").equals(email)) {
+				evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+						rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"),"propietario");				
+			} else {
+				evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+						rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"));
+			}
+			evento = addNumSuscritos(evento);
 			stmt.close();
 		}
 		catch (SQLException e) {
@@ -106,9 +112,11 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"), rs.getString("descripcion"), rs.getString("fecha"),
+				Evento e = new Evento(rs.getInt("id"), rs.getString("nombre"), rs.getString("descripcion"), rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador"), rs.getString("foto")));
+						rs.getString("creador"), rs.getString("foto"));
+						e = addNumSuscritos(e);
+				eventos.add(e);
 			}
 			stmt.close();
 		}
@@ -159,9 +167,11 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+				Evento e = new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador"), rs.getString("foto")));
+						rs.getString("creador"), rs.getString("foto"));
+						e = addNumSuscritos(e);
+				eventos.add(e);
 			}
 			stmt.close();
 		}
@@ -195,9 +205,11 @@ public class RepositorioEvento {
 			
 			// mientras haya filas en rs, quedate con la siguiente y añadelo en la lista de los eventos declarada arriba
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+				Evento e = new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador"), rs.getString("foto")));
+						rs.getString("creador"), rs.getString("foto"));
+						e = addNumSuscritos(e);
+				eventos.add(e);
 			}
 			stmt.close();
 		}
@@ -218,9 +230,12 @@ public class RepositorioEvento {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				eventos.add(new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+				Evento e = new Evento(rs.getInt("id"), rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
 						rs.getString("hora"), rs.getString("deporte"),
-						rs.getString("creador"), rs.getString("foto"),"propietario"));
+						rs.getString("creador"), rs.getString("foto"),"propietario");
+						e = addNumSuscritos(e);
+				eventos.add(e);				
+				
 			}
 			stmt.close();
 		}
@@ -238,7 +253,9 @@ public class RepositorioEvento {
 		
 		// Statement sql que inserta un evento en la tabla Evento de la BD, con los campos correspondientes.
 		String sql = "INSERT INTO Evento (nombre,descripcion,fecha,hora,deporte,creador,foto) VALUES "
-				+ "(\""+evento.getNombre()+"\",\""+evento.getDescripcion()+"\",\""+evento.getFecha()+"\",\""+evento.getHora()+"\",\""+evento.getDeporte()+"\",\""+evento.getCreador()+"\",\""+evento.getFoto()+"\")";
+				+ "('"+evento.getNombre()+"','"+evento.getDescripcion()+"','"+evento.getFecha() 
+				+ "','"+evento.getHora()+"','"+evento.getDeporte()+"','"+evento.getCreador() 
+				+ "','"+evento.getFoto()+"')";
 		try {
 			
 			// Crea conexión, ejecuta la query y cierra la conexión
@@ -271,6 +288,23 @@ public class RepositorioEvento {
 			stmt.executeUpdate(sql);
 			
 			// cerramos la conexión
+			stmt.close();
+			return true;
+		}
+		catch (SQLException e) {
+			System.out.println("Error al borrar evento");
+			return false;
+		}
+	}
+	
+	/**
+	 * Borra el evento con id <id> de la BD
+	 */
+	public boolean borrarEventoByName(String id) {
+		String sql = "DELETE FROM Evento WHERE nombre='"+id+"'";
+		try {
+			Statement stmt = conexion.createStatement();
+			stmt.executeUpdate(sql);
 			stmt.close();
 			return true;
 		}
@@ -330,5 +364,49 @@ public class RepositorioEvento {
 			System.out.println("Error al borrarse de evento");
 			return false;
 		}
+	}
+	
+	/**
+	 * Actualiza el evento <evento>
+	 */
+	public boolean actualizarEvento (Evento evento) {
+		String sql = "UPDATE Evento SET nombre=\""+evento.getNombre()+"\","
+				+ "descripcion=\""+evento.getDescripcion()+"\", fecha=\""+evento.getFecha()+"\", "
+				+ " hora=\""+evento.getHora()+"\", deporte=\""+evento.getDeporte()+"\", foto=\""+evento.getFoto()+"\" "
+				+ "WHERE id=\""+evento.getId()+"\"";
+		try {
+			Statement stmt = conexion.createStatement();
+			stmt.execute(sql);
+			stmt.close();
+			return true;
+		}
+		catch (SQLException e) {
+			System.out.println("Error al actualizar evento");
+			return false;
+		}
+	}
+	
+	/**
+	 * añade la cantidad de suscritos a los eventos listados
+	 */
+	public Evento addNumSuscritos(Evento evento) {
+
+		String sql = "SELECT COUNT(EventoSuscrito.Usuario) AS num FROM EventoSuscrito WHERE EventoSuscrito.idEvento = '" + evento.getId() + "'";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				evento.setNumSuscritos(rs.getString("num"));
+			}
+
+			stmt.close();
+		}
+
+		catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en añadir cant suscritos a Evento" + e);
+		}
+
+		return evento;
 	}
 }

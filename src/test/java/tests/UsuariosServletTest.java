@@ -21,6 +21,11 @@ import org.mockito.stubbing.Answer;
 import controlador.UsuariosServlet;
 import modelo.RepositorioUsuario;
 
+/**
+ * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
+ * funcionalidad relacionada con Usuarios
+ */
+
 public class UsuariosServletTest {
 
 	private UsuariosServlet servlet;
@@ -104,13 +109,10 @@ public class UsuariosServletTest {
 	public void testActualizarOK() throws Exception {
 		HttpSession session = request.getSession();
 		session.setAttribute("email", "usuario@socialsport.com");
-
 		parameters.put("tipoPost", "Actualizar");
-
 		parameters.put("nombre", "test");
 		parameters.put("apellidos", "test");
 		parameters.put("contrasena", "test");
-
 		parameters.put("fecha_nacimiento", "1900-10-10");
 		parameters.put("nick", "test");
 		servlet.doPost(request, response);

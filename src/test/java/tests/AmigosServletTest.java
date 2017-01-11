@@ -27,6 +27,11 @@ import controlador.AmigosServlet;
 import modelo.Usuario;
 import modelo.RepositorioAmigo;
 
+/**
+ * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
+ * funcionalidad relacionada con Amigos
+ */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AmigosServletTest {
 
@@ -66,6 +71,10 @@ public class AmigosServletTest {
 		assertEquals(response_writer.toString(),"El amigo se ha insertado correctamente");
 	}*/
 	
+	/**
+	 * Se prueba a listar los usuarios seguidores
+	 * @throws Exception
+	 */
 	@Test
 	public void btestListarSeguidores() throws Exception {
 		HttpSession session = request.getSession();
@@ -76,6 +85,10 @@ public class AmigosServletTest {
 		assertEquals(response_writer.toString(),gson.toJson(seguidores));
 	}
 	
+	/**
+	 * Se prueba a listar los usuarios seguidos
+	 * @throws Exception
+	 */
 	@Test
 	public void ctestListarSeguidos() throws Exception {
 		request.getSession().setAttribute("email", "usuario@socialsport.com");//Todavia no funciona bien test con la sesion
@@ -85,6 +98,10 @@ public class AmigosServletTest {
 		assertEquals(response_writer.toString(),gson.toJson(seguidos));
 	}
 	
+	/**
+	 * Se prueba a eliminar amigos
+	 * @throws Exception
+	 */
 	@Test
 	public void dtestZBorrarAmigos() throws Exception {
 		parameters.put("usuario", "usuario@socialsport.com");

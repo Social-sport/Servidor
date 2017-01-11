@@ -27,6 +27,11 @@ import controlador.DeportesServlet;
 import modelo.Deporte;
 import modelo.RepositorioDeporte;
 
+/**
+ * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
+ * funcionalidad relacionada con Deportes
+ */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DeportesServletTest {
 
@@ -58,6 +63,9 @@ public class DeportesServletTest {
 		when(request.getSession()).thenReturn(session);
 	}
 
+	/**
+	 * Se prueba a suscribirse a un deporte erróneo
+	 */
 	@Test
 	public void testSuscribirseDeporteErroneo() throws Exception {
 		request.getSession().setAttribute("email", "test@test.com");
@@ -83,6 +91,9 @@ public class DeportesServletTest {
 		assertEquals(response_writer.toString(),"El usuario se ha dado de baja correctamente del deporte");
 	}*/
 	
+	/**
+	 * Se prueba a darse de baja de un deporte erróneo
+	 */
 	@Test
 	public void testDarseDeBajaDeporteErroneo() throws Exception {
 		parameters.put("deporte", "pruebaasdadada");
@@ -91,7 +102,9 @@ public class DeportesServletTest {
 		assertEquals(response_writer.toString(),"El usuario no se ha podido dar de baja del deporte");
 	}
 	
-	
+	/**
+	 * Se prueba a listar todos los deportes
+	 */
 	@Test
 	public void testListarDeportes() throws Exception {
 		parameters.put("tipoDeport", "AllSports");
@@ -100,6 +113,9 @@ public class DeportesServletTest {
 		assertEquals(response_writer.toString(),gson.toJson(deportes));
 	}
 
+	/**
+	 * Se prueba a listar los deportes de un usuario
+	 */
 	@Test 
 	public void testListarDeportesUsuarioOK() throws Exception {
 		parameters.put("email", "test");
@@ -108,6 +124,10 @@ public class DeportesServletTest {
 		List<Deporte> deportes = repo.listarDeportesUsuario("test");
 		assertEquals(response_writer.toString(),gson.toJson(deportes));
 	}
+	
+	/**
+	 * Se prueba a listar los deportes disponibles
+	 */
 	@Test 
 	public void testListarDeportesDisponiblesOK() throws Exception {
 		parameters.put("email", "test");

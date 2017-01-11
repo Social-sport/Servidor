@@ -12,6 +12,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.ElementNotVisibleException;
 
+/**
+ * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
+ * funcionalidad relacionada con la GUI
+ */
+
 public class GUITest {
 
 	private static ChromeDriver driver;

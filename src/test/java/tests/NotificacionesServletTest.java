@@ -27,6 +27,11 @@ import controlador.NotificacionesServlet;
 import modelo.Notificacion;
 import modelo.RepositorioNotificacion;
 
+/**
+ * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
+ * funcionalidad relacionada con Notificaciones
+ */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class NotificacionesServletTest {
 

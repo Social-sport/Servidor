@@ -28,6 +28,11 @@ import controlador.UsuariosServlet;
 import modelo.RepositorioEvento;
 import modelo.Evento;
 
+/**
+ * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
+ * funcionalidad relacionada con Eventos
+ */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EventosServletTest {
 

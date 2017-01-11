@@ -14,7 +14,7 @@ public class RepositorioDeporte {
 	private Connection conexion = null;
 
 	/**
-	 * Metodo creador
+	 * Inicia una conexion con la base de datos
 	 */
 	public RepositorioDeporte() {
 		ConexionBD.iniciarConexion();
@@ -34,8 +34,7 @@ public class RepositorioDeporte {
 			deporte = new Deporte(rs.getString("Nombre"),rs.getString("Descripcion"),
 					rs.getString("Foto")) ;	
 			stmt.close();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en buscar Deporte");
 		}
@@ -58,8 +57,7 @@ public class RepositorioDeporte {
 				deportes.add(d);
 			}
 			stmt.close();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en buscar Deportes del usuario "+email);
 		}
@@ -82,27 +80,20 @@ public class RepositorioDeporte {
 						rs.getString("Foto"));
 						d = addNumSuscritos(d);
 				deportes.add(d);
-				
-				
 			}
-
 			stmt.close();
-		}
-		
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar Deportes" + e);
 		}
-		
 		return deportes;
 	}
 	
 	
 	/**
-	 * añade la cantidad de suscritos a los deportes listados
+	 * Anade la cantidad de suscritos a los deportes listados
 	 */
 	public Deporte addNumSuscritos(Deporte deporte) {
-
 		String sql = "SELECT COUNT(DeporteSuscrito.deporte) AS num FROM DeporteSuscrito WHERE DeporteSuscrito.deporte = '" + deporte.getNombre() + "'";
 		try {
 			Statement stmt = conexion.createStatement();
@@ -112,16 +103,12 @@ public class RepositorioDeporte {
 			}
 
 			stmt.close();
-		}
-
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en añadir cant suscritos a Deportes" + e);
 		}
-
 		return deporte;
 	}
-	
 	
 	/**
 	 * Lista los deportes almacenados en la BD
@@ -139,9 +126,7 @@ public class RepositorioDeporte {
 				deportes.add(d);			
 			}
 			stmt.close();
-		}
-		
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar Deportes" + e);
 		}
@@ -159,8 +144,7 @@ public class RepositorioDeporte {
 			stmt.execute(sql);
 			stmt.close();
 			return true;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error al suscribirse a deporte "+nombre+" del usuario "+email);
 			return false;
 		}
@@ -181,11 +165,10 @@ public class RepositorioDeporte {
 			else {
 				return true;
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error al dar de baja el deporte "+nombre+" al usuario "+email);
 			return false;
 		}
 	}
 	
-	}
+}

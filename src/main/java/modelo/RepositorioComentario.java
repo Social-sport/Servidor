@@ -11,13 +11,16 @@ public class RepositorioComentario {
 	private Connection conexion = null;
 
 	/**
-	 * Metodo creador
+	 * Inicia una conexion con la base de datos
 	 */
 	public RepositorioComentario() {
 		ConexionBD.iniciarConexion();
 		this.conexion = ConexionBD.getConexion();
 	}
 	
+	/**
+	 * Devuelve un Comentario dada su <id>
+	 */
 	public Comentario findComentario(int id) {
 		Comentario comentario = null;
 		try {
@@ -30,8 +33,7 @@ public class RepositorioComentario {
 					rs.getString("hora"), rs.getString("usuario"),
 					rs.getInt("evento"));
 			stmt.close();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en buscar Comentario");
 		}

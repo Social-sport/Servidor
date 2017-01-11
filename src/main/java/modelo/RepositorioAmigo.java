@@ -14,7 +14,7 @@ public class RepositorioAmigo {
 	private Connection conexion = null;
 
 	/**
-	 * Metodo creador
+	 * Inicia una conexion con la base de datos
 	 */
 	public RepositorioAmigo() {
 		ConexionBD.iniciarConexion();
@@ -28,14 +28,12 @@ public class RepositorioAmigo {
 		String sql = "INSERT INTO Amigos"
 				+ "(usuario, amigo, fecha)"
 				+ " VALUES (\""+amigo.getUsuario()+"\",\""+amigo.getAmigo()+"\",\""+amigo.getFecha()+"\")";
-		
 		try {
 			Statement stmt = conexion.createStatement();
 			stmt.executeUpdate(sql);
 			stmt.close();
 			return true;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error al insertar amigo por: " + e);
 			return false;
 		}
@@ -51,13 +49,15 @@ public class RepositorioAmigo {
 			stmt.executeUpdate(sql);
 			stmt.close();
 			return true;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error al borrar amigo");
 			return false;
 		}
 	}
-		
+	
+	/**
+	 * Devuelve una lista de usuarios seguidos dado el <email> de un usuario
+	 */
 	public List<Usuario> listarSeguidos (String email) {
 		List<Usuario> usuarios = new LinkedList<Usuario>();
 		String sql = "SELECT * FROM Usuario WHERE Usuario.email IN (SELECT Amigos.amigo"
@@ -75,14 +75,16 @@ public class RepositorioAmigo {
 				usuarios.add(u);
 			}
 			stmt.close();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar seguidos");
 		}
 		return usuarios;
 	}
 	
+	/**
+	 * Devuelve una lista de usuarios seguidores dado el <email> de un usuario
+	 */
 	public List<Usuario> listarSeguidores (String email) {
 		List<Usuario> usuarios = new LinkedList<Usuario>();
 		String sql = "SELECT * FROM Usuario WHERE Usuario.email IN (SELECT Amigos.usuario"
@@ -100,8 +102,7 @@ public class RepositorioAmigo {
 				usuarios.add(u);
 			}
 			stmt.close();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar mis seguidores");
 		}
@@ -109,12 +110,10 @@ public class RepositorioAmigo {
 	}
 	
 	/**
-	 * añade la cantidad de Seguidores a los usuarios listados
+	 * Anade la cantidad de Seguidores a los usuarios listados
 	 */
 	public Usuario addNumSeguidores(Usuario Usuario) {
-		
 		String sql = "SELECT COUNT(Amigos.usuario) AS num FROM Amigos WHERE Amigos.amigo = '" + Usuario.getEmail() + "'";
-			
 			try {
 				Statement stmt = conexion.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
@@ -123,14 +122,10 @@ public class RepositorioAmigo {
 				}
 				System.out.println("adheridos la cant de Seguidores a los Usuarios listados");
 				stmt.close();
-			}
-			
-			catch (SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Error en añadir cant Seguidores a Usuarios" + e);
 			}	
-		
-		
 		return Usuario;
 	}
 	

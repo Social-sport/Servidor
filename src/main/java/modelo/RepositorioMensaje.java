@@ -14,13 +14,16 @@ public class RepositorioMensaje {
 	private Connection conexion = null;
 
 	/**
-	 * Metodo creador
+	 * Inicia una conexion con la base de datos
 	 */
 	public RepositorioMensaje() {
 		ConexionBD.iniciarConexion();
 		this.conexion = ConexionBD.getConexion();
 	}
 
+	/**
+	 * Lista los Mensajes de un usuario dado su <email>
+	 */
 	public List<Mensaje> listarMensajesUsuario(String email) {
 		List<Mensaje> mensajes = new LinkedList<Mensaje>();
 		String sql = "SELECT * FROM Mensajes WHERE autor ='"+email+"'";
@@ -33,14 +36,16 @@ public class RepositorioMensaje {
 						rs.getString("autor"), rs.getString("destinatario")));
 			}
 			stmt.close();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar Mensajes enviados");
 		}
 		return mensajes;
 	}
 	
+	/**
+	 * Inserta un Mensaje <mensaje> en la base de datos
+	 */
 	public boolean insertarMensaje(Mensaje mensaje) {
 		String sql = "INSERT INTO Mensaje (fecha,hora,texto,autor,destinatario) VALUES "
 				+ "('"+mensaje.getFecha()+"','"+mensaje.getHora()+"','"+mensaje.getTexto()+"','"+mensaje.getAutor()+"','"+mensaje.getDestinatario()+"')";
@@ -49,13 +54,15 @@ public class RepositorioMensaje {
 			stmt.execute(sql);
 			stmt.close();
 			return true;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error al insertar mensaje");
 			return false;
 		}
 	}
 	
+	/**
+	 * Devuelva una lista de Mensajes recibidos por un usuario dado su <email>
+	 */
 	public List<Mensaje> listarMensajesRecibidos(String email) {
 		List<Mensaje> mensajes = new LinkedList<Mensaje>();
 		String sql = "SELECT * FROM Mensajes WHERE destinatario ='"+email+"'";
@@ -68,8 +75,7 @@ public class RepositorioMensaje {
 						rs.getString("autor"), rs.getString("destinatario")));
 			}
 			stmt.close();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar Mensajes recibidos");
 		}

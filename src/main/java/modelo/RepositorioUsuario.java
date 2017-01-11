@@ -14,7 +14,7 @@ public class RepositorioUsuario {
 	private Connection conexion = null;
 
 	/**
-	 * Metodo creador
+	 * Inicia una conexion con la base de datos
 	 */
 	public RepositorioUsuario() {
 		ConexionBD.iniciarConexion();
@@ -32,51 +32,37 @@ public class RepositorioUsuario {
 			Statement stmt = conexion.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				
 				Usuario u = new Usuario(rs.getString("email"),rs.getString("nombre"),
 						rs.getString("apellidos"),
 						rs.getString("fecha_nacimiento"),rs.getString("foto"),
 						rs.getString("nick"));				
 						u = addNumSeguidores(u);
-						
 				Usuarios.add(u);			
 			}
-
 			stmt.close();
-		}
-		
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar Usuarios" + e);
 		}
-						
 		return Usuarios;
 	}
 	
 	/**
-	 * aÃ±ade la cantidad de Seguidores a los usuarios listados
+	 * Añade la cantidad de Seguidores a los usuarios listados
 	 */
 	public Usuario addNumSeguidores(Usuario Usuario) {
-		
 		String sql = "SELECT COUNT(Amigos.usuario) AS num FROM Amigos WHERE Amigos.amigo = '" + Usuario.getEmail() + "'";
-			
 			try {
 				Statement stmt = conexion.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
 				while (rs.next()) {
 					Usuario.setNumSeguidores(rs.getString("num"));
 				}
-
 				stmt.close();
-			}
-			
-			catch (SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Error en aÃ±adir cant Seguidores a Usuarios" + e);
 			}
-			
-		
-		
 		return Usuario;
 	}
 	
@@ -95,17 +81,14 @@ public class RepositorioUsuario {
 						rs.getString("fecha_nacimiento"),rs.getString("foto"),
 						rs.getString("nick"));				
 						u = addNumSeguidores(u);
-						
 				Usuarios.add(u);		
 			}
 			stmt.close();
 		}
-		
 		catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar Usuarios " + e);
 		}			
-
 		return Usuarios;
 	}
 	
@@ -129,23 +112,19 @@ public class RepositorioUsuario {
 				Usuarios.add(u);		
 			}
 			stmt.close();
-		}
-		
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error en listar Usuarios " + e);
 		}
-		
 		Usuario u = findUsuario(name);
 		if (u!=null) {
 			Usuarios.add(u);
 		}	
-				
 		return Usuarios;
 	}
 
 	/**
-	 * Devuelve la informaciï¿½n del usuario con email <email>
+	 * Devuelve la información del usuario con email <email>
 	 */
 	public Usuario findUsuario(String email) {
 		Usuario usuario = null;
@@ -157,7 +136,6 @@ public class RepositorioUsuario {
 			usuario = new Usuario(rs.getString("email"),rs.getString("nombre"),
 					rs.getString("apellidos"),rs.getString("contrasena"),rs.getString("fecha_nacimiento"),rs.getString("foto"),rs.getString("nick"));
 			usuario = addNumSeguidores(usuario);
-						
 			stmt.close();
 		}
 		catch (SQLException e) {
@@ -179,8 +157,7 @@ public class RepositorioUsuario {
 			stmt.execute(sql);
 			stmt.close();
 			return true;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error al insertar usuario");
 			return false;
 		}
@@ -196,15 +173,14 @@ public class RepositorioUsuario {
 			stmt.execute(sql);
 			stmt.close();
 			return true;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error al borrar usuario");
 			return false;
 		}
 	}
 
 	/**
-	 * Actualiza la informaciï¿½n del usuario <usuario>
+	 * Actualiza la información del usuario <usuario>
 	 */
 	public boolean actualizarUsuario (Usuario usuario) {
 		String sql = "UPDATE Usuario SET nombre='"+usuario.getNombre()+"', "
@@ -216,12 +192,9 @@ public class RepositorioUsuario {
 			stmt.execute(sql);
 			stmt.close();
 			return true;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error al actualizar usuario");
 			return false;
 		}
 	}
-
-	
 }

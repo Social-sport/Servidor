@@ -119,13 +119,7 @@ public class EventosServletTest {
 		// Pongo como email de sesión "usuario@socialsport.com"
 		
 		request.getSession().setAttribute("email", "usuario@socialsport.com");
-		String a = (String) request.getSession().getAttribute("email");
-		
-		System.out.println("PRUEBAAAAAAAA" + a);
-		
-		HttpServletRequest req;
-		HttpServletResponse resp;
-		
+				
 		/*req =  mock(HttpServletRequest.class);
 		resp = mock(HttpServletResponse.class);
 		

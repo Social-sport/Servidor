@@ -48,7 +48,7 @@ public class RepositorioUsuario {
 	}
 	
 	/**
-	 * Añade la cantidad de Seguidores a los usuarios listados
+	 * Aï¿½ade la cantidad de Seguidores a los usuarios listados
 	 */
 	public Usuario addNumSeguidores(Usuario Usuario) {
 		String sql = "SELECT COUNT(Amigos.usuario) AS num FROM Amigos WHERE Amigos.amigo = '" + Usuario.getEmail() + "'";
@@ -124,7 +124,7 @@ public class RepositorioUsuario {
 	}
 
 	/**
-	 * Devuelve la información del usuario con email <email>
+	 * Devuelve la informaciï¿½n del usuario con email <email>
 	 */
 	public Usuario findUsuario(String email) {
 		Usuario usuario = null;
@@ -180,7 +180,7 @@ public class RepositorioUsuario {
 	}
 
 	/**
-	 * Actualiza la información del usuario <usuario>
+	 * Actualiza la informaciï¿½n del usuario <usuario>
 	 */
 	public boolean actualizarUsuario (Usuario usuario) {
 		String sql = "UPDATE Usuario SET nombre='"+usuario.getNombre()+"', "

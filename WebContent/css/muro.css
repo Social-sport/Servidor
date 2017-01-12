@@ -33,6 +33,11 @@ body {
   margin: 0 auto;
 }
 
+#seccionBuscar{
+	width: 650px;
+	margin: 0 auto;
+}
+
 #seccionSports{
 	width: 650px;
 	margin: 0 auto;
@@ -152,6 +157,10 @@ form.list-group-item.active small {
 }
 
 @media all and (max-width:730px){
+	#seccionBuscar{
+		width: 100%;
+		margin: 0 auto;
+	}
 	#seccionFriends{
 		width: 100%;
 		margin: 0 auto;

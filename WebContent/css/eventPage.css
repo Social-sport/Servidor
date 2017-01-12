@@ -13,7 +13,7 @@ body {
     margin-bottom: 10px;
 }
 
-#listEvent {
+#listEvent, #listSearchs {
 	height:auto;
     min-height:100px;
     margin-bottom: 10px;
@@ -33,6 +33,11 @@ form.list-group-item.active small {
 .event1 {
     margin-left: 10%;
     text-align: center;
+}
+
+#seccionBuscar{
+	width: 650px;
+	margin: 0 auto;
 }
 
 #seccionEvent{
@@ -443,6 +448,11 @@ select.selectpicker option:first-child {
 @media all and (max-width:730px){
 	.search-btn {
 		width: 100%;
+	}
+
+	#seccionBuscar{
+		width: 100%;
+		margin: 0 auto;
 	}
 
 	#seccionEvent{

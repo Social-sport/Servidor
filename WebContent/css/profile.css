@@ -3,6 +3,15 @@ body {
 	font-family: 'Noto Sans', sans-serif;
 }
 
+.img-rounded {
+    border-radius: 6px;
+    width: 100%;
+    height: auto;
+    max-height: 80px;
+    max-width: 115px;
+    margin-bottom: 10px;
+}
+
 .fom-main{
 	width: 100%;
 	margin: auto;
@@ -472,6 +481,14 @@ h4.pro-title {
 	}
 	#busAmi{
 		width: 280px;
+	}
+	.img-rounded {
+	    border-radius: 6px;
+	    width: 100%;
+	    height: auto;
+	    max-height: 200px;
+	    max-width: 300px;
+	    margin-bottom: 10px;
 	}
 }
 

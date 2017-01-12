@@ -4,6 +4,15 @@ body {
 	padding-top: 70px;
 }
 
+.img-rounded {
+    border-radius: 6px;
+    width: 100%;
+    height: auto;
+    max-height: 80px;
+    max-width: 115px;
+    margin-bottom: 10px;
+}
+
 #listEvent {
 	height:auto;
     min-height:100px;
@@ -383,6 +392,15 @@ select.selectpicker option:first-child {
 
 	.hve-pro, .event1 {
 		margin-left: 0;
+	}
+	
+	.img-rounded {
+	    border-radius: 6px;
+	    width: 100%;
+	    height: auto;
+	    max-height: 200px;
+	    max-width: 300px;
+	    margin-bottom: 10px;
 	}
 }
 

@@ -25,7 +25,7 @@ public class RepositorioNotificacion {
 
 	/**
 	 * Inserta una Notificacion <notificacion> en la Base de datos y devuelve
-	 * [true] si ha habido éxito, [false] en caso contrario.
+	 * [true] si ha habido ï¿½xito, [false] en caso contrario.
 	 */
 	public boolean insertarNotificacion(Notificacion notificacion) {
 		String sql = "INSERT INTO Notificacion (usuarioEnvia,usuarioRecibe,"
@@ -50,7 +50,7 @@ public class RepositorioNotificacion {
 
 	/**
 	 * Elimina una Notificacion de la base de datos dada su <id> y devuelve
-	 * [true] si ha habido éxito, [false] en caso contrario.
+	 * [true] si ha habido ï¿½xito, [false] en caso contrario.
 	 */
 	public boolean borrarNotificacion(String id) {
 		String sql = "DELETE FROM Notificacion WHERE id=\""+id+"\"";
@@ -92,7 +92,7 @@ public class RepositorioNotificacion {
 	}
 
 	/**
-	 * Notifica a un usuario según el <tipo>, devuelve [true] en caso de exito, [false] en caso contrario.
+	 * Notifica a un usuario segï¿½n el <tipo>, devuelve [true] en caso de exito, [false] en caso contrario.
 	 */
 	public boolean notificar(String emailUsuarioEnvia,String emailUsuarioRecibe, String nombreNotificacion, 
 						String fotoNotificacion, String tipo, String nombreUsuarioEnvia, int idEvent) {
@@ -115,7 +115,7 @@ public class RepositorioNotificacion {
 	}
 
 	/**
-	 * Devuelve el número de notificaciones de un usuario dado su <email>
+	 * Devuelve el nï¿½mero de notificaciones de un usuario dado su <email>
 	 */
 	public int contarNotificaciones(String email) {
 		int cuenta = 0;

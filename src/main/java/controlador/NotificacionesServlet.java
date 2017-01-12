@@ -21,9 +21,9 @@ import com.google.gson.Gson;
 
 /**
  * Servlet relativo a la funcionalidad de notificaciones.
- * 		POST /notificaciones. Inserta una notificación en la base de datos
- * 		GET /notificaciones. Petición que devuelve las notificaciones de un usuario.
- * 		DELETE /notificaciones. Petición que elimina notificaciones de un usuario.
+ * 		POST /notificaciones. Inserta una notificaciï¿½n en la base de datos
+ * 		GET /notificaciones. Peticiï¿½n que devuelve las notificaciones de un usuario.
+ * 		DELETE /notificaciones. Peticiï¿½n que elimina notificaciones de un usuario.
  */
 
 @WebServlet(value = "/notificaciones", name = "NotificacionesServlet")
@@ -36,7 +36,7 @@ public class NotificacionesServlet extends HttpServlet {
 	private Gson gson = new Gson();
 
 	/**
-	 * Metodo para insertar una notificación
+	 * Metodo para insertar una notificaciï¿½n
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -48,7 +48,7 @@ public class NotificacionesServlet extends HttpServlet {
 		
 		boolean realizado = false;
 		Usuario seguidor = repoUsuario.findUsuario(emailEnvia);
-		//Si se pide una notificación de evento
+		//Si se pide una notificaciï¿½n de evento
 		if (tipo.equals("Evento")) {
 			String idEvento = req.getParameter("idEvent");
 			Evento evento = repoEvento.findEventById(idEvento, emailEnvia);
@@ -61,22 +61,23 @@ public class NotificacionesServlet extends HttpServlet {
 						"fotoEvento",tipo,"Nick", 1);
 			}
 		}
-		//Si de pide una notificación de seguimiento
+		//Si de pide una notificaciï¿½n de seguimiento
 		if (tipo.equals("Seguidor")) {
 			realizado = repo.notificar(emailEnvia,emailRecibe, seguidor.getNick(),
 										seguidor.getFoto(), tipo,seguidor.getNick(), 0);
 		}
-		//Si la operación es exitosa
+		//Si la operaciï¿½n es exitosa
 		if (realizado) {
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "Se ha enviado la notificacion";
 		}
 		else {
-			//Se devuelve código 400 (petición no exitosa)
+			//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response = "No hay nueva notificacion";
 		}
+		resp.sendRedirect("eventPage.html");
 		setResponse(response, resp);
 	}
 
@@ -100,14 +101,14 @@ public class NotificacionesServlet extends HttpServlet {
 			System.out.println("email notificaciones: " + email);
 			notificaciones = repo.listarNotificaciones(email);
 			response = gson.toJson(notificaciones);
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			resp.setStatus(HttpServletResponse.SC_OK);
 			setResponse(response, resp);
 		}
 	}
 	
 	/**
-	 * Metodo para borrar una notificación del usuario.
+	 * Metodo para borrar una notificaciï¿½n del usuario.
 	 */
 	@Override
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
@@ -115,16 +116,16 @@ public class NotificacionesServlet extends HttpServlet {
 		String response = null;
 		String id = req.getParameter("id");
 		boolean realizado = repo.borrarNotificacion(id);
-		//Si la operación se ha ralizado con éxito
+		//Si la operaciï¿½n se ha ralizado con ï¿½xito
 		if (realizado) {
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			resp.setStatus(HttpServletResponse.SC_OK);
-			response = "La notificación se ha borrado correctamente";
+			response = "La notificaciï¿½n se ha borrado correctamente";
 		}
 		else {
-			//Se devuelve código 400 (petición no exitosa)
+			//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			response = "La notificación no se ha podido borrar";
+			response = "La notificaciï¿½n no se ha podido borrar";
 		}
 		setResponse(response, resp);
 	}

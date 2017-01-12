@@ -104,7 +104,7 @@ public class RepositorioNotificacion {
 		String descripcion = "";
 		
 		if (tipo.equals("Evento")) {
-			descripcion = nombreUsuarioEnvia + "te ha invitado a este evento";
+			descripcion = nombreUsuarioEnvia + " te ha invitado a este evento";
 		}
 		if (tipo.equals("Seguidor")) {
 			descripcion = "Ha comenzado a seguirte";

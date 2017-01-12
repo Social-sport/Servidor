@@ -1,9 +1,11 @@
 $(document).ready(
 		function() {
 			var count;
+			var num;
 			window.onload = function() {
 				$.get('notificaciones', {tipo:"contar"}, function (cuentan){
 						count = cuentan;
+						num = cuentan;
 					}
 				);
 			}
@@ -63,6 +65,10 @@ $(document).ready(
 
 						event.preventDefault();
 						
+						num = count;
+						document.getElementById("NotificationButton").innerHTML = "Notificaciones";
+						
+						
 						$.get('notificaciones', {tipo:"contar"}, function (cuenta){
 							count = cuenta;
 						});
@@ -117,7 +123,7 @@ $(document).ready(
 												"<input type='hidden' name='idEvent' value='"+listNotification[i].idEvent+"'>"+
 												"<input type='hidden' name='tipo' value='viewEvent'>"+
 												"<h4 class='list-group-item-heading'>"+listNotification[i].nombre+"</h4>"+
-												"<p class='list-group-item-text' id='list-group-item-text'> "+listNotification[i].Descripcion+" </p>"+
+												"<p class='list-group-item-text' id='list-group-item-text'> " +listNotification[i].descripcion+" </p>"+
 												"</div>"+
 												"<div class='col-md-3 text-center'>"+
 												"<input type='submit' class='btn btn-default btn-lg btn-block'  id = 'bSuscribete' value='Ver'>"+
@@ -172,10 +178,12 @@ $(document).ready(
 			function contar() {
 				$.get('notificaciones', {tipo:"contar"}, function (cuenta){
 					if (cuenta>count) {
+						var c = cuenta - num;
 						count = cuenta;
-						//Me falta cambiar de color al botón
-						alert("Tienes una nueva notificación");
-						$("#NotificationButton").toggleClass('red');
+						
+						document.getElementById("NotificationButton").style.backgroundColor='#99FFFF';
+						document.getElementById("NotificationButton").innerHTML = "Notificaciones(" + c +")";
+						
 					}
 				});
 			}

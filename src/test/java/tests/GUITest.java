@@ -27,49 +27,55 @@ public class GUITest {
 		System.setProperty("webdriver.chrome.driver", "WebContent\\WEB-INF\\lib\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	} 
 	
 	@AfterClass
 	public static void cerrarNavegador(){
+		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 		driver.close();
 		driver.quit();
 	} 
 	
 	@Test
 	public void index(){
-		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-		driver.get("localhost:8080/Servidor/");	
+		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/");	
 		driver.findElement(By.id("iniciar")).click();
-		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 	
 
 
 	@Test
 	public void login(){
-		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-		driver.get("localhost:8080/Servidor/signup.html");	
+		index();
 		driver.findElement(By.id("login-form-link")).click();
-		driver.findElement(By.id("emailL")).sendKeys("catalindumitrache76@yahoo.es");
-		driver.findElement(By.id("contrasenaL")).sendKeys("thisisnotmyrealpassword");
-		driver.findElement(By.id("remember")).click();
+		driver.findElement(By.id("emailL")).sendKeys("testgui@server.com");
+		driver.findElement(By.id("contrasenaL")).sendKeys("testgui");
 		driver.findElement(By.id("login-submit")).click();
-		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 	
 	@Test
 	public void perfil(){
-		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
 		login();	
 		driver.findElement(By.id("perfil")).click();
 		driver.findElement(By.id("mySportsButton")).click();
 		driver.findElement(By.id("myEventsButton")).click();
 		driver.findElement(By.id("mySportsButton")).click();
 		driver.findElement(By.id("myEventsButton")).click();
-		driver.findElement(By.id("verEventosButton")).click();
-		driver.findElement(By.id("perfil")).click();
 		driver.findElement(By.id("myFriendsButton")).click();
-		driver.findElement(By.id("myMessagesButton")).click();
+		driver.findElement(By.id("FollowedButton")).click();
+		driver.findElement(By.id("myFriendsButton")).click();
+		driver.findElement(By.id("creaEvent")).click();
+		driver.findElement(By.id("configEdit1")).click();
+		driver.findElement(By.id("perfil")).click();
+	}
+	
+	@Test
+	public void crear_eventos(){
+		login();	
+		
+		driver.findElement(By.id("perfil")).click();
+		
 		driver.findElement(By.id("creaEvent")).click();
 		driver.findElement(By.id("nombre")).sendKeys("Nombre de prueba");
 		driver.findElement(By.id("hora")).sendKeys("Hora del evento");
@@ -79,20 +85,21 @@ public class GUITest {
 				+ "scelerisque. Nulla ac leo sed orci egestas viverra ac a elit.");
 		Select dropdown = new Select(driver.findElement(By.id("deporte")));
 		dropdown.selectByVisibleText("Baloncesto");
-		driver.findElement(By.id("creador")).sendKeys("catalindumitrache76@yahoo.es");
 		driver.findElement(By.id("event-submit")).click();
-		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
+				
 	}
 	
 	@Test
 	public void muroVacio(){
-		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
 		login();
 		driver.findElement(By.className("navbar-brand")).click();
 		driver.findElement(By.id("search")).sendKeys("amigo1");
 		driver.findElement(By.id("buttonBuscar")).click();
-		driver.findElement(By.id("listSport")).click();
-		driver.findElement(By.id("listFriends")).click();
+		driver.findElement(By.id("EventsButton")).click();
+		driver.findElement(By.id("SportsButton")).click();
+		driver.findElement(By.id("NotificationButton")).click();
+		driver.findElement(By.id("addFriendsButton")).click();
+		
 		try{
 			driver.findElement(By.className("navbar-toggle")).click();
 		}
@@ -109,20 +116,16 @@ public class GUITest {
 		driver.manage().window().setSize(newSize);
 		driver.findElement(By.id("socialSport")).click();
 		driver.findElement(By.id("home"));
-		driver.findElement(By.id("about")).click();
 		driver.findElement(By.id("perfil")).click();
 		driver.findElement(By.id("home"));
 		driver.findElement(By.id("cerrarSesion")).click();
-		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 	
 	
 	
 	@Test
 	public void registro() throws InterruptedException{
-		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
-		System.err.println("CUIDADO: TEST PROBADO CON TOMCAT EN LOCALHOST");
-		driver.get("localhost:8080/Servidor/signup.html");	
+		index();
 		driver.findElement(By.id("register-form-link")).click();
 		driver.findElement(By.id("username")).sendKeys("test");
 		driver.findElement(By.id("emailR")).sendKeys("test@test.test");
@@ -131,6 +134,5 @@ public class GUITest {
 		driver.findElement(By.id("apellidos")).sendKeys("Test");
 		driver.findElement(By.id("fecha_nacimiento")).sendKeys("16-11-2016");
 		driver.findElement(By.id("register-submit")).click();
-		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	}
 }

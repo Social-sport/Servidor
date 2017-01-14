@@ -1,5 +1,6 @@
 package tests;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
@@ -9,8 +10,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.thoughtworks.selenium.Wait;
+
 import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 
 /**
  * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
@@ -27,12 +37,12 @@ public class GUITest {
 		System.setProperty("webdriver.chrome.driver", "WebContent\\WEB-INF\\lib\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
+		//System.out.println("Starting test " + new Object(){}.getClass().getEnclosingMethod().getName());
 	} 
 	
 	@AfterClass
 	public static void cerrarNavegador(){
-		System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
+		//System.out.println("Ending test " + new Object(){}.getClass().getEnclosingMethod().getName());
 		driver.close();
 		driver.quit();
 	} 
@@ -40,6 +50,8 @@ public class GUITest {
 	@Test
 	public void index(){
 		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/");	
+		WebElement myDynamicElement2 = (new WebDriverWait(driver, 10))
+				  .until(ExpectedConditions.presenceOfElementLocated(By.id("iniciar")));
 		driver.findElement(By.id("iniciar")).click();
 	}
 	
@@ -68,14 +80,82 @@ public class GUITest {
 		driver.findElement(By.id("creaEvent")).click();
 		driver.findElement(By.id("configEdit1")).click();
 		driver.findElement(By.id("perfil")).click();
+		driver.findElement(By.id("cerrarSesion")).click();
+	}
+	
+	@Test
+	public void ver_eventos_perfil(){
+		login();	
+		driver.findElement(By.id("EventsButton")).click();
+		WebElement myDynamicElement2 = (new WebDriverWait(driver, 10))
+				  .until(ExpectedConditions.presenceOfElementLocated(By.id("EventsButton")));
+	}
+	
+	//@Test
+	public void unirse_evento(){
+		login();	
+		driver.findElement(By.id("EventsButton")).click();
+		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+				  .until(ExpectedConditions.presenceOfElementLocated(By.id("bSuscribete")));
+		driver.findElement(By.id("bSuscribete")).click();
+		WebElement myDynamicElement2 = (new WebDriverWait(driver, 10))
+				  .until(ExpectedConditions.presenceOfElementLocated(By.id("SuscribeButton")));
+		driver.findElement(By.id("SuscribeButton")).click();
+		driver.findElement(By.id("cerrarSesion")).click();
+	}
+	
+	@Test
+	public void modificar_evento(){
+		login();	
+		driver.findElement(By.id("perfil")).click();
+		driver.findElement(By.id("myEventsButton")).click();
+		
+		
+		
+		// 
+		//System.out.println(link.getText());
+		//link.sendKeys(Keys.TAB);
+		//System.out.println(link.getClass());
+		//System.out.println(link.getTagName());
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("document.getElementById('eventCreated').setAttribute('aria-expanded', 'true')");
+		//System.out.println(link.isSelected());
+		//System.out.println(link.isDisplayed());
+		//System.out.println(link.isEnabled());
+		
+		//link.getCssValue(arg0);
+		//link.click();
+		//link.sendKeys(Keys.ENTER);
+		WebElement link = driver.findElement(By.id("eventCreated"));
+		
+		System.out.println(link.getAttribute("aria-expanded"));
+		
+		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+				  .until(ExpectedConditions.presenceOfElementLocated(By.id("bSuscribete")));
+		//driver.findElement(By.cssSelector("a[id*='eventCreated']")).click();
+		//driver.findElement(By.id("eventCreated")).click();
+		//WebElement myDynamicElement2 = (new WebDriverWait(driver, 10))
+				  //.until(ExpectedConditions.presenceOfElementLocated(By.id("bSuscribete")));
+		List lista = driver.findElements(By.id("bSuscribete"));
+		WebElement elemento = (WebElement) lista.get(0);
+
+		System.out.println(lista.size());
+		System.out.println(elemento.getAttribute("value"));
+		WebElement elemento2 = (WebElement) lista.get(1);
+		System.out.println(elemento2.getAttribute("value"));
+		WebElement elemento3 = (WebElement) lista.get(1);
+		System.out.println(elemento3.getAttribute("value"));
+		/*driver.findElement(By.id("eventEdit")).click();
+		driver.findElement(By.id("nombre")).sendKeys("Evento MODIFICADO");
+		driver.findElement(By.id("event-submit")).click();
+		driver.findElement(By.id("home")).click();*/
 	}
 	
 	@Test
 	public void crear_eventos(){
 		login();	
-		
 		driver.findElement(By.id("perfil")).click();
-		
 		driver.findElement(By.id("creaEvent")).click();
 		driver.findElement(By.id("nombre")).sendKeys("Nombre de prueba");
 		driver.findElement(By.id("hora")).sendKeys("Hora del evento");
@@ -86,7 +166,6 @@ public class GUITest {
 		Select dropdown = new Select(driver.findElement(By.id("deporte")));
 		dropdown.selectByVisibleText("Baloncesto");
 		driver.findElement(By.id("event-submit")).click();
-				
 	}
 	
 	@Test
@@ -100,14 +179,12 @@ public class GUITest {
 		driver.findElement(By.id("NotificationButton")).click();
 		driver.findElement(By.id("addFriendsButton")).click();
 		
-		try{
+		try {
 			driver.findElement(By.className("navbar-toggle")).click();
 		}
-		catch(ElementNotVisibleException e){
-			System.out.println("---------- ERROR ----------");
-			System.err.println("Size is too large; Page didn't collide");
-			System.err.println("Size: " + driver.manage().window().getSize());
-			System.out.println("---------- ERROR ----------");
+		catch (ElementNotVisibleException e) {
+			System.out.println("Size is too large; Page didn't collide");
+			System.out.println("Size: " + driver.manage().window().getSize());
 		}	
 		Dimension newSize = new Dimension(700,806);
 		driver.manage().window().setSize(newSize);

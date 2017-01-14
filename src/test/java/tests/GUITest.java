@@ -50,8 +50,6 @@ public class GUITest {
 	@Test
 	public void index(){
 		driver.get("http://pruebaopenshift-socialsport.rhcloud.com/Servidor/");	
-		WebElement myDynamicElement2 = (new WebDriverWait(driver, 10))
-				  .until(ExpectedConditions.presenceOfElementLocated(By.id("iniciar")));
 		driver.findElement(By.id("iniciar")).click();
 	}
 	
@@ -105,51 +103,64 @@ public class GUITest {
 	}
 	
 	@Test
-	public void modificar_evento(){
+	public void desuscribirse_evento(){
+		login();	
+		driver.findElement(By.id("EventsButton")).click();
+		driver.findElement(By.id("bSuscribete")).click();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		driver.findElement(By.id("SuscribeButton")).click();
+		driver.findElement(By.id("cerrarSesion")).click();
+		
+		
+	}
+	
+	@Test
+	public void invitar_evento(){
+		login();	
+		driver.findElement(By.id("EventsButton")).click();
+		driver.findElement(By.id("bSuscribete")).click();
+		driver.findElement(By.id("SuscribeButton")).click();
+		driver.findElement(By.id("eventInvit")).click();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void modificar_evento() throws Exception{
 		login();	
 		driver.findElement(By.id("perfil")).click();
 		driver.findElement(By.id("myEventsButton")).click();
-		
-		
-		
-		// 
-		//System.out.println(link.getText());
-		//link.sendKeys(Keys.TAB);
-		//System.out.println(link.getClass());
-		//System.out.println(link.getTagName());
-
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("document.getElementById('eventCreated').setAttribute('aria-expanded', 'true')");
-		//System.out.println(link.isSelected());
-		//System.out.println(link.isDisplayed());
-		//System.out.println(link.isEnabled());
-		
-		//link.getCssValue(arg0);
-		//link.click();
-		//link.sendKeys(Keys.ENTER);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		WebElement link = driver.findElement(By.id("eventCreated"));
-		
+		link.click();
 		System.out.println(link.getAttribute("aria-expanded"));
 		
-		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
-				  .until(ExpectedConditions.presenceOfElementLocated(By.id("bSuscribete")));
-		//driver.findElement(By.cssSelector("a[id*='eventCreated']")).click();
-		//driver.findElement(By.id("eventCreated")).click();
-		//WebElement myDynamicElement2 = (new WebDriverWait(driver, 10))
-				  //.until(ExpectedConditions.presenceOfElementLocated(By.id("bSuscribete")));
-		List lista = driver.findElements(By.id("bSuscribete"));
-		WebElement elemento = (WebElement) lista.get(0);
 
-		System.out.println(lista.size());
-		System.out.println(elemento.getAttribute("value"));
-		WebElement elemento2 = (WebElement) lista.get(1);
-		System.out.println(elemento2.getAttribute("value"));
-		WebElement elemento3 = (WebElement) lista.get(1);
-		System.out.println(elemento3.getAttribute("value"));
-		/*driver.findElement(By.id("eventEdit")).click();
-		driver.findElement(By.id("nombre")).sendKeys("Evento MODIFICADO");
-		driver.findElement(By.id("event-submit")).click();
-		driver.findElement(By.id("home")).click();*/
+		List lista = driver.findElements(By.id("bSuscribete"));
+		if (lista.size() == 4){
+			WebElement elemento = (WebElement) lista.get(3);
+			System.out.println(lista.size());
+			System.out.println(elemento.getAttribute("value"));
+		} else {
+			System.out.println(lista.size());
+		}
+		
 	}
 	
 	@Test

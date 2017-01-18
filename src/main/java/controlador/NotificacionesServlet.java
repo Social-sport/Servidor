@@ -43,6 +43,9 @@ public class NotificacionesServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String response = null;
 		String emailEnvia = (String)req.getSession().getAttribute("email");
+		if (emailEnvia == null) {
+			emailEnvia = req.getParameter("email");
+		}
 		String emailRecibe = req.getParameter("emailRecibe");
 		String tipo = req.getParameter("tipo");
 		
@@ -90,6 +93,9 @@ public class NotificacionesServlet extends HttpServlet {
 		String response = null;
 		List<Notificacion> notificaciones = null;
 		String email = (String) req.getSession().getAttribute("email");
+		if (email == null) {
+			email = req.getParameter("email");
+		}
 		String tipo = req.getParameter("tipo");
 		//Si se pide contar las notificaciones
 		if (tipo != null && tipo != "" && tipo.equals("contar")) {

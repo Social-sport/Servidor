@@ -65,7 +65,8 @@ public class NotificacionesServletTest {
 		
 	@Test
 	public void testNotificarEvento() throws Exception {
-		request.getSession().setAttribute("email", "john@socialsport.com");
+		//request.getSession().setAttribute("email", "john@socialsport.com");
+		parameters.put("email", "john@socialsport.com");
 		parameters.put("idEvento", "18");
 		parameters.put("tipo", "Evento");
 		servlet.doPost(request, response);
@@ -74,7 +75,8 @@ public class NotificacionesServletTest {
 	
 	@Test
 	public void testListaNotificaciones() throws Exception {
-		request.getSession().setAttribute("email", "john@socialsport.com");
+		//request.getSession().setAttribute("email", "john@socialsport.com");
+		parameters.put("email", "john@socialsport.com");
 		servlet.doGet(request, response);
 		List<Notificacion> notificaciones = repo.listarNotificaciones("null");
 		assertEquals(response_writer.toString(),gson.toJson(notificaciones));

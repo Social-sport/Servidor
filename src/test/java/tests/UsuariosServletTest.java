@@ -24,8 +24,6 @@ import org.mockito.stubbing.Answer;
 import controlador.UsuariosServlet;
 import modelo.RepositorioUsuario;
 
-
-
 /**
  * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
  * funcionalidad relacionada con Usuarios
@@ -131,7 +129,5 @@ public class UsuariosServletTest {
 		parameters.put("nick", "");
 		servlet.doPost(request, response);
 		assertEquals("El usuario se ha actualizado correctamente", response_writer.toString());
-	}
-	
-	
+	}	
 }

@@ -68,7 +68,8 @@ public class DeportesServletTest {
 	 */
 	@Test
 	public void testSuscribirseDeporteErroneo() throws Exception {
-		request.getSession().setAttribute("email", "test@test.com");
+		//request.getSession().setAttribute("email", "test@test.com");
+		parameters.put("email", "test@test.com");
 		parameters.put("deporte", "asdafgh");
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al deporte");

@@ -59,9 +59,7 @@ public class EventosServlet extends HttpServlet {
 		
 		// Se guarda el email del usuario
 		String email = (String)req.getSession().getAttribute("email");
-		if (email == null) {
-			email = req.getParameter("email");
-		}
+		
 		// Se guarda el tipo de evento
 		String tipo = req.getParameter("tipoPostEvent");
 		System.out.println("tipoPost=: "+tipo);
@@ -346,9 +344,7 @@ public class EventosServlet extends HttpServlet {
 
 		// Email de la sesión del usuario
 		String emailusuario = (String)req.getSession().getAttribute("email");
-		if (emailusuario == null) {
-			emailusuario = req.getParameter("email");
-		}
+		
 		// Tipo de búsqueda de deporte
 		String tipo = req.getParameter("tipo");
 
@@ -486,13 +482,7 @@ public class EventosServlet extends HttpServlet {
 			
 			// id = id del evento de la sesión actual
 			String id = (String) req.getSession().getAttribute("idEvent");
-			if (id == null) {
-				id = req.getParameter("idEvent");
-			}
 			String email = (String) req.getSession().getAttribute("email");
-			if (email == null) {
-				email = req.getParameter("email");
-			}
 			
 			// Buscamos en la BD el evento con id <id>
 			Evento evento = repoEvento.findEventById(id, email);
@@ -511,9 +501,6 @@ public class EventosServlet extends HttpServlet {
 		// Si se recibe el tipo de busqueda "Verificar", se comprueba si el usuario está suscrito.
 		if (tipo.equals("Verificar")) {
 			int id = Integer.parseInt((String) req.getSession().getAttribute("idEvent"));
-			if ((String) req.getSession().getAttribute("idEvent") == null) {
-				id = Integer.parseInt(req.getParameter("idEvent"));
-			}
 			boolean suscrito = repoEvento.findSuscripcion(id, emailusuario);
 			if (suscrito) {
 				response = gson.toJson("Salir");

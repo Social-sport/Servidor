@@ -61,9 +61,6 @@ public class UsuariosServlet extends HttpServlet {
 		if (tipoPost.equals("Actualizar")) {
 			//Obtenci�n de los diferentes campos
 			email = (String) req.getSession().getAttribute("email");
-			if (email == null) {
-				email = req.getParameter("email");
-			}
 			nick = req.getParameter("nick");
 			nombre = req.getParameter("nombre");
 			apellidos = req.getParameter("apellidos");
@@ -241,9 +238,7 @@ public class UsuariosServlet extends HttpServlet {
 			if (SessionisActive(req, resp)) {
 
 				String email = (String) req.getSession().getAttribute("email");
-				if (email == null) {
-					email = req.getParameter("email");
-				}
+
 				if (tipo.equals("infosesion")) {
 					Usuario u = repo.findUsuario(email);
 					response = gson.toJson(u);

@@ -44,6 +44,7 @@ public class DeportesServletTest {
 	private static HttpSession session;
 	private static RepositorioDeporte repo;
 	private static RepositorioUsuario repoUser;
+	private static Usuario user;
 	private static Gson gson;
 	
 	private HttpServletResponse response;	
@@ -56,12 +57,10 @@ public class DeportesServletTest {
 		repo = new RepositorioDeporte();
 		servlet = new DeportesServlet();
 		repoUser = new RepositorioUsuario();
-		repoUser.borrarUsuario("user@socialsport.com");
-		Usuario user = new Usuario("user@socialsport.com","Social","Sport","2016-09-19","/Servidor/img/profile.jpg","test12");
+		user = new Usuario("user@socialsport.com","Social","Sport","2016-09-19","/Servidor/img/profile.jpg","test12");
 		repoUser.insertarUsuario(user);
 		session = mock(HttpSession.class);
-		request = mock(HttpServletRequest.class);
-		session.setAttribute("email", user.getEmail());
+		request = mock(HttpServletRequest.class);		
 		when(request.getSession()).thenReturn(session);
 		when(session.getAttribute("email")).thenReturn(user.getEmail());
 	}
@@ -77,7 +76,6 @@ public class DeportesServletTest {
 			}
 		});
 		when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
-		
 	}
 	
 	@AfterClass
@@ -86,48 +84,27 @@ public class DeportesServletTest {
 	}
 	
 	/**
-	 * Se prueba a suscribirse a un deporte err�neo
+	 * Se prueba a suscribirse a un deporte
 	 */
-	@Test
-	public void testSuscribirseDeporteErroneo() throws Exception {
-		parameters.put("email", "test@test.com");
-		parameters.put("deporte", "asdafgh");
-		servlet.doPost(request, response);
-		assertEquals(response_writer.toString(),"El usuario no se ha podido suscribir al deporte");
-		//assertEquals(response.getStatus(),HttpServletResponse.SC_BAD_REQUEST);
-	}
 	
 	@Test
-	public void testASuscribirseDeporteOK() throws Exception {		
+	public void testaSuscribirseDeporteOK() throws Exception {		
 		parameters.put("deporte", "Futbol");
 		servlet.doPost(request, response);
 		assertEquals("El usuario se ha suscrito correctamente al deporte", response_writer.toString());
 	}
-	
 	@Test
-	public void testZDarseDeBajaDeporteOK() throws Exception {
-		parameters.put("deporte", "Futbol");
-		parameters.put("email", "test@test.com");
-		servlet.doDelete(request, response);
-		assertEquals(response_writer.toString(),"El usuario se ha dado de baja correctamente del deporte");
+	public void testSuscribirseDeporteErroneo() throws Exception {
+		parameters.put("deporte", "asdafgh");
+		servlet.doPost(request, response);
+		assertEquals("El usuario no se ha podido suscribir al deporte", response_writer.toString());		
 	}
-	
-	/**
-	 * Se prueba a darse de baja de un deporte err�neo
-	 */
-	@Test
-	public void testDarseDeBajaDeporteErroneo() throws Exception {
-		parameters.put("deporte", "pruebaasdadada");
-		parameters.put("email", "try");
-		servlet.doDelete(request, response);
-		assertEquals(response_writer.toString(),"El usuario no se ha podido dar de baja del deporte");
-	}
-	
+		
 	/**
 	 * Se prueba a listar todos los deportes
 	 */
 	@Test
-	public void testListarDeportes() throws Exception {
+	public void testListarTodosDeportes() throws Exception {
 		parameters.put("tipoDeport", "AllSports");
 		servlet.doGet(request, response);
 		List<Deporte> deportes = repo.listarDeportes();
@@ -139,10 +116,9 @@ public class DeportesServletTest {
 	 */
 	@Test 
 	public void testListarDeportesUsuarioOK() throws Exception {
-		parameters.put("email", "test");
 		parameters.put("tipoDeport", "ListUserSports");
 		servlet.doGet(request, response);
-		List<Deporte> deportes = repo.listarDeportesUsuario("test");
+		List<Deporte> deportes = repo.listarDeportesUsuario(user.getEmail());
 		assertEquals(response_writer.toString(),gson.toJson(deportes));
 	}
 	
@@ -151,10 +127,26 @@ public class DeportesServletTest {
 	 */
 	@Test 
 	public void testListarDeportesDisponiblesOK() throws Exception {
-		parameters.put("email", "test");
 		parameters.put("tipoDeport", "AvailableSports");
 		servlet.doGet(request, response);
-		List<Deporte> deportes = repo.listarDeportesDisponibles("test");
-		assertEquals(response_writer.toString(),gson.toJson(deportes));
+		List<Deporte> deportes = repo.listarDeportesDisponibles(user.getEmail());
+		assertEquals(response_writer.toString(), gson.toJson(deportes));
+	}
+	
+	/**
+	 * Se prueba a darse de baja de un deporte err�neo
+	 */
+	@Test
+	public void testDarseDeBajaDeporteErroneo() throws Exception {
+		parameters.put("deporte", "Padel");
+		servlet.doDelete(request, response);
+		assertEquals("El usuario no se ha podido dar de baja del deporte", response_writer.toString());
+	}
+	
+	@Test
+	public void testbDarseDeBajaDeporteOK() throws Exception {
+		parameters.put("deporte", "Futbol");
+		servlet.doDelete(request, response);
+		assertEquals("El usuario se ha dado de baja correctamente del deporte",response_writer.toString());
 	}
 }

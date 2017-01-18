@@ -35,14 +35,10 @@ public class DeportesServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		String email = (String)req.getSession().getAttribute("email");
-		System.out.println("email con session "+email);
-		
-		/*if (email == null) {
-			email = req.getParameter("email");
-		}*/
+		String email = (String)req.getSession().getAttribute("email");		
 		String deporte = req.getParameter("deporte");
-		//Se suscribir el usuario dado su <email> a un <deporte>
+		
+		//Suscribir el usuario dado su <email> a un <deporte>
 		boolean realizado = repo.suscribirseDeporte(deporte, email);
 		//Si la operaci�n se ha realizado con �xito
 		if (realizado) {
@@ -66,7 +62,7 @@ public class DeportesServlet extends HttpServlet {
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		String email = req.getParameter("email");
+		String email = (String)req.getSession().getAttribute("email");
 		String deporte = req.getParameter("deporte");
 		//Se da de baja un usuario dado su <amil> de un <deporte>
 		boolean realizado = repo.darseDeBajaDeporte(deporte, email);

@@ -92,9 +92,6 @@ public class AmigosServlet extends HttpServlet {
 		List<Usuario> listSeguidores = new LinkedList<>();
 		List<Usuario> listSeguidos = new LinkedList<>();
 		String email = (String) req.getSession().getAttribute("email");		
-		if (email == null) {
-			email = req.getParameter("email");
-		}
 		String tipo = req.getParameter("tipoRelacion");
 		//Si se pide la lista de usuarios seguidos
 		if (tipo.equals("listSeguidos")) {

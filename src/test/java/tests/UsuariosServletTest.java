@@ -42,15 +42,6 @@ public class UsuariosServletTest {
 
 	@Before
 	public void setUp() throws IOException, ServletException {
-		Usuario usuario = new Usuario("prueba@social","test","test",
-				"test", "1900-10-10", "test", "testnick");
-		repoUsuario.insertarUsuario(usuario);
-		//repoUsuario.borrarUsuario("prueba@social");
-		List<Usuario> list = repoUsuario.listAll();
-		for (Usuario u : list) {
-			System.out.println(u.getEmail() + " " + u.getContrasena() + " " + u.getFoto());
-		}
-		
 		parameters = new HashMap<String, String>();
 		servlet = new UsuariosServlet();
 		request = mock(HttpServletRequest.class);
@@ -65,7 +56,7 @@ public class UsuariosServletTest {
 		when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
 		when(request.getSession()).thenReturn(session);
 	}
-/*
+
 	@Test
 	public void btestLoginErroneo() throws Exception {
 		parameters.put("emailL", "asd");
@@ -117,7 +108,7 @@ public class UsuariosServletTest {
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido insertar");
 	}
-*/
+
 	@Test
 	public void testActualizarOK() throws Exception {
 		parameters.put("email", "prueba@social");

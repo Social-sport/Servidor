@@ -36,6 +36,9 @@ public class DeportesServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String response = null;
 		String email = (String)req.getSession().getAttribute("email");
+		if (email == null) {
+			email = req.getParameter("email");
+		}
 		String deporte = req.getParameter("deporte");
 		//Se suscribir el usuario dado su <email> a un <deporte>
 		boolean realizado = repo.suscribirseDeporte(deporte, email);
@@ -86,6 +89,9 @@ public class DeportesServlet extends HttpServlet {
 		String response = null;
 		List<Deporte> deportes = null;
 		String email = (String) req.getSession().getAttribute("email");
+		if (email == null) {
+			email = req.getParameter("email");
+		}
 		String tipo = req.getParameter("tipoDeport");
 		String deporte = req.getParameter("deporte");
 		

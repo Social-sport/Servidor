@@ -164,7 +164,7 @@ public class RepositorioUsuario {
 			stmt.close();
 		}
 		catch (SQLException e) {
-			System.out.println("Error en buscar Usuario "+email);
+			System.out.println("RepoError en buscar Usuario "+email);
 		}
 		return usuario;
 	}
@@ -199,7 +199,8 @@ public class RepositorioUsuario {
 			stmt.close();
 			return true;
 		} catch (SQLException e) {
-			System.out.println("Error al borrar usuario");
+			System.out.println("RepoError al borrar usuario" + email );
+			System.out.println("RepoError " + e );
 			return false;
 		}
 	}
@@ -218,7 +219,8 @@ public class RepositorioUsuario {
 			stmt.close();
 			return true;
 		} catch (SQLException e) {
-			System.out.println("Error al actualizar usuario");
+			System.out.println("RepoError al actualizar usuario" + usuario.getEmail());
+			System.out.println("RepoError " + e);
 			return false;
 		}
 	}

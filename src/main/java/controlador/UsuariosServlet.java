@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -23,9 +24,9 @@ import com.google.gson.Gson;
 
 /**
  * Servlet relativo a la funcionalidad de usuarios.
- * 		POST /usuarios. Petición para insertar/actualizar un usuario en la base de datos.
- * 		GET /usuarios. Petición para devolver información de un usuario.
- * 		DELETE /usuarios. Petición para dar de baja a un usuario de la base de datos.
+ * 		POST /usuarios. Peticiï¿½n para insertar/actualizar un usuario en la base de datos.
+ * 		GET /usuarios. Peticiï¿½n para devolver informaciï¿½n de un usuario.
+ * 		DELETE /usuarios. Peticiï¿½n para dar de baja a un usuario de la base de datos.
  */
 
 @MultipartConfig
@@ -58,7 +59,7 @@ public class UsuariosServlet extends HttpServlet {
 		System.out.println("tipoPost=: "+tipoPost);
 		//Si se pide actualizar el usuario
 		if (tipoPost.equals("Actualizar")) {
-			//Obtención de los diferentes campos
+			//Obtenciï¿½n de los diferentes campos
 			email = (String) req.getSession().getAttribute("email");
 			if (email == null) {
 				email = req.getParameter("email");
@@ -72,24 +73,33 @@ public class UsuariosServlet extends HttpServlet {
 			Part partFoto = req.getPart("foto");
 			if (partFoto!=null && !partFoto.equals("")) {
 				foto = getFilename(partFoto);
+			}else{
+				foto = "";
 			}
 			fecha_nacimiento = req.getParameter("fecha_nacimiento");
-			System.out.println("EMAIL BUSCADOOO: " + email);
 			Usuario buscado = repo.findUsuario(email);
-			//Si la nueva contraseña es no nula y no vacía
-			if (newContrasena != null && !(newContrasena.equals(""))) {
-				//Si la nueva contraseña es correctamente confirmada
-				if (newContrasena.equals(confNewContrasena)) {
-					//Si la contraseña coincide con la del usuario
-					if (contrasena.equals(buscado.getContrasena())) {
-						//Se actualiza la contraseña
-						contrasena = newContrasena;
-					}
-				}
-			}
 
 			if (buscado != null) {
-				String uploads = getServletContext().getRealPath("/") + "img/uploads/profile/";
+				
+				//Si la nueva contraseï¿½a es no nula y no vacï¿½a
+				if (newContrasena != null && !(newContrasena.equals(""))) {
+					//Si la nueva contraseï¿½a es correctamente confirmada
+					if (newContrasena.equals(confNewContrasena)) {
+						//Si la contraseï¿½a coincide con la del usuario
+						if (contrasena.equals(buscado.getContrasena())) {
+							//Se actualiza la contraseï¿½a
+							contrasena = newContrasena;
+						}
+					}
+				}
+				
+				ServletConfig sc = getServletConfig();
+				String uploads;
+				if (sc == null) {
+					uploads = "C:/Apache/apache-tomcat-7.0.73/webapps/Servidor/img/uploads/profile/";
+				}else {
+					uploads = getServletContext().getRealPath("/") + "img/uploads/profile/";
+				}
 				String rutaFoto = uploads + buscado.getNick() + ".jpg";
 				File folder = new File(uploads);
 				if (!folder.exists()) {
@@ -129,23 +139,29 @@ public class UsuariosServlet extends HttpServlet {
 				//Se actualiza el usuario
 				Usuario usuario = new Usuario(email, nombre, apellidos, contrasena, fecha_nacimiento, foto,nick);
 				boolean realizado = repo.actualizarUsuario(usuario);
-				//Si la operación se ha ralizado con éxito
+				//Si la operaciï¿½n se ha ralizado con ï¿½xito
 				if (buscado != null && realizado) {
 					resp.sendRedirect("profile.html");
 					response = "El usuario se ha actualizado correctamente";
-					//Se devuelve código 200 (éxito)
+					System.out.println(response);
+					//Se devuelve cï¿½digo 200 (ï¿½xito)
 					resp.setStatus(HttpServletResponse.SC_OK);
 				}
 				else {
 					response = "El usuario no se ha podido actualizar";
-					//Se devuelve código 400 (petición no exitosa)
+					System.out.println(response);
+					//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 					resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				}
+			}else{
+				response = "El usuario no se ha podido actualizar";
+				System.out.println(response);
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		}
 		//Si se pide registar un usuario
 		if (tipoPost.equals("Registro")) {
-			//Obtención de los diferentes campos
+			//Obtenciï¿½n de los diferentes campos
 			email = req.getParameter("emailR");
 			nick = req.getParameter("username");
 			nombre = req.getParameter("nombre");
@@ -163,21 +179,23 @@ public class UsuariosServlet extends HttpServlet {
 				Usuario usuario = new Usuario(email, nombre, apellidos, contrasena, fecha_nacimiento, foto, nick);
 				//Se inserta el usuario en la base de datos
 				boolean realizado = repo.insertarUsuario(usuario);
-				//Si la operación se ha ralizado con éxito
+				//Si la operaciï¿½n se ha ralizado con ï¿½xito
 				if (realizado) {
 					// Inserta el usuario en la BD
 					response = "El usuario se ha insertado correctamente";
+					System.out.println(response);
 					HttpSession session = req.getSession();
 					createSession(session, usuario);
 					resp.sendRedirect("muro.html");
-					//Se devuelve código 200 (éxito)
+					//Se devuelve cï¿½digo 200 (ï¿½xito)
 					resp.setStatus(HttpServletResponse.SC_OK);
 				}
 
 			} else {
-				//Se devuelve código 400 (petición no exitosa)
+				//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response = "El usuario no se ha podido insertar";
+				System.out.println(response);
 				resp.sendRedirect("signup.html");
 			}
 		}
@@ -192,13 +210,12 @@ public class UsuariosServlet extends HttpServlet {
 		String response = null;
 		String tipo = req.getParameter("tipo");
 		System.out.println("tipo= " + tipo);
-		//Si se pide iniciar sesión
+		//Si se pide iniciar sesiï¿½n
 		if (tipo.equals("initSesion")) {
 			//Se obtienen los campos correspondientes
 			String email = req.getParameter("emailL");
 			String contrasena = req.getParameter("contrasenaL");
 			
-			System.out.println("email: " + email + " | pass: " + contrasena);
 			Usuario usuario = repo.findUsuario(email);
 
 			if (usuario != null && contrasena.equals(usuario.getContrasena())) {
@@ -207,14 +224,14 @@ public class UsuariosServlet extends HttpServlet {
 				createSession(session, usuario);
 				response = "El usuario se ha logeado correctamente";
 				resp.sendRedirect("muro.html");
-				//Se devuelve código 200 (éxito)
+				//Se devuelve cï¿½digo 200 (ï¿½xito)
 				resp.setStatus(HttpServletResponse.SC_OK);
 				System.out.println(response);
 			} else {				
 				response = "El usuario no se ha podido logear";
 				System.out.println(response);
 				resp.sendRedirect("signup.html");
-				//Se devuelve código 400 (petición no exitosa)
+				//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
 			}
@@ -235,13 +252,13 @@ public class UsuariosServlet extends HttpServlet {
 					List<Usuario> usuarios = repo.ListAvailableUsers(email);
 					if (usuarios.isEmpty()) {
 						response = "No se encuentran usuarios";
-						//Se devuelve código 200 (éxito)
+						//Se devuelve cï¿½digo 200 (ï¿½xito)
 						resp.setStatus(HttpServletResponse.SC_OK);
 					} else {
 						response = gson.toJson(usuarios);
 						System.out.println("json con los usuarios sin seguir aÃºn");
 						System.out.println(response);
-						//Se devuelve código 200 (éxito)
+						//Se devuelve cï¿½digo 200 (ï¿½xito)
 						resp.setStatus(HttpServletResponse.SC_OK);
 					}
 				}
@@ -249,23 +266,23 @@ public class UsuariosServlet extends HttpServlet {
 				if (tipo.equals("Buscar")) {
 					String name = req.getParameter("search");
 					List<Usuario> usuarios = repo.listarUsuariosBusqueda(name);
-					//Si la lista de usuarios obtenida es no vacía
+					//Si la lista de usuarios obtenida es no vacï¿½a
 					if (usuarios.isEmpty()) {
 						response = "No se encuentran usuarios por: " + name;
-						//Se devuelve código 200 (éxito)
+						//Se devuelve cï¿½digo 200 (ï¿½xito)
 						resp.setStatus(HttpServletResponse.SC_OK);
 					} else {
 						response = gson.toJson(usuarios);
 						System.out.println("json con usuarios buscados");
 						System.out.println(response);
-						//Se devuelve código 200 (éxito)
+						//Se devuelve cï¿½digo 200 (ï¿½xito)
 						resp.setStatus(HttpServletResponse.SC_OK);
 					}
 				}
-				//Si se pide cerrar sesión
+				//Si se pide cerrar sesiï¿½n
 				if (tipo.equals("closeSesion")) {
 					req.getSession().invalidate();
-					//Se devuelve código 200 (éxito)
+					//Se devuelve cï¿½digo 200 (ï¿½xito)
 					resp.setStatus(HttpServletResponse.SC_OK);
 				}
 				setResponse(response, resp);
@@ -275,7 +292,7 @@ public class UsuariosServlet extends HttpServlet {
 	}
 	
 	/**
-	 * @return [true] si la sesión está activa, [false] en caso contrario
+	 * @return [true] si la sesiï¿½n estï¿½ activa, [false] en caso contrario
 	 */
 	private boolean SessionisActive(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		if (req.getSession(false) != null) {
@@ -284,7 +301,7 @@ public class UsuariosServlet extends HttpServlet {
 		} else {
 			System.out.println("no hay sesion iniciada");
 			String response = "";
-			//Se devuelve código 400 (petición no exitosa)
+			//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resp.sendRedirect("signup.html");
 			setResponse(response, resp);
@@ -314,7 +331,7 @@ public class UsuariosServlet extends HttpServlet {
 
 	/**
 	 * 
-	 * Establece los atributos de la sesión
+	 * Establece los atributos de la sesiï¿½n
 	 * @param session
 	 * @param usuario
 	 */
@@ -346,7 +363,7 @@ public class UsuariosServlet extends HttpServlet {
 	}
 
 	/**
-	 * @return [true] si la sesión está autentificada, [false] en caso contrario
+	 * @return [true] si la sesiï¿½n estï¿½ autentificada, [false] en caso contrario
 	 */
 	public boolean isAuthenticated(HttpServletRequest request, HttpServletResponse response) {
 		try {

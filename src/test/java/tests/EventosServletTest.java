@@ -118,7 +118,8 @@ public class EventosServletTest {
 		//verify(session, times(1)).getAttribute("email");
 		// Pongo como email de sesión "usuario@socialsport.com"
 		
-		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		//request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("email", "usuario@socialsport.com");
 				
 		/*req =  mock(HttpServletRequest.class);
 		resp = mock(HttpServletResponse.class);
@@ -152,7 +153,8 @@ public class EventosServletTest {
 	
 	@Test
 	public void testBModificarEventos() throws Exception {
-		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		//request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("idEvento", "1");
 		parameters.put("tipoPostEvent", "Actualizar");
 		parameters.put("nombre", "EventActualizar");
@@ -179,7 +181,8 @@ public class EventosServletTest {
 	
 	@Test
 	public void testSuscribirseEventoErroneo() throws Exception {
-		request.getSession().setAttribute("email", "usuariport.com");
+		//request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("tipoPostEvent", "Suscribirse");
 		parameters.put("idEvento", "200");
 		servletEventos.doPost(request, response);
@@ -188,7 +191,8 @@ public class EventosServletTest {
 	
 	@Test
 	public void testaSuscribirseEvento() throws Exception {
-		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		//request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("tipoPostEvent", "Suscribirse");
 		parameters.put("idEvento", "20");
 		servletEventos.doPost(request, response);
@@ -197,7 +201,8 @@ public class EventosServletTest {
 	
 	@Test
 	public void testbSalirEvento() throws Exception {
-		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		//request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("tipoPostEvent", "Suscribirse");
 		parameters.put("idEvento", "20");
 		servletEventos.doPost(request, response);
@@ -208,7 +213,8 @@ public class EventosServletTest {
 	public void testListarEventosDeporte() throws Exception {
 		
 		// Pone como usuario de sesión al usuario con el email "usuario@socialsport.com"
-		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		//request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("email", "usuario@socialsport.com");
 		
 		// Pone como parametro deporte "Futbol"
 		parameters.put("deporte", "Futbol");
@@ -250,7 +256,8 @@ public class EventosServletTest {
 	public void testListarEventosUsuario() throws Exception {
 		
 		// Ponemos como atributo de la sesion el email "usuario@socialsport.com"
-		request.getSession().setAttribute("email", "usuario@socialsport.com");
+		//request.getSession().setAttribute("email", "usuario@socialsport.com");
+		parameters.put("email", "usuario@socialsport.com");
 		
 		// ponemos como parametro deporte = Futbol
 		parameters.put("deporte", "Futbol");

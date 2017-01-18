@@ -78,7 +78,8 @@ public class AmigosServletTest {
 	@Test
 	public void btestListarSeguidores() throws Exception {
 		HttpSession session = request.getSession();
-		session.setAttribute("email", "usuario@socialsport.com");//Todavia no funciona bien test con la sesion
+		//session.setAttribute("email", "usuario@socialsport.com");//Todavia no funciona bien test con la sesion
+		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("tipoRelacion", "listSeguidores");
 		servlet.doGet(request, response);
 		List<Usuario> seguidores = repo.listarSeguidores("usuario@socialsport.com");
@@ -91,7 +92,8 @@ public class AmigosServletTest {
 	 */
 	@Test
 	public void ctestListarSeguidos() throws Exception {
-		request.getSession().setAttribute("email", "usuario@socialsport.com");//Todavia no funciona bien test con la sesion
+		//request.getSession().setAttribute("email", "usuario@socialsport.com");//Todavia no funciona bien test con la sesion
+		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("tipoRelacion", "listSeguidos");
 		servlet.doGet(request, response);
 		List<Usuario> seguidos = repo.listarSeguidos("usuari@socialsport.com");

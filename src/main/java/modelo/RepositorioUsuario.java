@@ -22,6 +22,31 @@ public class RepositorioUsuario {
 	}
 	
 	/**
+	 * Lista todos los usuarios almacenados
+	 */
+	public List<Usuario> listAll() {
+		List<Usuario> Usuarios = new LinkedList<Usuario>();
+		String sql = "SELECT * FROM Usuario";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Usuario u = new Usuario(rs.getString("email"),rs.getString("nombre"),
+						rs.getString("apellidos"), rs.getString("contrasena"),
+						rs.getString("fecha_nacimiento"),rs.getString("foto"),
+						rs.getString("nick"));				
+						u = addNumSeguidores(u);
+				Usuarios.add(u);			
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en listar Usuarios" + e);
+		}
+		return Usuarios;
+	}
+	
+	/**
 	 * Lista los usuarios disponibles para seguir
 	 */
 	public List<Usuario> ListAvailableUsers(String email) {
@@ -158,7 +183,7 @@ public class RepositorioUsuario {
 			stmt.close();
 			return true;
 		} catch (SQLException e) {
-			System.out.println("Error al insertar usuario");
+			System.out.println("Error al insertar usuario: " + e);
 			return false;
 		}
 	}

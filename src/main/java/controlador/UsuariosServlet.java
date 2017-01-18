@@ -60,6 +60,9 @@ public class UsuariosServlet extends HttpServlet {
 		if (tipoPost.equals("Actualizar")) {
 			//Obtención de los diferentes campos
 			email = (String) req.getSession().getAttribute("email");
+			if (email == null) {
+				email = req.getParameter("email");
+			}
 			nick = req.getParameter("nick");
 			nombre = req.getParameter("nombre");
 			apellidos = req.getParameter("apellidos");
@@ -71,6 +74,7 @@ public class UsuariosServlet extends HttpServlet {
 				foto = getFilename(partFoto);
 			}
 			fecha_nacimiento = req.getParameter("fecha_nacimiento");
+			System.out.println("EMAIL BUSCADOOO: " + email);
 			Usuario buscado = repo.findUsuario(email);
 			//Si la nueva contraseña es no nula y no vacía
 			if (newContrasena != null && !(newContrasena.equals(""))) {

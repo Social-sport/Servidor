@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +22,7 @@ import org.mockito.stubbing.Answer;
 
 import controlador.UsuariosServlet;
 import modelo.RepositorioUsuario;
+import modelo.Usuario;
 
 /**
  * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
@@ -34,10 +37,20 @@ public class UsuariosServletTest {
 	private HttpSession session;
 	private StringWriter response_writer;
 	private Map<String, String> parameters;
+	private RepositorioUsuario repoUsuario = new RepositorioUsuario();
 
 
 	@Before
-	public void setUp() throws IOException {
+	public void setUp() throws IOException, ServletException {
+		Usuario usuario = new Usuario("prueba@social","test","test",
+				"test", "1900-10-10", "test", "testnick");
+		repoUsuario.insertarUsuario(usuario);
+		//repoUsuario.borrarUsuario("prueba@social");
+		List<Usuario> list = repoUsuario.listAll();
+		for (Usuario u : list) {
+			System.out.println(u.getEmail() + " " + u.getContrasena() + " " + u.getFoto());
+		}
+		
 		parameters = new HashMap<String, String>();
 		servlet = new UsuariosServlet();
 		request = mock(HttpServletRequest.class);
@@ -52,7 +65,7 @@ public class UsuariosServletTest {
 		when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
 		when(request.getSession()).thenReturn(session);
 	}
-
+/*
 	@Test
 	public void btestLoginErroneo() throws Exception {
 		parameters.put("emailL", "asd");
@@ -104,11 +117,10 @@ public class UsuariosServletTest {
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El usuario no se ha podido insertar");
 	}
-
+*/
 	@Test
 	public void testActualizarOK() throws Exception {
-		HttpSession session = request.getSession();
-		session.setAttribute("email", "usuario@socialsport.com");
+		parameters.put("email", "prueba@social");
 		parameters.put("tipoPost", "Actualizar");
 		parameters.put("nombre", "test");
 		parameters.put("apellidos", "test");
@@ -116,6 +128,7 @@ public class UsuariosServletTest {
 		parameters.put("fecha_nacimiento", "1900-10-10");
 		parameters.put("nick", "test");
 		servlet.doPost(request, response);
+		System.out.println("Writer response: " + response_writer.toString());
 		assertEquals(response_writer.toString(),"null");
 	}
 }

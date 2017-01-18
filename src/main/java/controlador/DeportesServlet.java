@@ -17,9 +17,9 @@ import com.google.gson.Gson;
 
 /**
  * Servlet relativo a la funcionalidad de deportes.
- * 		POST /deportes. Petición para suscribir un usuario a un deporte.
- * 		GET /deportes. Petición para listar los deportes de la base de datos.
- * 		DELETE /deportes. Petición para dar de baja a un usuario de un deporte.
+ * 		POST /deportes. Peticiï¿½n para suscribir un usuario a un deporte.
+ * 		GET /deportes. Peticiï¿½n para listar los deportes de la base de datos.
+ * 		DELETE /deportes. Peticiï¿½n para dar de baja a un usuario de un deporte.
  */
 @WebServlet(value = "/deportes", name = "DeportesServlet")
 public class DeportesServlet extends HttpServlet {
@@ -36,20 +36,22 @@ public class DeportesServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String response = null;
 		String email = (String)req.getSession().getAttribute("email");
-		if (email == null) {
+		System.out.println("email con session "+email);
+		
+		/*if (email == null) {
 			email = req.getParameter("email");
-		}
+		}*/
 		String deporte = req.getParameter("deporte");
 		//Se suscribir el usuario dado su <email> a un <deporte>
 		boolean realizado = repo.suscribirseDeporte(deporte, email);
-		//Si la operación se ha realizado con éxito
+		//Si la operaciï¿½n se ha realizado con ï¿½xito
 		if (realizado) {
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			resp.setStatus(HttpServletResponse.SC_OK);
 			resp.sendRedirect("muro.html");
 			response = "El usuario se ha suscrito correctamente al deporte";
 		} else {
-			//Se devuelve código 400 (petición no exitosa)
+			//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resp.sendRedirect("muro.html");
 			response = "El usuario no se ha podido suscribir al deporte";
@@ -69,12 +71,12 @@ public class DeportesServlet extends HttpServlet {
 		//Se da de baja un usuario dado su <amil> de un <deporte>
 		boolean realizado = repo.darseDeBajaDeporte(deporte, email);
 		if (realizado) {
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El usuario se ha dado de baja correctamente del deporte";
 		}
 		else {
-			//Se devuelve código 400 (petición no exitosa)
+			//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response = "El usuario no se ha podido dar de baja del deporte";
 		}
@@ -101,33 +103,33 @@ public class DeportesServlet extends HttpServlet {
 			response = gson.toJson(deportes);
 			System.out.println("json con deportes");
 			System.out.println(response);
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 		if (tipo.equals("DesSuscribe")) {
 			if (repo.darseDeBajaDeporte(deporte, email)) {
-				//Se devuelve código 200 (éxito)
+				//Se devuelve cï¿½digo 200 (ï¿½xito)
 				resp.setStatus(HttpServletResponse.SC_OK);
 				resp.sendRedirect("profile.html");
 			} else {
-				//Se devuelve código 400 (petición no exitosa)
+				//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response = "El usuario no existe";
 			}
 		}
-		//Si se pide listar los deortes a los que está suscrito el usuario
+		//Si se pide listar los deortes a los que estï¿½ suscrito el usuario
 		if (tipo.equals("ListUserSports")) {
 			deportes = repo.listarDeportesUsuario(email);
 			response = gson.toJson(deportes);
 			System.out.println("si los Deportes usuario con json: " + response);			
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 		//Si se pide listar todos los deportes
 		if (tipo.equals("AllSports")) {
 			deportes = repo.listarDeportes();
 			response = gson.toJson(deportes);			
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			resp.setStatus(HttpServletResponse.SC_OK);
 
 		}

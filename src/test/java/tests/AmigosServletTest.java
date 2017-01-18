@@ -63,13 +63,13 @@ public class AmigosServletTest {
 		when(request.getSession()).thenReturn(session);
 	}
 
-	/*@Test
+	@Test
 	public void atestAInsertarAmigos() throws Exception {
 		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("emailAmigo", "usuario1@socialsport.com");		
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El amigo se ha insertado correctamente");
-	}*/
+	}
 	
 	/**
 	 * Se prueba a listar los usuarios seguidores
@@ -77,8 +77,6 @@ public class AmigosServletTest {
 	 */
 	@Test
 	public void btestListarSeguidores() throws Exception {
-		HttpSession session = request.getSession();
-		//session.setAttribute("email", "usuario@socialsport.com");//Todavia no funciona bien test con la sesion
 		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("tipoRelacion", "listSeguidores");
 		servlet.doGet(request, response);
@@ -92,7 +90,6 @@ public class AmigosServletTest {
 	 */
 	@Test
 	public void ctestListarSeguidos() throws Exception {
-		//request.getSession().setAttribute("email", "usuario@socialsport.com");//Todavia no funciona bien test con la sesion
 		parameters.put("email", "usuario@socialsport.com");
 		parameters.put("tipoRelacion", "listSeguidos");
 		servlet.doGet(request, response);

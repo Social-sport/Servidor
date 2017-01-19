@@ -111,8 +111,14 @@ public class NotificacionesServlet extends HttpServlet {
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
+		boolean realizado = false;
 		String id = req.getParameter("id");
-		boolean realizado = repo.borrarNotificacion(id);
+		if (id==null) {
+			realizado = repo.deletebyEmail(req.getParameter("emailRecibe"));
+		}else{
+			realizado = repo.borrarNotificacion(id);
+		}
+		
 		//Si la operaci�n se ha ralizado con �xito
 		if (realizado) {
 			//Se devuelve c�digo 200 (�xito)

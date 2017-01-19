@@ -26,7 +26,9 @@ import org.mockito.stubbing.Answer;
 import com.google.gson.Gson;
 
 import controlador.EventosServlet;
+import controlador.NotificacionesServlet;
 import modelo.RepositorioEvento;
+import modelo.RepositorioNotificacion;
 import modelo.RepositorioUsuario;
 import modelo.Usuario;
 import modelo.Evento;
@@ -41,9 +43,11 @@ public class EventosServletTest {
 	
 	private static HttpServletRequest request;	
 	private static EventosServlet servlet;
+	private static NotificacionesServlet servletNot;
 	private static HttpSession session;
 	private static RepositorioEvento repo;
 	private static RepositorioUsuario repoUser;
+	private static RepositorioNotificacion repoNot;
 	private static Usuario user;
 	private static Gson gson;
 	private static Evento evento;
@@ -57,6 +61,7 @@ public class EventosServletTest {
 	public static void before() {
 		gson = new Gson();		
 		repo = new RepositorioEvento();
+		servletNot = new NotificacionesServlet();
 		servlet = new EventosServlet();
 		repoUser = new RepositorioUsuario();
 		user = new Usuario("user@socialsport.com","Social","Sport",
@@ -64,6 +69,7 @@ public class EventosServletTest {
 		evento = new Evento("TestEvent","test servlet","13/11/2016", 
 				"19:26","Futbol",user.getEmail(),"");
 		repoUser.insertarUsuario(user);
+		repoNot = new RepositorioNotificacion();
 		session = mock(HttpSession.class);
 		request = mock(HttpServletRequest.class);		
 		when(request.getSession()).thenReturn(session);
@@ -87,6 +93,7 @@ public class EventosServletTest {
 	@AfterClass
 	public static void after() {
 		repoUser.borrarUsuario("user@socialsport.com");
+		repoNot.deletebyEmail("userInvit@socialsport.com");
 	}
 
 	@Test
@@ -133,10 +140,19 @@ public class EventosServletTest {
 	}
 	
 	@Test
+	public void testbInvitar_a_Evento() throws Exception {	
+		parameters.put("tipo", "Evento");
+		parameters.put("idEvent", ""+event.getId());
+		parameters.put("emailRecibe", "userInvit@socialsport.com");	
+		servletNot.doPost(request, response);
+		assertEquals("Se ha enviado la notificacion",response_writer.toString());	 
+	}
+	
+	@Test
 	public void testbListarEventosSuscritos() throws Exception {		
 		parameters.put("deporte", "Futbol");	
 		parameters.put("tipo", "listUserEvents");
-		servlet.doGet(request, response);		
+		servlet.doGet(request, response);	
 		List<Evento> eventos = repo.listarEventosSuscritos(user.getEmail());
 		assertEquals(response_writer.toString(),gson.toJson(eventos));	 
 	}

@@ -94,19 +94,26 @@ public class NotificacionesServletTest {
 	}
 		
 	@Test
-	public void testNotificarEvento() throws Exception {
+	public void testaNotificarEvento() throws Exception {
 		parameters.put("idEvent", ""+evento.getId());
 		parameters.put("tipo", "Evento");
-		parameters.put("emailRecibe","");
+		parameters.put("emailRecibe","userInvit@socialsport.com");
 		servlet.doPost(request, response);
-		assertEquals(response_writer.toString(),"Se ha enviado la notificacion");
+		assertEquals("Se ha enviado la notificacion",response_writer.toString());
 	}
 	
 	@Test
-	public void testListaNotificaciones() throws Exception {
+	public void testbListaNotificaciones() throws Exception {
 		servlet.doGet(request, response);
 		List<Notificacion> notificaciones = repo.listarNotificaciones(user.getEmail());
-		assertEquals(response_writer.toString(),gson.toJson(notificaciones));
+		assertEquals(gson.toJson(notificaciones),response_writer.toString());
+	}
+	
+	@Test
+	public void testcBorrarcEvento() throws Exception {
+		parameters.put("emailRecibe","userInvit@socialsport.com");
+		servlet.doDelete(request, response);
+		assertEquals("La notificaci�n se ha borrado correctamente",response_writer.toString());
 	}
 	
 }

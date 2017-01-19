@@ -64,6 +64,23 @@ public class RepositorioNotificacion {
 			return false;
 		}
 	}
+	
+	/**
+	 * Elimina una Notificacion de la base de datos dada su <id> y devuelve
+	 * [true] si ha habido �xito, [false] en caso contrario.
+	 */
+	public boolean deletebyEmail(String email) {
+		String sql = "DELETE FROM Notificacion WHERE usuarioRecibe='"+email+"'";
+		try {
+			Statement stmt = conexion.createStatement();
+			stmt.executeUpdate(sql);
+			stmt.close();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("RepoError al borrar Notificacion " + e);
+			return false;
+		}
+	}
 
 	/**
 	 * Devuelve una lista de las notificaciones de un usuario dado su nombre.

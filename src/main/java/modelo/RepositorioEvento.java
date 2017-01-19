@@ -1,6 +1,7 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,25 @@ public class RepositorioEvento {
 	public RepositorioEvento() {
 		ConexionBD.iniciarConexion();
 		this.conexion = ConexionBD.getConexion();
+	}
+	
+	public List<Evento> listAllEvents() {
+		List<Evento> eventos = new LinkedList<Evento>();
+		String sql = "SELECT * FROM Evento";
+		try {
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Evento evento = new Evento(rs.getInt("id"),rs.getString("nombre"),rs.getString("descripcion"),rs.getString("fecha"),
+						rs.getString("hora"),rs.getString("deporte"),rs.getString("creador"),rs.getString("foto"));
+				eventos.add(evento);			
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error en listar Usuarios" + e);
+		}
+		return eventos;
 	}
 
 	/**
@@ -248,7 +268,7 @@ public class RepositorioEvento {
 			return true;
 		} catch (SQLException e) {
 			// No se ha podido insertar el evento 
-			System.out.println("Error al insertar evento "+evento.getNombre());
+			System.out.println("Error al insertar evento "+evento.getNombre() + " " + e);
 			return false;
 		}
 	}
@@ -375,4 +395,18 @@ public class RepositorioEvento {
 		}
 		return evento;
 	}
+	
+	public boolean checkTableEvent() throws SQLException {
+		DatabaseMetaData meta = conexion.getMetaData(); 
+		ResultSet res = meta.getTables(null, null, "Evento", null);
+		if(!res.next()){ 
+		  return false; 
+		} else{
+		   return true;
+		}
+		
+		
+	}
+	
+	
 }

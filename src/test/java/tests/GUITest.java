@@ -1,5 +1,8 @@
 package tests;
 
+import static org.junit.Assert.*;
+
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +19,13 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.thoughtworks.selenium.Wait;
+
+import modelo.Deporte;
+import modelo.Evento;
+import modelo.RepositorioDeporte;
+import modelo.RepositorioEvento;
+import modelo.RepositorioUsuario;
+import modelo.Usuario;
 
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -90,6 +100,7 @@ public class GUITest {
 	}
 	
 	//@Test
+	
 	public void unirse_evento(){
 		login();	
 		driver.findElement(By.id("EventsButton")).click();
@@ -165,18 +176,41 @@ public class GUITest {
 	
 	@Test
 	public void crear_eventos(){
-		login();	
+		RepositorioEvento repoEvento = new RepositorioEvento();
+		RepositorioDeporte repoDeporte = new RepositorioDeporte();
+
+		try {
+			//Verificar que en la base de datos exista una tabla correspondiente a la creación de eventos.
+			assertTrue(repoEvento.checkTableEvent());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		login();
 		driver.findElement(By.id("perfil")).click();
 		driver.findElement(By.id("creaEvent")).click();
 		driver.findElement(By.id("nombre")).sendKeys("Nombre de prueba");
 		driver.findElement(By.id("hora")).sendKeys("Hora del evento");
-		driver.findElement(By.id("fecha")).sendKeys("11/22/1111");
-		driver.findElement(By.id("descripcion")).sendKeys("Lorem ipsum dolor sit amet, "
-				+ "consectetur adipiscing elit. Integer eget lacus et massa vestibulum "
-				+ "scelerisque. Nulla ac leo sed orci egestas viverra ac a elit.");
+		driver.findElement(By.id("fecha")).sendKeys("11/22/111");
+		driver.findElement(By.id("descripcion")).sendKeys("Lorem ipsum dolor sit amet");
 		Select dropdown = new Select(driver.findElement(By.id("deporte")));
 		dropdown.selectByVisibleText("Baloncesto");
-		driver.findElement(By.id("event-submit")).click();
+		List<Deporte> list = repoDeporte.listarDeportesUsuario("testgui@server.com");
+		boolean encontrado = false;
+		for (Deporte dep : list) {
+			//Verificar que el usuario este suscrito al deporte sobre el cual desea crear el evento.
+			if (dep.getNombre().equals("Baloncesto")) {
+				encontrado = true;
+				/*WebElement element = driver.findElement(By.id("event-submit"));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);*/
+				driver.findElement(By.id("event-submit")).click();
+
+			}
+		}
+		if (!encontrado) { fail(); }
+		//Verificar que posterior a la creación del evento, en la base de datos exista el evento creado.
+		Evento evento = repoEvento.findEvento("Nombre de prueba");
+		if (evento == null) { fail(); }
+
 	}
 	
 	@Test

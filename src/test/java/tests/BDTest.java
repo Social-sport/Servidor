@@ -32,19 +32,15 @@ public class BDTest {
 
 	private static RepositorioDeporte repoDeporte;
 	private static RepositorioUsuario repoUsuario;
-	//private static RepositorioComentario repoComentario;
 	private static RepositorioEvento repoEvento;
 	private static RepositorioAmigo repoAmigo;
 	private static RepositorioNotificacion repoNotificacion;
-	//private static RepositorioMensaje repoMensaje;
 
 	@BeforeClass
 	public static void setUp() {
 		repoDeporte = new RepositorioDeporte();
 		repoUsuario = new RepositorioUsuario();
-		//repoComentario = new RepositorioComentario();
 		repoEvento = new RepositorioEvento();
-		//repoMensaje = new RepositorioMensaje();
 		repoAmigo = new RepositorioAmigo();
 		repoNotificacion = new RepositorioNotificacion();
 	}
@@ -126,15 +122,7 @@ public class BDTest {
 	public void ztestEliminarUsuario() {
 		assertTrue(repoUsuario.borrarUsuario("prueba@social"));
 	}
-
-	/**
-	 * Se prueba a encontrar un comentario
-	 */
-	@Test
-	public void testFindComentario() {
-		assertEquals(repoDeporte.findDeporte("Futbol").getNombre(), "Futbol");
-	}
-
+	
 	/**
 	 * Se prueba a insertar un evento
 	 */

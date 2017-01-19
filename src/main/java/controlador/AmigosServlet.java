@@ -24,9 +24,9 @@ import modelo.Usuario;
 
 /**
  * Servlet relativo a la funcionalidad de amigos.
- * 		POST /amigos. Petición para añadir (seguir) amigos. Se notifica al usuario .
- * 		GET /amigos. Petición que devuelve una lista con los amigos de un usuario dado su email.
- * 		DELETE /amigos. Petición que elimina un amigo de la base de datos.
+ * 		POST /amigos. Peticiï¿½n para aï¿½adir (seguir) amigos. Se notifica al usuario .
+ * 		GET /amigos. Peticiï¿½n que devuelve una lista con los amigos de un usuario dado su email.
+ * 		DELETE /amigos. Peticiï¿½n que elimina un amigo de la base de datos.
  */
 @WebServlet(value = "/amigos", name = "AmigosServlet")
 public class AmigosServlet extends HttpServlet {
@@ -45,37 +45,30 @@ public class AmigosServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = (HttpSession) req.getSession(); 
 		String response = null;		
-		String emailSeguidor = null;		
+		String emailSeguidor = (String) session.getAttribute("email");		
 		String amigoSeguido = req.getParameter("emailAmigo");
 		System.out.println("amigoSeguido: "+ amigoSeguido);
-		//Fecha en la que el amigo se ha añadido
+		//Fecha en la que el amigo se ha aï¿½adido
 		Date fech = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String fecha = format.format(fech);
-      
-        if (req.getParameter("email") != null) {
-			emailSeguidor = req.getParameter("email");
-		} else {
-			emailSeguidor = (String) session.getAttribute("email");
-		}
-        System.out.println("usuario: " + emailSeguidor);
         
         //Se inserta el amigo en la base de Datos
 		Amigo amigo = new Amigo(emailSeguidor, amigoSeguido, fecha);
 		boolean realizado = repoAmigo.insertarAmigo(amigo);
-		//Si la operación se ha ralizado con éxito
+		//Si la operaciï¿½n se ha ralizado con ï¿½xito
 		if (realizado) {
 			//Se notifica al usuario
 			Usuario seguidor = repoUsuario.findUsuario(emailSeguidor);
 			repoNotificacion.notificar(emailSeguidor, amigoSeguido, seguidor.getNick(),
 					seguidor.getFoto(), "Seguidor", seguidor.getNick(), 0);
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			response = "El amigo se ha insertado correctamente";
 			resp.setStatus(HttpServletResponse.SC_OK);
 			resp.sendRedirect("muro.html");
 		}
 		else {
-			//Se devuelve código 400 (petición no exitosa)
+			//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 			response = "El amigo no se ha podido insertar";
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resp.sendRedirect("muro.html");
@@ -95,18 +88,14 @@ public class AmigosServlet extends HttpServlet {
 		String tipo = req.getParameter("tipoRelacion");
 		//Si se pide la lista de usuarios seguidos
 		if (tipo.equals("listSeguidos")) {
-			System.out.println("usuario a buscar seguidos: " + email);
 			listSeguidos = repoAmigo.listarSeguidos(email);
 			response = gson.toJson(listSeguidos);
-			System.out.println("json lleno con Seguidos: " + response);
 			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 		//Si se pide la lista de seguidores
 		if (tipo.equals("listSeguidores")) {
-			System.out.println("usuario a buscar seguidores: " + email);
 			listSeguidores = repoAmigo.listarSeguidores(email);
 			response = gson.toJson(listSeguidores);
-			System.out.println("json lleno con Seguidores: " + response);
 			resp.setStatus(HttpServletResponse.SC_OK);
 		}
 		if (tipo.equals("Eliminar")) {
@@ -116,7 +105,7 @@ public class AmigosServlet extends HttpServlet {
 				response = "Amigo borrado correctamente";
 				resp.sendRedirect("profile.html");
 			} else {
-				//Se devuelve código 400 (petición no exitosa)
+				//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				resp.sendRedirect("profile.html");
 				response = "No se pudo borrar el amigo";
@@ -131,7 +120,7 @@ public class AmigosServlet extends HttpServlet {
 	        //Se inserta el amigo en la base de Datos
 			Amigo amigo = new Amigo(email,amigoNuevo,fecha);
 			boolean realizado = repoAmigo.insertarAmigo(amigo);
-			//Si la operación se ha ralizado con éxito
+			//Si la operaciï¿½n se ha ralizado con ï¿½xito
 			if (realizado) {
 				//Se notifica al usuario
 				Usuario seguidor = repoUsuario.findUsuario(email);
@@ -139,12 +128,12 @@ public class AmigosServlet extends HttpServlet {
 						"Seguidor", seguidor.getNick(), 0);
 				
 				response = "El amigo se ha insertado correctamente";
-				//Se devuelve código 200 (éxito)
+				//Se devuelve cï¿½digo 200 (ï¿½xito)
 				resp.setStatus(HttpServletResponse.SC_OK);
 				resp.sendRedirect("profile.html");
 			}
 			else {
-				//Se devuelve código 400 (petición no exitosa)
+				//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 				response = "El amigo no se ha podido insertar";
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				resp.sendRedirect("profile.html");
@@ -160,19 +149,19 @@ public class AmigosServlet extends HttpServlet {
 	public void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String response = null;
-		String usuario = req.getParameter("usuario");
+		String usuario = (String) req.getSession().getAttribute("email");
 		String amigo = req.getParameter("amigo");
 		//Se elimina el amigo de la Base de Datos
 		boolean realizado = repoAmigo.borrarAmigo(usuario, amigo);
-		//Si la operación se ha realizado con éxito
+		//Si la operaciï¿½n se ha realizado con ï¿½xito
 		if (realizado) {
-			//Se devuelve código 200 (éxito)
+			//Se devuelve cï¿½digo 200 (ï¿½xito)
 			resp.setStatus(HttpServletResponse.SC_OK);
 			response = "El amigo se ha borrado correctamente";
 		}
-		//Si la operación ha fallado
+		//Si la operaciï¿½n ha fallado
 		else {
-			//Se devuelve código 400 (petición no exitosa)
+			//Se devuelve cï¿½digo 400 (peticiï¿½n no exitosa)
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response = "El amigo no se ha podido borrar";
 		}

@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -26,6 +28,7 @@ import com.google.gson.Gson;
 import controlador.AmigosServlet;
 import modelo.Usuario;
 import modelo.RepositorioAmigo;
+import modelo.RepositorioUsuario;
 
 /**
  * Clase que contiene los tests para probar el correcto funcionamiento de toda aquella
@@ -35,37 +38,52 @@ import modelo.RepositorioAmigo;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AmigosServletTest {
 
-	private AmigosServlet servlet;
-	private HttpServletRequest request;
+	private static HttpServletRequest request;	
+	private static AmigosServlet servlet;
+	private static HttpSession session;
+	private static RepositorioAmigo repo;
+	private static RepositorioUsuario repoUser;
+	private static Usuario user;
+	private static Gson gson;
+	
 	private HttpServletResponse response;
-	private HttpSession session;
 	private StringWriter response_writer;
 	private Map<String, String> parameters;
-	private RepositorioAmigo repo;
-	private Gson gson;
-
+	
+	@BeforeClass
+	public static void before() {
+		gson = new Gson();				
+		repo = new RepositorioAmigo();
+		servlet = new AmigosServlet();
+		repoUser = new RepositorioUsuario();
+		user = new Usuario("user@socialsport.com","Social","Sport","2016-09-19","/Servidor/img/profile.jpg","test12");
+		repoUser.insertarUsuario(user);
+		session = mock(HttpSession.class);
+		request = mock(HttpServletRequest.class);		
+		when(request.getSession()).thenReturn(session);
+		when(session.getAttribute("email")).thenReturn(user.getEmail());
+	}	
+	
 	@Before
 	public void setUp() throws IOException {
 		parameters = new HashMap<String, String>();
-		servlet = new AmigosServlet();
-		request = mock(HttpServletRequest.class);
 		response = mock(HttpServletResponse.class);
-		session = mock(HttpSession.class);
 		response_writer = new StringWriter();
-		gson = new Gson();
-		repo = new RepositorioAmigo();
 		when(request.getParameter(anyString())).thenAnswer(new Answer<String>() {
 			public String answer(InvocationOnMock invocation) {
 				return parameters.get((String) invocation.getArguments()[0]);
 			}
 		});
 		when(response.getWriter()).thenReturn(new PrintWriter(response_writer));
-		when(request.getSession()).thenReturn(session);
+	}
+	
+	@AfterClass
+	public static void after() {
+		repoUser.borrarUsuario("user@socialsport.com");
 	}
 
 	@Test
-	public void atestAInsertarAmigos() throws Exception {
-		parameters.put("email", "usuario@socialsport.com");
+	public void testaInsertarAmigos() throws Exception {
 		parameters.put("emailAmigo", "usuario1@socialsport.com");		
 		servlet.doPost(request, response);
 		assertEquals(response_writer.toString(),"El amigo se ha insertado correctamente");
@@ -76,11 +94,10 @@ public class AmigosServletTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void btestListarSeguidores() throws Exception {
-		parameters.put("email", "usuario@socialsport.com");
+	public void testListarSeguidores() throws Exception {
 		parameters.put("tipoRelacion", "listSeguidores");
 		servlet.doGet(request, response);
-		List<Usuario> seguidores = repo.listarSeguidores("usuario@socialsport.com");
+		List<Usuario> seguidores = repo.listarSeguidores(user.getEmail());
 		assertEquals(response_writer.toString(),gson.toJson(seguidores));
 	}
 	
@@ -89,11 +106,10 @@ public class AmigosServletTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void ctestListarSeguidos() throws Exception {
-		parameters.put("email", "usuario@socialsport.com");
+	public void testListarSeguidos() throws Exception {
 		parameters.put("tipoRelacion", "listSeguidos");
 		servlet.doGet(request, response);
-		List<Usuario> seguidos = repo.listarSeguidos("usuari@socialsport.com");
+		List<Usuario> seguidos = repo.listarSeguidos(user.getEmail());
 		assertEquals(response_writer.toString(),gson.toJson(seguidos));
 	}
 	
@@ -102,8 +118,7 @@ public class AmigosServletTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void dtestZBorrarAmigos() throws Exception {
-		parameters.put("usuario", "usuario@socialsport.com");
+	public void testdBorrarAmigos() throws Exception {
 		parameters.put("amigo", "usuario1@socialsport.com");
 		servlet.doDelete(request, response);
 		assertEquals(response_writer.toString(),"El amigo se ha borrado correctamente");

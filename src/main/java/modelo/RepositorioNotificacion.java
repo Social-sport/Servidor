@@ -60,7 +60,7 @@ public class RepositorioNotificacion {
 			stmt.close();
 			return true;
 		} catch (SQLException e) {
-			System.out.println("Error al borrar Notificacion");
+			System.out.println("RepoError al borrar Notificacion");
 			return false;
 		}
 	}
@@ -86,7 +86,7 @@ public class RepositorioNotificacion {
 			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error en listar Notificaciones" + e);
+			System.out.println("RepoError en listar Notificaciones" + e);
 		}
 		return notificaciones;
 	}

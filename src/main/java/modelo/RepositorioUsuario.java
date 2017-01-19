@@ -199,8 +199,8 @@ public class RepositorioUsuario {
 			stmt.close();
 			return true;
 		} catch (SQLException e) {
-			System.out.println("RepoError al borrar usuario" + email );
-			System.out.println("RepoError " + e );
+			System.out.println("RepoError al borrar usuario: " + email );
+			System.out.println("RepoError: " + e );
 			return false;
 		}
 	}

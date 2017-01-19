@@ -120,7 +120,6 @@ public class UsuariosServletTest {
 	
 	@Test
 	public void testcUpdateOK() throws Exception {
-		parameters.put("email", "user@socialsport.com");
 		parameters.put("tipoPost", "Actualizar");
 		parameters.put("nombre", "test");
 		parameters.put("apellidos", "test");

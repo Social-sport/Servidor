@@ -56,10 +56,7 @@ public class NotificacionesServlet extends HttpServlet {
 				//Se le notifica al usuario
 				realizado = repo.notificar(emailEnvia, emailRecibe, evento.getNombre(),
 						evento.getFoto(), tipo, seguidor.getNick(), evento.getId());
-			} else {
-				realizado = repo.notificar(emailEnvia,emailRecibe,"nombreEvento",
-						"fotoEvento",tipo,"Nick", 18);
-			}
+			} 
 		}
 		//Si de pide una notificaci�n de seguimiento
 		if (tipo.equals("Seguidor")) {

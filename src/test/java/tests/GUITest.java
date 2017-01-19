@@ -179,7 +179,7 @@ public class GUITest {
 		RepositorioDeporte repoDeporte = new RepositorioDeporte();
 
 		try {
-			//Verificar que en la base de datos exista una tabla correspondiente a la creación de eventos.
+			//Verificar que en la base de datos exista una tabla correspondiente a la creaciï¿½n de eventos.
 			assertTrue(repoEvento.checkTableEvent());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -206,7 +206,7 @@ public class GUITest {
 			}
 		}
 		if (!encontrado) { fail(); }
-		//Verificar que posterior a la creación del evento, en la base de datos exista el evento creado.
+		//Verificar que posterior a la creaciï¿½n del evento, en la base de datos exista el evento creado.
 		Evento evento = repoEvento.findEvento("Nombre de prueba");
 		if (evento == null) { fail(); }
 
@@ -248,7 +248,7 @@ public class GUITest {
 	public void registro() throws InterruptedException{
 		RepositorioUsuario repoUsuario = new RepositorioUsuario();
 		try {
-			//Verificar que en la base de datos exista una tabla correspondiente a la creación de eventos.
+			//Verificar que en la base de datos exista una tabla correspondiente a la creaciï¿½n de eventos.
 			assertTrue(repoUsuario.checkTableUsuario());
 			//Verificar que la tabla "Usuarios" contiene los Atributos: Nombre, Apellido, Email, Fecha nacimiento, nick y Foto.
 			assertTrue(repoUsuario.checkColUsuario());
@@ -265,7 +265,7 @@ public class GUITest {
 		driver.findElement(By.id("apellidos")).sendKeys("Test");
 		driver.findElement(By.id("fecha_nacimiento")).sendKeys("16-11-2016");
 		driver.findElement(By.id("register-submit")).click();
-		//Verificar que posterior al registro se inicie una sesión para el usuario registrado.
+		//Verificar que posterior al registro se inicie una sesiï¿½n para el usuario registrado.
 		index();
 		driver.findElement(By.id("login-form-link")).click();
 		driver.findElement(By.id("emailL")).sendKeys("test@test.test");

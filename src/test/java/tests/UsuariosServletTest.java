@@ -52,9 +52,10 @@ public class UsuariosServletTest {
 		request = mock(HttpServletRequest.class);
 		repoUser = new RepositorioUsuario();
 		when(request.getSession()).thenReturn(session);
+		when(request.getSession(false)).thenReturn(session);
 		when(session.getAttribute("email")).thenReturn("user@socialsport.com");
 	}
-		
+	
 	@Before
 	public void setUp() throws IOException, ServletException {
 		parameters = new HashMap<String, String>();
@@ -72,6 +73,11 @@ public class UsuariosServletTest {
 	public static void after() {
 		repoUser.borrarUsuario("user@socialsport.com");
 	}
+	
+	@Test
+	public void testaCorreoNoRegistrado() throws Exception {
+		assertTrue(servlet.uniqueUser("user@socialsport.com"));
+	}
 		
 	@Test
 	public void testaRegistrarOK() throws Exception {
@@ -85,6 +91,11 @@ public class UsuariosServletTest {
 		parameters.put("username", "sSport");
 		servlet.doPost(request, response);
 		assertEquals("El usuario se ha insertado correctamente",response_writer.toString());
+	}
+	
+	@Test
+	public void testbSesionActiva() throws Exception {
+		assertTrue(servlet.SessionisActive(request, response));
 	}
 	
 	@Test

@@ -173,19 +173,21 @@ public class UsuariosServlet extends HttpServlet {
 
 			if (email != "" && nick != "" && nombre != "" && apellidos != "" && contrasena != ""
 					&& fecha_nacimiento != "") {
-				Usuario usuario = new Usuario(email, nombre, apellidos, contrasena, fecha_nacimiento, foto, nick);
-				//Se inserta el usuario en la base de datos
-				boolean realizado = repo.insertarUsuario(usuario);
-				//Si la operaci�n se ha ralizado con �xito
-				if (realizado) {
-					// Inserta el usuario en la BD
-					response = "El usuario se ha insertado correctamente";
-					System.out.println(response);
-					HttpSession session = req.getSession();
-					createSession(session, usuario);
-					resp.sendRedirect("muro.html");
-					//Se devuelve c�digo 200 (�xito)
-					resp.setStatus(HttpServletResponse.SC_OK);
+				if (uniqueUser(email)) {
+					Usuario usuario = new Usuario(email, nombre, apellidos, contrasena, fecha_nacimiento, foto, nick);
+					//Se inserta el usuario en la base de datos
+					boolean realizado = repo.insertarUsuario(usuario);
+					//Si la operaci�n se ha ralizado con �xito
+					if (realizado) {
+						// Inserta el usuario en la BD
+						response = "El usuario se ha insertado correctamente";
+						System.out.println(response);
+						HttpSession session = req.getSession();
+						createSession(session, usuario);
+						resp.sendRedirect("muro.html");
+						//Se devuelve c�digo 200 (�xito)
+						resp.setStatus(HttpServletResponse.SC_OK);
+					}
 				}
 
 			} else {
@@ -197,6 +199,14 @@ public class UsuariosServlet extends HttpServlet {
 			}
 		}
 		setResponse(response, resp);
+	}
+
+	public boolean uniqueUser(String email) {		
+		boolean resp = false;
+		if(repo.findUsuario(email)==null){
+			resp = true;
+		}
+		return resp;
 	}
 
 	/**
@@ -291,20 +301,19 @@ public class UsuariosServlet extends HttpServlet {
 	/**
 	 * @return [true] si la sesi�n est� activa, [false] en caso contrario
 	 */
-	private boolean SessionisActive(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public boolean SessionisActive(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		if (req.getSession(false) != null) {
 			System.out.println("si existe sesion");
 			return true;
 		} else {
 			System.out.println("no hay sesion iniciada");
-			String response = "";
+			String response = "no hay sesion iniciada";
 			//Se devuelve c�digo 400 (petici�n no exitosa)
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resp.sendRedirect("signup.html");
 			setResponse(response, resp);
 			return false;
-		}	
-
+		}
 	}
 
 	/**

@@ -97,7 +97,7 @@ public class EventosServletTest {
 	}
 
 	@Test
-	public void testaInsertarEventos() throws Exception {		
+	public void testaInsertarEvento() throws Exception {		
 		parameters.put("tipoPostEvent", "Crear");
 		parameters.put("nombre", evento.getNombre());
 		parameters.put("descripcion", evento.getDescripcion());
@@ -107,6 +107,19 @@ public class EventosServletTest {
 		parameters.put("foto", evento.getFoto());
 		servlet.doPost(request, response);
 		assertEquals("El evento se ha insertado correctamente al deporte",response_writer.toString());
+	}	
+	
+	@Test
+	public void testaInsertarEventoErroneo() throws Exception {		
+		parameters.put("tipoPostEvent", "Crear");
+		parameters.put("nombre", "");
+		parameters.put("descripcion", "");
+		parameters.put("fecha", "");
+		parameters.put("hora","");
+		parameters.put("deporte", "");
+		parameters.put("foto","");
+		servlet.doPost(request, response);
+		assertEquals("El evento no se ha podido insertar, parámetros incorrectos",response_writer.toString());
 	}	
 	
 	@Test

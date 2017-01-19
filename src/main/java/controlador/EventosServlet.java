@@ -155,7 +155,7 @@ public class EventosServlet extends HttpServlet {
 			
 			// Si hay alg�n campo o par�metro incorrecto, devuelve como ESTADO un 400, BAD REQUEST y el mensaje "El evento no se ha ..."
 			else {
-				response = "El evento no se ha podido insertar porque carece de alguno de los parámetros o no se ha elegido un deporte";
+				response = "El evento no se ha podido insertar, parámetros incorrectos";
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		}

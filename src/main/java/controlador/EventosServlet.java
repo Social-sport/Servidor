@@ -362,12 +362,10 @@ public class EventosServlet extends HttpServlet {
 			String name = req.getParameter("search");
 			
 			// Lista de eventos cuyo nombre coincide con el valor del par�metro "search" 
-			eventos = repoEvento.listarEventosCreados(name);
+			eventos = repoEvento.findEventos(name);
 
 			// Lista de eventos, convertida a Json
 			response = gson.toJson(eventos);
-			System.out.println("json con eventos buscados de " +name);
-			System.out.println(response);
 
 		}
 		

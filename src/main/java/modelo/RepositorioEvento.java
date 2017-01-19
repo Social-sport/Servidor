@@ -40,7 +40,7 @@ public class RepositorioEvento {
 		}
 		return eventos;
 	}
-
+		
 	/**
 	 * Devuelve la informacion del evento con nombre <nombre>
 	 */
@@ -109,6 +109,31 @@ public class RepositorioEvento {
 		return evento;
 	}
 
+	/**
+	 * Devuelve la informacion del evento con nombre <nombre>
+	 */
+	public List<Evento> findEventos(String nombre) {
+
+		List<Evento> eventos = new LinkedList<Evento>();
+		try {
+			// Devuelve los eventos cuyo nombre sea "nombre"
+			String sql = "SELECT * FROM Evento WHERE nombre ='"+nombre+"'";
+			Statement stmt = conexion.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				Evento e = new Evento(rs.getInt("id"), rs.getString("nombre"), rs.getString("descripcion"), rs.getString("fecha"),
+						rs.getString("hora"), rs.getString("deporte"),
+						rs.getString("creador"), rs.getString("foto"));
+						e = addNumSuscritos(e);
+				eventos.add(e);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println("RepoError en buscar Evento "+nombre + " por " + e);
+		}
+		return eventos;
+	}
+	
 	/**
 	 * Lista los eventos que son del deporte <deporte> y NO han sido creados por el usuario con el email <email>
 	 */

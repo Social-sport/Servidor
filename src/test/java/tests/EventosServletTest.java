@@ -123,6 +123,14 @@ public class EventosServletTest {
 		assertEquals("El usuario se ha suscrito correctamente al evento",response_writer.toString());
 	}	
 	
+	@Test
+	public void testbBuscarEvento() throws Exception {	
+		parameters.put("tipo", "Buscar");
+		parameters.put("search", evento.getNombre());
+		servlet.doGet(request, response);	
+		List<Evento> eventos = repo.findEventos(evento.getNombre());
+		assertEquals(response_writer.toString(),gson.toJson(eventos));	 
+	}
 	
 	@Test
 	public void testbListarEventosSuscritos() throws Exception {		

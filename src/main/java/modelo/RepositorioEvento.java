@@ -396,6 +396,9 @@ public class RepositorioEvento {
 		return evento;
 	}
 	
+	/**
+	 * Comprueba la existencia de la tabla evento
+	 */
 	public boolean checkTableEvent() throws SQLException {
 		DatabaseMetaData meta = conexion.getMetaData(); 
 		ResultSet res = meta.getTables(null, null, "Evento", null);
@@ -404,9 +407,6 @@ public class RepositorioEvento {
 		} else{
 		   return true;
 		}
-		
-		
 	}
-	
 	
 }

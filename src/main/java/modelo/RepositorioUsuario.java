@@ -1,7 +1,9 @@
 package modelo;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
@@ -224,4 +226,35 @@ public class RepositorioUsuario {
 			return false;
 		}
 	}
+	
+	/**
+	 * Comprueba la existencia de la tabla usuario
+	 */
+	public boolean checkTableUsuario() throws SQLException {
+		DatabaseMetaData meta = conexion.getMetaData(); 
+		ResultSet res = meta.getTables(null, null, "Usuario", null);
+		if(!res.next()){ 
+		  return false; 
+		} else{
+		   return true;
+		}
+	}
+	
+	/**
+	 * Comprueba la existencia de las columnas: apellidos, email, fecha_nacimiento, nick, foto
+	 */
+	public boolean checkColUsuario() {
+		Statement stmt;
+		try {
+			stmt = conexion.createStatement();
+			stmt.executeQuery("SELECT apellidos, email, fecha_nacimiento, nick, foto FROM Usuario");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	
 }

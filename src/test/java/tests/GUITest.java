@@ -162,7 +162,6 @@ public class GUITest {
 		link.click();
 		System.out.println(link.getAttribute("aria-expanded"));
 		
-
 		List lista = driver.findElements(By.id("bSuscribete"));
 		if (lista.size() == 4){
 			WebElement elemento = (WebElement) lista.get(3);
@@ -247,14 +246,30 @@ public class GUITest {
 	
 	@Test
 	public void registro() throws InterruptedException{
+		RepositorioUsuario repoUsuario = new RepositorioUsuario();
+		try {
+			//Verificar que en la base de datos exista una tabla correspondiente a la creación de eventos.
+			assertTrue(repoUsuario.checkTableUsuario());
+			//Verificar que la tabla "Usuarios" contiene los Atributos: Nombre, Apellido, Email, Fecha nacimiento, nick y Foto.
+			assertTrue(repoUsuario.checkColUsuario());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		index();
 		driver.findElement(By.id("register-form-link")).click();
 		driver.findElement(By.id("username")).sendKeys("test");
 		driver.findElement(By.id("emailR")).sendKeys("test@test.test");
+		assertNull(repoUsuario.findUsuario("test@test.test"));
 		driver.findElement(By.id("contrasenaR")).sendKeys("testtesttest");
 		driver.findElement(By.id("nombre")).sendKeys("Test");
 		driver.findElement(By.id("apellidos")).sendKeys("Test");
 		driver.findElement(By.id("fecha_nacimiento")).sendKeys("16-11-2016");
 		driver.findElement(By.id("register-submit")).click();
+		//Verificar que posterior al registro se inicie una sesión para el usuario registrado.
+		index();
+		driver.findElement(By.id("login-form-link")).click();
+		driver.findElement(By.id("emailL")).sendKeys("test@test.test");
+		driver.findElement(By.id("contrasenaL")).sendKeys("testtesttest");
+		driver.findElement(By.id("login-submit")).click();
 	}
 }

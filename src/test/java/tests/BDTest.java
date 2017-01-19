@@ -100,6 +100,7 @@ public class BDTest {
 	 */
 	@Test
 	public void atestInsertarUsuario() {
+		//Verificar que se pueden añadir usuarios a la base de datos, insertando datos aleatorios desde sentencia sql.
 		Usuario usuario = new Usuario("prueba@social","prueba","prueba",
 				"prueba", "1994-11-11", "prueba", "pruebaN");
 		assertTrue(repoUsuario.insertarUsuario(usuario));
